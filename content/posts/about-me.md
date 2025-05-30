@@ -1,7 +1,9 @@
 ---
 title: "About Me"
-description: "My professional background and experience"
+author: ["Gene Gi"]
 date: 2025-05-30T14:00:00-07:00
+slug: "about-me"
+description: "My professional background and experience"
 url: "/about-me"
 menu:
   main:
