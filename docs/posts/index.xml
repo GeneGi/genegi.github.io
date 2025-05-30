@@ -6,14 +6,28 @@
     <description>Recent content in Posts on Gene Gi&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 May 2025 13:49:37 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 30 May 2025 14:05:37 -0700</lastBuildDate>
     <atom:link href="https://genegi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About Me</title>
+      <link>https://genegi.github.io/about-me/</link>
+      <pubDate>Fri, 30 May 2025 14:00:00 -0700</pubDate>
+      <guid>https://genegi.github.io/about-me/</guid>
+      <description>&lt;h2 id=&#34;professional-summary&#34;&gt;Professional Summary&lt;/h2&gt;&#xA;&lt;p&gt;Experienced software engineer with a passion for building innovative solutions. Skilled in modern development technologies, with a focus on creating efficient and elegant solutions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;experience&#34;&gt;Experience&lt;/h2&gt;&#xA;&lt;h3 id=&#34;senior-software-engineer---tech-company&#34;&gt;Senior Software Engineer - Tech Company&lt;/h3&gt;&#xA;&lt;p&gt;&lt;em&gt;2022 - Present&lt;/em&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Led development of key product features resulting in 30% user growth&lt;/li&gt;&#xA;&lt;li&gt;Implemented CI/CD pipeline reducing deployment time by 50%&lt;/li&gt;&#xA;&lt;li&gt;Mentored junior developers and conducted code reviews&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;software-developer---previous-company&#34;&gt;Software Developer - Previous Company&lt;/h3&gt;&#xA;&lt;p&gt;&lt;em&gt;2019 - 2022&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Having fun with AI agent</title>
       <link>https://genegi.github.io/posts/having-fun-with-ai-agent/</link>
       <pubDate>Fri, 30 May 2025 13:34:00 -0700</pubDate>
       <guid>https://genegi.github.io/posts/having-fun-with-ai-agent/</guid>
       <description>&lt;p&gt;Tried with AI agent to fix my org roam node title issue, it works surprisingly well. And also tried to set up blogging and AI just did all of it for me.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Hello World</title>
+      <link>https://genegi.github.io/posts/hello-world/</link>
+      <pubDate>Tue, 30 May 2023 00:00:00 +0000</pubDate>
+      <guid>https://genegi.github.io/posts/hello-world/</guid>
+      <description>&lt;h2 id=&#34;hello-world&#34;&gt;Hello, World!&lt;/h2&gt;&#xA;&lt;p&gt;Welcome to my new blog! This is my first post created with org-mode and Hugo.&lt;/p&gt;&#xA;&lt;h3 id=&#34;why-i-started-this-blog&#34;&gt;Why I Started This Blog&lt;/h3&gt;&#xA;&lt;p&gt;I wanted to share my thoughts and experiences using a simple yet powerful blogging setup.&lt;/p&gt;&#xA;&lt;h3 id=&#34;how-it-s-built&#34;&gt;How It&amp;rsquo;s Built&lt;/h3&gt;&#xA;&lt;p&gt;This blog is built using:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Emacs with Doom configuration&lt;/li&gt;&#xA;&lt;li&gt;Org-mode for content creation&lt;/li&gt;&#xA;&lt;li&gt;ox-hugo for exporting to Hugo&lt;/li&gt;&#xA;&lt;li&gt;Hugo for static site generation&lt;/li&gt;&#xA;&lt;li&gt;GitHub Pages for hosting&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;what-s-next&#34;&gt;What&amp;rsquo;s Next&lt;/h3&gt;&#xA;&lt;p&gt;I plan to write about:&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
