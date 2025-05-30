@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Posts on Gene Gi&#39;s Blog</title>
-    <link>http://localhost:1313/posts/</link>
+    <link>https://genegi.github.io/posts/</link>
     <description>Recent content in Posts on Gene Gi&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Fri, 30 May 2025 13:49:37 -0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://genegi.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Having fun with AI agent</title>
-      <link>http://localhost:1313/posts/having-fun-with-ai-agent/</link>
+      <link>https://genegi.github.io/posts/having-fun-with-ai-agent/</link>
       <pubDate>Fri, 30 May 2025 13:34:00 -0700</pubDate>
-      <guid>http://localhost:1313/posts/having-fun-with-ai-agent/</guid>
+      <guid>https://genegi.github.io/posts/having-fun-with-ai-agent/</guid>
       <description>&lt;p&gt;Tried with AI agent to fix my org roam node title issue, it works surprisingly well. And also tried to set up blogging and AI just did all of it for me.&lt;/p&gt;</description>
     </item>
   </channel>
