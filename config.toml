@@ -1,0 +1,12 @@
+# Add this to your existing hugo.toml or create a new config.toml
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+# Exclude pages from lists
+[outputs]
+  page = ["HTML"]
+  home = ["HTML", "RSS"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
