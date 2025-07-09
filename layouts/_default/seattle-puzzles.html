@@ -473,24 +473,47 @@
         }, 500);
     })();
 
-    // Obfuscated puzzle validation system
-    const _0x4f2a = [116, 104, 101, 115, 112, 104, 101, 114, 101, 115]; // Encoded answer 1
-    const _0x7b3c = [98, 114, 111, 110, 122, 101]; // Encoded answer 2
-    const _0x9d4e = [50, 48, 48, 54]; // Encoded answer 3
-    const _0x7f8g = [100, 114, 101, 97, 109, 101, 114]; // Encoded answer 4
+    // Polynomial hash-based validation system
+    const _0xPrime = 31; // Prime number for hash function
+    const _0xMod = 1000000007; // Large prime modulus
     
-    // Decoy arrays to confuse
-    const _0x1a2b = [115, 101, 97, 116, 116, 108, 101]; // decoy
-    const _0x3c4d = [112, 117, 122, 122, 108, 101]; // decoy
-    const _0x5e6f = [97, 110, 115, 119, 101, 114]; // decoy
+    // Pre-computed polynomial hashes of answers
+    const _0x4f2a = 0x28A0C550; // Hash of "thespheres"
+    const _0x7b3c = 0x740505; // Hash of "bronze"  
+    const _0x9d4e = 0x194AFE; // Hash of "2006"
+    const _0x7f8g = 0xA2B738B; // Hash of "dreamer"
     
-    function _0x2e1f(arr) { 
-        return arr.map(code => String.fromCharCode(code)).join(''); 
+    // Decoy hashes to confuse reverse engineering
+    const _0x1a2b = 0x9B4C7E2F;
+    const _0x3c4d = 0x5A8D1F6C;
+    const _0x5e6f = 0x7E2A9C4B;
+    const _0x8h9i = 0x3F7B5D8E;
+    
+    function _0x2e1f(expectedHash, input) {
+        try {
+            // Compute polynomial hash of input
+            const cleanInput = input.toLowerCase().replace(/\s/g, '');
+            let hash = 0;
+            let pow = 1;
+            
+            for (let i = 0; i < cleanInput.length; i++) {
+                hash = (hash + (cleanInput.charCodeAt(i) * pow) % _0xMod) % _0xMod;
+                pow = (pow * _0xPrime) % _0xMod;
+            }
+            
+            // Add salt based on input length and first character
+            const salt = (cleanInput.length * 17 + cleanInput.charCodeAt(0) * 23) % _0xMod;
+            hash = (hash + salt) % _0xMod;
+            
+            return hash === expectedHash;
+        } catch(e) {
+            return false;
+        }
     }
     
-    // Decoy function
-    function _0x8h9i(str) {
-        return str.split('').reverse().join('');
+    // Decoy validation function
+    function _0x9j0k(hash, input) {
+        return Math.random() > 0.5; // Always returns random result
     }
     
     // Glass transition function
@@ -545,7 +568,7 @@
             'value': 1
         });
         
-        if (answer === _0x2e1f(_0x4f2a)) {
+        if (_0x2e1f(_0x4f2a, answer)) {
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Excellent work, ${playerName}! 🔑 You solved the first puzzle!`;
             messageDiv.style.display = 'block';
@@ -602,7 +625,7 @@
             'value': 2
         });
         
-        if (answer === _0x2e1f(_0x7b3c)) {
+        if (_0x2e1f(_0x7b3c, answer)) {
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Outstanding, ${playerName}! 🗼 You solved the second puzzle!`;
             messageDiv.style.display = 'block';
@@ -659,7 +682,7 @@
             'value': 3
         });
         
-        if (answer === _0x2e1f(_0x9d4e)) {
+        if (_0x2e1f(_0x9d4e, answer)) {
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Excellent, ${playerName}! 🎯 You solved the third puzzle!`;
             messageDiv.style.display = 'block';
@@ -716,7 +739,7 @@
             'value': 4
         });
         
-        if (answer === _0x2e1f(_0x7f8g)) {
+        if (_0x2e1f(_0x7f8g, answer)) {
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Congratulations, ${playerName}! 🌟 You solved all four puzzles! You're a true Seattle puzzle master!`;
             messageDiv.style.display = 'block';
