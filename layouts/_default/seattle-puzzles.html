@@ -497,8 +497,18 @@
     document.getElementById('puzzle1-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
-        const answer = input.value.toLowerCase().replace(/\s/g, '');
+        const rawAnswer = input.value.trim(); // Keep original answer for tracking
+        const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle1-message');
+        
+        // Track the actual answer attempt with player name
+        gtag('event', 'puzzle_1_answer_attempt', {
+            'event_category': 'puzzle_answers',
+            'event_label': 'puzzle_1_attempt',
+            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
+            'custom_parameter_2': rawAnswer.substring(0, 50), // Track actual answer attempted
+            'value': 1
+        });
         
         // Track puzzle submission with player name
         gtag('event', 'puzzle_1_submit', {
@@ -544,8 +554,18 @@
     document.getElementById('puzzle2-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
-        const answer = input.value.toLowerCase().replace(/\s/g, '');
+        const rawAnswer = input.value.trim(); // Keep original answer for tracking
+        const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle2-message');
+        
+        // Track the actual answer attempt with player name
+        gtag('event', 'puzzle_2_answer_attempt', {
+            'event_category': 'puzzle_answers',
+            'event_label': 'puzzle_2_attempt',
+            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
+            'custom_parameter_2': rawAnswer.substring(0, 50), // Track actual answer attempted
+            'value': 2
+        });
         
         // Track puzzle submission with player name
         gtag('event', 'puzzle_2_submit', {
@@ -591,8 +611,18 @@
     document.getElementById('puzzle3-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
-        const answer = input.value.toLowerCase().replace(/\s/g, '');
+        const rawAnswer = input.value.trim(); // Keep original answer for tracking
+        const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle3-message');
+        
+        // Track the actual answer attempt with player name
+        gtag('event', 'puzzle_3_answer_attempt', {
+            'event_category': 'puzzle_answers',
+            'event_label': 'puzzle_3_attempt',
+            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
+            'custom_parameter_2': rawAnswer.substring(0, 50), // Track actual answer attempted
+            'value': 3
+        });
         
         // Track puzzle submission with player name
         gtag('event', 'puzzle_3_submit', {
@@ -638,8 +668,18 @@
     document.getElementById('puzzle4-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
-        const answer = input.value.toLowerCase().replace(/\s/g, '');
+        const rawAnswer = input.value.trim(); // Keep original answer for tracking
+        const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle4-message');
+        
+        // Track the actual answer attempt with player name
+        gtag('event', 'puzzle_4_answer_attempt', {
+            'event_category': 'puzzle_answers',
+            'event_label': 'puzzle_4_attempt',
+            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
+            'custom_parameter_2': rawAnswer.substring(0, 50), // Track actual answer attempted
+            'value': 4
+        });
         
         // Track puzzle submission with player name
         gtag('event', 'puzzle_4_submit', {
