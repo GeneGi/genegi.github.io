@@ -315,6 +315,52 @@
                 color: #ffffff !important;
                 -webkit-text-fill-color: #ffffff !important;
             }
+            
+             
+            .glass-message {
+                font-size: 16px !important;
+                padding: 20px !important;
+                border-radius: 15px !important;
+                margin: 20px 0 !important;
+                text-align: center !important;
+                font-weight: 600 !important;
+                border: 3px solid !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+             
+            .glass-message.positive,
+            .glass-message.success-message {
+                background: #34c759 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border-color: #30d158 !important;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+             
+            .glass-message.negative {
+                background: #ff453a !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border-color: #ff6961 !important;
+                text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+             
+            .glass-message.positive::before {
+                content: "✅ ";
+                font-size: 20px;
+                margin-right: 8px;
+            }
+            
+            .glass-message.negative::before {
+                content: "❌ ";
+                font-size: 20px;
+                margin-right: 8px;
+            }
         }
 
          
