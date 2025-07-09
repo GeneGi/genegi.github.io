@@ -130,6 +130,13 @@
                 background: rgba(255, 255, 255, 0.95) !important;
                 border: 1px solid rgba(0, 0, 0, 0.1);
                 color: #333 !important;
+                /* Force dark text color */
+                -webkit-text-fill-color: #333 !important;
+            }
+            
+            .glass-input input::placeholder {
+                color: #666 !important;
+                opacity: 1 !important;
             }
             
             .glass-button {
@@ -144,6 +151,8 @@
                 color: white !important;
                 border: 1px solid rgba(255, 255, 255, 0.3);
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+                /* Force white text color */
+                -webkit-text-fill-color: white !important;
             }
             
             .glass-title {
@@ -152,6 +161,41 @@
             
             .glass-subtitle {
                 color: #555 !important;
+            }
+            
+            /* CRITICAL: Override all glass input styles for mobile visibility */
+            .glass-input input,
+            .glass-input input:focus,
+            .glass-input input:hover,
+            .glass-input input:active {
+                background: white !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: 2px solid #ccc !important;
+                color: #333 !important;
+                -webkit-text-fill-color: #333 !important;
+                text-shadow: none !important;
+            }
+            
+            .glass-input input::placeholder {
+                color: #666 !important;
+                opacity: 1 !important;
+                -webkit-text-fill-color: #666 !important;
+            }
+            
+            /* CRITICAL: Override all glass button styles for mobile visibility */
+            .glass-button,
+            .glass-button:hover,
+            .glass-button:focus,
+            .glass-button:active {
+                background: #7877c6 !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border: 2px solid #5a59a3 !important;
+                text-shadow: none !important;
+                font-weight: 600 !important;
             }
             
             .glass-message {
