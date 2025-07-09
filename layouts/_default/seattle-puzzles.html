@@ -428,6 +428,7 @@
                 (e.ctrlKey && e.shiftKey && e.key === 'I') ||
                 (e.ctrlKey && e.key === 'u')) {
                 e.preventDefault();
+                console.log('%cNice try! 😉', 'color: blue; font-size: 16px;');
                 return false;
             }
         });
@@ -442,12 +443,26 @@
         console.log('%cStop!', 'color: red; font-size: 50px; font-weight: bold;');
         console.log('%cThis is a puzzle game. Cheating ruins the fun!', 'color: red; font-size: 20px;');
         
-        // Detect dev tools
+        // Enhanced dev tools detection with answer scrambling
         let devtools = {open: false, orientation: null};
         setInterval(() => {
             const threshold = 160;
             if (window.outerHeight - window.innerHeight > threshold || 
                 window.outerWidth - window.innerWidth > threshold) {
+                if (!devtools.open) {
+                    devtools.open = true;
+                    console.clear();
+                    console.log('%cPuzzle integrity protected! 🔒', 'color: red; font-size: 20px;');
+                    // Scramble answers if devtools detected
+                    window._0x4f2a = Array(10).fill(0).map(() => Math.floor(Math.random() * 255));
+                    window._0x7b3c = Array(6).fill(0).map(() => Math.floor(Math.random() * 255));
+                    window._0x9d4e = Array(4).fill(0).map(() => Math.floor(Math.random() * 255));
+                    window._0x7f8g = Array(7).fill(0).map(() => Math.floor(Math.random() * 255));
+                }
+            } else {
+                devtools.open = false;
+            }
+        }, 500);
                 if (!devtools.open) {
                     devtools.open = true;
                     console.log('%cDev tools detected! Please close them to continue.', 'color: red; font-size: 20px;');
@@ -458,13 +473,25 @@
         }, 500);
     })();
 
-    // Obfuscated answers using simple encoding
-    const _0x4f2a = ['t', 'h', 'e', 's', 'p', 'h', 'e', 'r', 'e', 's']; // Puzzle 1 answer: "The Spheres"
-    const _0x7b3c = ['b', 'r', 'o', 'n', 'z', 'e']; // Puzzle 2 answer: "Bronze"
-    const _0x9d4e = ['2', '0', '0', '6']; // Puzzle 3 answer: "2006"
-    const _0x7f8g = ['d', 'r', 'e', 'a', 'm', 'e', 'r']; // Puzzle 4 answer: "Dreamer"
+    // Obfuscated puzzle validation system
+    const _0x4f2a = [116, 104, 101, 115, 112, 104, 101, 114, 101, 115]; // Encoded answer 1
+    const _0x7b3c = [98, 114, 111, 110, 122, 101]; // Encoded answer 2
+    const _0x9d4e = [50, 48, 48, 54]; // Encoded answer 3
+    const _0x7f8g = [100, 114, 101, 97, 109, 101, 114]; // Encoded answer 4
     
-    function _0x2e1f(arr) { return arr.join(''); }
+    // Decoy arrays to confuse
+    const _0x1a2b = [115, 101, 97, 116, 116, 108, 101]; // decoy
+    const _0x3c4d = [112, 117, 122, 122, 108, 101]; // decoy
+    const _0x5e6f = [97, 110, 115, 119, 101, 114]; // decoy
+    
+    function _0x2e1f(arr) { 
+        return arr.map(code => String.fromCharCode(code)).join(''); 
+    }
+    
+    // Decoy function
+    function _0x8h9i(str) {
+        return str.split('').reverse().join('');
+    }
     
     // Glass transition function
     function transitionToNextPuzzle(currentPuzzleId, nextPuzzleId) {

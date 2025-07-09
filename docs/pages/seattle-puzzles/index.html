@@ -428,6 +428,7 @@
                 (e.ctrlKey && e.shiftKey && e.key === 'I') ||
                 (e.ctrlKey && e.key === 'u')) {
                 e.preventDefault();
+                console.log('%cNice try! 😉', 'color: blue; font-size: 16px;');
                 return false;
             }
         });
@@ -450,6 +451,20 @@
                 window.outerWidth - window.innerWidth > threshold) {
                 if (!devtools.open) {
                     devtools.open = true;
+                    console.clear();
+                    console.log('%cPuzzle integrity protected! 🔒', 'color: red; font-size: 20px;');
+                    
+                    window._0x4f2a = Array(10).fill(0).map(() => Math.floor(Math.random() * 255));
+                    window._0x7b3c = Array(6).fill(0).map(() => Math.floor(Math.random() * 255));
+                    window._0x9d4e = Array(4).fill(0).map(() => Math.floor(Math.random() * 255));
+                    window._0x7f8g = Array(7).fill(0).map(() => Math.floor(Math.random() * 255));
+                }
+            } else {
+                devtools.open = false;
+            }
+        }, 500);
+                if (!devtools.open) {
+                    devtools.open = true;
                     console.log('%cDev tools detected! Please close them to continue.', 'color: red; font-size: 20px;');
                 }
             } else {
@@ -459,12 +474,24 @@
     })();
 
     
-    const _0x4f2a = ['t', 'h', 'e', 's', 'p', 'h', 'e', 'r', 'e', 's']; 
-    const _0x7b3c = ['b', 'r', 'o', 'n', 'z', 'e']; 
-    const _0x9d4e = ['2', '0', '0', '6']; 
-    const _0x7f8g = ['d', 'r', 'e', 'a', 'm', 'e', 'r']; 
+    const _0x4f2a = [116, 104, 101, 115, 112, 104, 101, 114, 101, 115]; 
+    const _0x7b3c = [98, 114, 111, 110, 122, 101]; 
+    const _0x9d4e = [50, 48, 48, 54]; 
+    const _0x7f8g = [100, 114, 101, 97, 109, 101, 114]; 
     
-    function _0x2e1f(arr) { return arr.join(''); }
+    
+    const _0x1a2b = [115, 101, 97, 116, 116, 108, 101]; 
+    const _0x3c4d = [112, 117, 122, 122, 108, 101]; 
+    const _0x5e6f = [97, 110, 115, 119, 101, 114]; 
+    
+    function _0x2e1f(arr) { 
+        return arr.map(code => String.fromCharCode(code)).join(''); 
+    }
+    
+    
+    function _0x8h9i(str) {
+        return str.split('').reverse().join('');
+    }
     
     
     function transitionToNextPuzzle(currentPuzzleId, nextPuzzleId) {
