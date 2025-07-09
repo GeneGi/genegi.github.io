@@ -34,7 +34,7 @@ _University of Southern California, 2019-2020_
 
 ## Skills {#skills}
 
--   Programming Languages: Python, JavaScript, Go, Rust
+-   Programming Languages: Python, JavaScript
 -   Web Technologies: React, Node.js
 
 
