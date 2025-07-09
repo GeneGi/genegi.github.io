@@ -2,18 +2,25 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Pages on Gene Gi&#39;s Blog</title>
-    <link>http://localhost:1313/pages/</link>
+    <link>https://genegi.github.io/pages/</link>
     <description>Recent content in Pages on Gene Gi&#39;s Blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 30 May 2025 14:00:00 -0700</lastBuildDate>
-    <atom:link href="http://localhost:1313/pages/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 05 Jun 2025 16:15:01 -0700</lastBuildDate>
+    <atom:link href="https://genegi.github.io/pages/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>About Me</title>
-      <link>http://localhost:1313/about-me/</link>
+      <link>https://genegi.github.io/about-me/</link>
       <pubDate>Fri, 30 May 2025 14:00:00 -0700</pubDate>
-      <guid>http://localhost:1313/about-me/</guid>
-      <description>&lt;h2 id=&#34;professional-summary&#34;&gt;Professional Summary&lt;/h2&gt;&#xA;&lt;p&gt;Experienced software engineer with a passion for building innovative solutions. Skilled in modern development technologies, with a focus on creating efficient and elegant solutions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;experience&#34;&gt;Experience&lt;/h2&gt;&#xA;&lt;h3 id=&#34;senior-software-engineer-tech-company&#34;&gt;Senior Software Engineer - Tech Company&lt;/h3&gt;&#xA;&lt;p&gt;&lt;em&gt;2022 - Present&lt;/em&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Led development of key product features resulting in 30% user growth&lt;/li&gt;&#xA;&lt;li&gt;Implemented CI/CD pipeline reducing deployment time by 50%&lt;/li&gt;&#xA;&lt;li&gt;Mentored junior developers and conducted code reviews&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h3 id=&#34;software-developer-previous-company&#34;&gt;Software Developer - Previous Company&lt;/h3&gt;&#xA;&lt;p&gt;&lt;em&gt;2019 - 2022&lt;/em&gt;&lt;/p&gt;</description>
+      <guid>https://genegi.github.io/about-me/</guid>
+      <description>&lt;h2 id=&#34;professional-summary&#34;&gt;Professional Summary&lt;/h2&gt;&#xA;&lt;p&gt;Experienced software engineer with a passion for building innovative solutions. Skilled in modern development technologies, with a focus on creating efficient and elegant solutions.&lt;/p&gt;&#xA;&lt;h2 id=&#34;experience&#34;&gt;Experience&lt;/h2&gt;&#xA;&lt;h3 id=&#34;software-development-engineer-amazon&#34;&gt;Software Development Engineer - Amazon&lt;/h3&gt;&#xA;&lt;p&gt;&lt;em&gt;2021 - Present&lt;/em&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;education&#34;&gt;Education&lt;/h2&gt;&#xA;&lt;h3 id=&#34;master-of-science-in-computer-science&#34;&gt;Master of Science in Computer Science&lt;/h3&gt;&#xA;&lt;p&gt;&lt;em&gt;University of Southern California, 2019-2020&lt;/em&gt;&lt;/p&gt;&#xA;&lt;h2 id=&#34;skills&#34;&gt;Skills&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Programming Languages: Python, JavaScript, Go, Rust&lt;/li&gt;&#xA;&lt;li&gt;Web Technologies: React, Node.js&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;h2 id=&#34;projects&#34;&gt;Projects&lt;/h2&gt;&#xA;&lt;h2 id=&#34;contact&#34;&gt;Contact&lt;/h2&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;GitHub: &lt;a href=&#34;https://github.com/GeneGi&#34;&gt;https://github.com/GeneGi&lt;/a&gt;&lt;/li&gt;&#xA;&lt;li&gt;Email: &lt;a href=&#34;mailto:junzheji@gmail.com&#34;&gt;junzheji@gmail.com&lt;/a&gt;&lt;/li&gt;&#xA;&lt;/ul&gt;</description>
+    </item>
+    <item>
+      <title>Seattle Puzzles</title>
+      <link>https://genegi.github.io/pages/seattle-puzzles/</link>
+      <pubDate>Tue, 09 Jul 2024 00:00:00 +0000</pubDate>
+      <guid>https://genegi.github.io/pages/seattle-puzzles/</guid>
+      <description>&lt;h1 id=&#34;seattle-puzzles&#34;&gt;Seattle Puzzles&lt;/h1&gt;&#xA;&lt;p&gt;Welcome to our collection of Seattle-themed puzzles! Test your knowledge and problem-solving skills with these three interconnected challenges.&lt;/p&gt;&#xA;&lt;h2 id=&#34;how-to-play&#34;&gt;How to Play&lt;/h2&gt;&#xA;&lt;ol&gt;&#xA;&lt;li&gt;Start with Puzzle 1 and work your way through each challenge&lt;/li&gt;&#xA;&lt;li&gt;Each puzzle has a unique theme related to Seattle&lt;/li&gt;&#xA;&lt;li&gt;Use the hint system if you get stuck (but try to solve them first!)&lt;/li&gt;&#xA;&lt;li&gt;Progress through all three puzzles to complete the challenge&lt;/li&gt;&#xA;&lt;/ol&gt;&#xA;&lt;p&gt;Good luck exploring the puzzles of the Emerald City!&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
