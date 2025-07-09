@@ -187,7 +187,14 @@
             .glass-button,
             .glass-button:hover,
             .glass-button:focus,
-            .glass-button:active {
+            .glass-button:active,
+            button.glass-button,
+            form .glass-button,
+            #player-name-form .glass-button,
+            #puzzle1-form .glass-button,
+            #puzzle2-form .glass-button,
+            #puzzle3-form .glass-button,
+            #puzzle4-form .glass-button {
                 background: #7877c6 !important;
                 backdrop-filter: none !important;
                 -webkit-backdrop-filter: none !important;
@@ -196,6 +203,9 @@
                 border: 2px solid #5a59a3 !important;
                 text-shadow: none !important;
                 font-weight: 600 !important;
+                opacity: 1 !important;
+                text-decoration: none !important;
+                font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif !important;
             }
             
             .glass-message {
@@ -263,6 +273,47 @@
             .glass-subtitle {
                 font-size: 14px;
                 margin-bottom: 15px;
+            }
+        }
+
+         
+        @media (max-width: 768px) {
+             
+            button[type="submit"],
+            .glass-button,
+            button.glass-button,
+            form button,
+            #player-name-form button,
+            #puzzle1-form button,
+            #puzzle2-form button,
+            #puzzle3-form button,
+            #puzzle4-form button {
+                background-color: #7877c6 !important;
+                background: #7877c6 !important;
+                color: #ffffff !important;
+                -webkit-text-fill-color: #ffffff !important;
+                text-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: 2px solid #5a59a3 !important;
+                font-weight: bold !important;
+                opacity: 1 !important;
+                font-size: 16px !important;
+                padding: 15px !important;
+                border-radius: 12px !important;
+            }
+            
+             
+            button[type="submit"]:hover,
+            button[type="submit"]:focus,
+            button[type="submit"]:active,
+            .glass-button:hover,
+            .glass-button:focus,
+            .glass-button:active {
+                background-color: #6a69b5 !important;
+                background: #6a69b5 !important;
+                color: #ffffff !important;
+                -webkit-text-fill-color: #ffffff !important;
             }
         }
 
