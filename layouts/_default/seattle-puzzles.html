@@ -195,13 +195,6 @@
             margin-bottom: 1.5rem;
         }
         
-        .glass-hint {
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
-            font-weight: 500;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
         /* Apple-style transition effects */
         .glass-glow {
             animation: glassGlow 2s ease-in-out;
@@ -321,12 +314,6 @@
                 <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle1-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
-            <div style="text-align:center; margin-top: 20px;">
-                <form id="hint-form-1" style="display: inline;">
-                    <button type="button" id="hint-btn-1" class="glass-button">Hint</button>
-                </form>
-                <span id="hint-message-1" class="glass-hint" style="margin-left: 15px;"></span>
-            </div>
         </div>
 
         <!-- Puzzle 2 -->
@@ -342,12 +329,6 @@
                 <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle2-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
-            <div style="text-align:center; margin-top: 20px;">
-                <form id="hint-form-2" style="display: inline;">
-                    <button type="button" id="hint-btn-2" class="glass-button">Hint</button>
-                </form>
-                <span id="hint-message-2" class="glass-hint" style="margin-left: 15px;"></span>
-            </div>
         </div>
 
         <!-- Puzzle 3 -->
@@ -358,12 +339,6 @@
                 <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle3-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
-            <div style="text-align:center; margin-top: 20px;">
-                <form id="hint-form-3" style="display: inline;">
-                    <button type="button" id="hint-btn-3" class="glass-button">Hint</button>
-                </form>
-                <span id="hint-message-3" class="glass-hint" style="margin-left: 15px;"></span>
-            </div>
         </div>
     </div>
 
@@ -462,82 +437,6 @@
     const _0x7f8g = ['d', 'u', 'c', 'k', 'i', 's', 'l', 'a', 'n', 'd']; // Puzzle 3 alternative answer
     
     function _0x2e1f(arr) { return arr.join(''); }
-    
-    // Hint logic
-    const hints = {
-        1: 'Think about Seattle landmarks with reflective surfaces 🌐',
-        2: 'parks',
-        3: 'zoom in when searching'
-    };
-    
-    // Initialize hint buttons for each puzzle
-    function initializeHintButton(puzzleNum) {
-        const hintForm = document.getElementById(`hint-form-${puzzleNum}`);
-        const hintBtn = document.getElementById(`hint-btn-${puzzleNum}`);
-        const hintMsg = document.getElementById(`hint-message-${puzzleNum}`);
-        let hintState = 0;
-        
-        hintForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            handleHintClick(puzzleNum, hintState, hintMsg);
-            hintState = (hintState + 1) % 3;
-        });
-        
-        hintBtn.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Track hint click in Google Analytics with player name
-            gtag('event', `puzzle_${puzzleNum}_hint`, {
-                'event_category': 'puzzle_interaction',
-                'event_label': `puzzle_${puzzleNum}_hint_click`,
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': hintState + 1
-            });
-            
-            handleHintClick(puzzleNum, hintState, hintMsg);
-            hintState = (hintState + 1) % 3;
-        });
-    }
-    
-    function handleHintClick(puzzleNum, hintState, hintMsg) {
-        if (hintState === 0) {
-            // Show prompt for user input
-            const userInput = prompt('Type "我服了" to get a hint:');
-            if (userInput && userInput.trim() === '我服了') {
-                hintMsg.textContent = hints[puzzleNum];
-                // Track actual hint reveal with player name
-                gtag('event', `puzzle_${puzzleNum}_hint_reveal`, {
-                    'event_category': 'puzzle_interaction',
-                    'event_label': `puzzle_${puzzleNum}_hint_reveal`,
-                    'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                    'value': puzzleNum
-                });
-            } else if (userInput !== null) {
-                // User entered something but not correct
-                hintMsg.textContent = 'That\'s not the right phrase. Try again.';
-                // Track failed attempt with player name
-                gtag('event', `puzzle_${puzzleNum}_hint_failed`, {
-                    'event_category': 'puzzle_interaction',
-                    'event_label': `puzzle_${puzzleNum}_hint_failed`,
-                    'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                    'value': puzzleNum
-                });
-            }
-        } else if (hintState === 1) {
-            hintMsg.textContent = hints[puzzleNum];
-            // Track actual hint reveal with player name
-            gtag('event', `puzzle_${puzzleNum}_hint_reveal`, {
-                'event_category': 'puzzle_interaction',
-                'event_label': `puzzle_${puzzleNum}_hint_reveal`,
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': puzzleNum
-            });
-        }
-    }
-    
-    // Initialize all hint buttons
-    initializeHintButton(1);
-    initializeHintButton(2);
-    initializeHintButton(3);
     
     // Glass transition function
     function transitionToNextPuzzle(currentPuzzleId, nextPuzzleId) {
