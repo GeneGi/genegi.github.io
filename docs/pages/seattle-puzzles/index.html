@@ -76,6 +76,31 @@
                  
                 background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
                 background-attachment: scroll !important;
+                background-repeat: no-repeat !important;
+                background-size: cover !important;
+                min-height: 100vh !important;
+                min-height: 100dvh !important;  
+            }
+            
+             
+            html {
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+                background-color: #667eea !important;  
+                min-height: 100vh !important;
+                min-height: 100dvh !important;
+            }
+            
+             
+            body::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                z-index: -1;
+                pointer-events: none;
             }
             
             .glass-container {
