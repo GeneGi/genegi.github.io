@@ -133,29 +133,47 @@
         
          
         .glass-input input {
-            background: rgba(255, 255, 255, 0.1) !important;
-            backdrop-filter: blur(10px) !important;
-            -webkit-backdrop-filter: blur(10px) !important;
-            border: 1px solid rgba(255, 255, 255, 0.2) !important;
-            border-radius: 12px !important;
+            background: rgba(255, 255, 255, 0.08) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15) !important;
+            border-radius: 16px !important;
             font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif !important;
-            color: rgba(255, 255, 255, 0.9) !important;
-            font-size: 1rem !important;
-            padding: 16px 20px !important;
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            font-size: 1.1rem !important;
+            font-weight: 500 !important;
+            padding: 20px 24px !important;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            text-align: center !important;
+            letter-spacing: 0.01em !important;
+            box-shadow: 
+                0 4px 20px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
         }
         
         .glass-input input::placeholder {
-            color: rgba(255, 255, 255, 0.5) !important;
+            color: rgba(255, 255, 255, 0.4) !important;
+            font-weight: 400 !important;
+            text-align: center !important;
         }
         
         .glass-input input:focus {
-            background: rgba(255, 255, 255, 0.15) !important;
-            border-color: rgba(255, 255, 255, 0.4) !important;
+            background: rgba(255, 255, 255, 0.12) !important;
+            border-color: rgba(255, 255, 255, 0.3) !important;
             box-shadow: 
-                0 0 0 3px rgba(255, 255, 255, 0.1),
-                0 4px 16px rgba(0, 0, 0, 0.1) !important;
+                0 0 0 4px rgba(255, 255, 255, 0.08),
+                0 8px 32px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
             outline: none !important;
+            transform: translateY(-2px) !important;
+        }
+        
+        .glass-input input:hover:not(:focus) {
+            background: rgba(255, 255, 255, 0.1) !important;
+            border-color: rgba(255, 255, 255, 0.2) !important;
+            transform: translateY(-1px) !important;
         }
         
          
@@ -285,11 +303,9 @@
                 Before we begin your Seattle adventure,<br>
                 what should we call you?
             </div>
-            <form id="player-name-form" class="glass-input">
-                <div class="field">
-                    <input type="text" id="player-name-input" placeholder="Enter your name" required maxlength="50">
-                </div>
-                <button class="glass-button" type="submit" style="width:100%; margin-top: 20px;">Start Adventure</button>
+            <form id="player-name-form" class="glass-input" style="margin: 2rem 0;">
+                <input type="text" id="player-name-input" placeholder="Enter your name" required maxlength="50">
+                <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Start Adventure</button>
             </form>
         </div>
         
@@ -300,11 +316,9 @@
                 三球如梦，藏林于城。<br>
                 镜影如诗，谜途由此生。
             </div>
-            <form id="puzzle1-form" class="glass-input">
-                <div class="field">
-                    <input type="text" placeholder="Enter your answer" required>
-                </div>
-                <button class="glass-button" type="submit" style="width:100%; margin-top: 20px;">Submit</button>
+            <form id="puzzle1-form" class="glass-input" style="margin: 2rem 0;">
+                <input type="text" placeholder="Enter your answer" required>
+                <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle1-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
             <div style="text-align:center; margin-top: 20px;">
@@ -323,11 +337,9 @@
                 Coe 向 Jefferson 静静走近。<br>
                 不曾言语，却也重逢。
             </div>
-            <form id="puzzle2-form" class="glass-input">
-                <div class="field">
-                    <input type="text" placeholder="Enter your answer" required>
-                </div>
-                <button class="glass-button" type="submit" style="width:100%; margin-top: 20px;">Submit</button>
+            <form id="puzzle2-form" class="glass-input" style="margin: 2rem 0;">
+                <input type="text" placeholder="Enter your answer" required>
+                <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle2-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
             <div style="text-align:center; margin-top: 20px;">
@@ -341,11 +353,9 @@
         
         <div id="puzzle3" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
             <div class="glass-title" style="text-align:center;">一笔静绿，中心留墨</div>
-            <form id="puzzle3-form" class="glass-input">
-                <div class="field">
-                    <input type="text" placeholder="Enter your answer" required>
-                </div>
-                <button class="glass-button" type="submit" style="width:100%; margin-top: 20px;">Submit</button>
+            <form id="puzzle3-form" class="glass-input" style="margin: 2rem 0;">
+                <input type="text" placeholder="Enter your answer" required>
+                <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle3-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
             <div style="text-align:center; margin-top: 20px;">
