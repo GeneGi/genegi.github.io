@@ -17,23 +17,26 @@
     <meta http-equiv="Expires" content="0">
     <title>{{ .Title }} - {{ .Site.Title }}</title>
     <meta name="description" content="{{ .Description }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Crimson+Text:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Vintage Seattle Theme */
+        /* Apple Glass Design */
         body {
             background: 
-                radial-gradient(circle at 25% 25%, rgba(139, 69, 19, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(70, 130, 180, 0.1) 0%, transparent 50%),
-                linear-gradient(135deg, #f5f5dc 0%, #e8e8d0 50%, #d4d4c4 100%);
+                linear-gradient(135deg, #667eea 0%, #764ba2 100%),
+                radial-gradient(circle at 30% 40%, rgba(120, 119, 198, 0.3), transparent 50%),
+                radial-gradient(circle at 80% 10%, rgba(255, 255, 255, 0.15), transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(120, 119, 198, 0.2), transparent 50%);
             background-attachment: fixed;
-            font-family: 'Crimson Text', serif;
-            color: #2c3e50;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', Arial, sans-serif;
+            color: rgba(255, 255, 255, 0.9);
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
             user-select: none;
             position: relative;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
         }
         
         body::before {
@@ -43,24 +46,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: 
-                repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(139, 69, 19, 0.03) 20px, rgba(139, 69, 19, 0.03) 22px),
-                repeating-linear-gradient(-45deg, transparent, transparent 20px, rgba(70, 130, 180, 0.03) 20px, rgba(70, 130, 180, 0.03) 22px);
-            pointer-events: none;
-            z-index: -1;
-        }
-        
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(70, 130, 180, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(25, 25, 112, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(139, 69, 19, 0.05) 0%, transparent 70%);
+                radial-gradient(circle at 20% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.08) 0%, transparent 50%);
             pointer-events: none;
             z-index: -1;
         }
@@ -72,128 +61,212 @@
             user-select: text;
         }
         
-        /* Vintage Header */
-        .vintage-header {
-            font-family: 'Playfair Display', serif;
-            color: #34495e;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            border-bottom: 3px solid #8b4513;
-            padding-bottom: 10px;
-            margin-bottom: 30px;
+        /* Apple Glass Header */
+        .glass-header {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: rgba(255, 255, 255, 0.95);
+            text-align: center;
+            margin-bottom: 2rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.6));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
         
-        /* Vintage Puzzle Containers */
-        .vintage-segment {
-            background: rgba(255, 255, 255, 0.95);
-            border: 2px solid #8b4513;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(139, 69, 19, 0.2);
-            backdrop-filter: blur(5px);
+        /* Glass Morphism Containers */
+        .glass-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2);
+            padding: 2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        .vintage-segment:hover {
-            box-shadow: 0 6px 20px rgba(139, 69, 19, 0.3);
-            transform: translateY(-2px);
-            transition: all 0.3s ease;
+        .glass-container:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-4px);
+            box-shadow: 
+                0 12px 40px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
         
-        /* Vintage Buttons */
-        .vintage-button {
-            background: linear-gradient(145deg, #8b4513, #a0522d) !important;
-            border: 2px solid #654321 !important;
-            color: #f5f5dc !important;
-            font-family: 'Crimson Text', serif !important;
+        /* Apple Style Buttons */
+        .glass-button {
+            background: rgba(255, 255, 255, 0.2) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.3) !important;
+            border-radius: 12px !important;
+            color: rgba(255, 255, 255, 0.95) !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif !important;
             font-weight: 600 !important;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3) !important;
-            box-shadow: 0 3px 8px rgba(139, 69, 19, 0.3) !important;
+            font-size: 1rem !important;
+            padding: 12px 24px !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            cursor: pointer !important;
+            text-shadow: none !important;
+            box-shadow: 
+                0 4px 16px rgba(0, 0, 0, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
         }
         
-        .vintage-button:hover {
-            background: linear-gradient(145deg, #a0522d, #8b4513) !important;
+        .glass-button:hover {
+            background: rgba(255, 255, 255, 0.3) !important;
             transform: translateY(-1px) !important;
-            box-shadow: 0 4px 12px rgba(139, 69, 19, 0.4) !important;
+            box-shadow: 
+                0 6px 20px rgba(0, 0, 0, 0.15),
+                inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
         }
         
-        /* Vintage Input Fields */
-        .vintage-input input {
-            background: rgba(245, 245, 220, 0.9) !important;
-            border: 2px solid #8b4513 !important;
-            border-radius: 4px !important;
-            font-family: 'Crimson Text', serif !important;
-            color: #2c3e50 !important;
+        .glass-button:active {
+            transform: translateY(0) !important;
+            background: rgba(255, 255, 255, 0.25) !important;
         }
         
-        .vintage-input input:focus {
-            background: rgba(255, 255, 255, 0.98) !important;
-            border-color: #a0522d !important;
-            box-shadow: 0 0 8px rgba(139, 69, 19, 0.3) !important;
+        /* Glass Input Fields */
+        .glass-input input {
+            background: rgba(255, 255, 255, 0.1) !important;
+            backdrop-filter: blur(10px) !important;
+            -webkit-backdrop-filter: blur(10px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 12px !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-size: 1rem !important;
+            padding: 16px 20px !important;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
         }
         
-        /* Nature transition effects */
-        .nature-transition {
-            animation: natureGlow 2s ease-in-out;
+        .glass-input input::placeholder {
+            color: rgba(255, 255, 255, 0.5) !important;
         }
         
-        @keyframes natureGlow {
+        .glass-input input:focus {
+            background: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.4) !important;
+            box-shadow: 
+                0 0 0 3px rgba(255, 255, 255, 0.1),
+                0 4px 16px rgba(0, 0, 0, 0.1) !important;
+            outline: none !important;
+        }
+        
+        /* Typography */
+        .glass-title {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            color: rgba(255, 255, 255, 0.95);
+            margin-bottom: 1rem;
+            letter-spacing: -0.01em;
+        }
+        
+        .glass-subtitle {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+            font-weight: 400;
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.5;
+            margin-bottom: 1.5rem;
+        }
+        
+        .glass-hint {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        /* Apple-style transition effects */
+        .glass-glow {
+            animation: glassGlow 2s ease-in-out;
+        }
+        
+        @keyframes glassGlow {
             0% { 
                 transform: scale(1);
-                box-shadow: 0 0 0 rgba(76, 175, 80, 0);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             }
             50% { 
-                transform: scale(1.05);
-                box-shadow: 0 0 30px rgba(76, 175, 80, 0.6);
+                transform: scale(1.02);
+                box-shadow: 
+                    0 12px 40px rgba(255, 255, 255, 0.2),
+                    0 0 60px rgba(255, 255, 255, 0.1);
             }
             100% { 
                 transform: scale(1);
-                box-shadow: 0 0 0 rgba(76, 175, 80, 0);
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             }
         }
         
         .success-message {
-            animation: successPulse 1s ease-in-out;
+            animation: successSlide 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
-        @keyframes successPulse {
-            0% { opacity: 0; transform: translateY(-20px); }
-            50% { opacity: 1; transform: translateY(0); }
-            100% { opacity: 1; transform: translateY(0); }
+        @keyframes successSlide {
+            0% { 
+                opacity: 0; 
+                transform: translateY(-20px) scale(0.95); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
         }
         
         .puzzle-container {
-            transition: all 0.5s ease-in-out;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
         
         .fade-out {
             opacity: 0;
-            transform: translateY(-30px);
+            transform: translateY(-30px) scale(0.95);
         }
         
         .fade-in {
             opacity: 1;
-            transform: translateY(0);
+            transform: translateY(0) scale(1);
         }
         
-        /* Seattle-inspired decorative elements */
-        .seattle-accent {
-            position: relative;
+        /* Message styling */
+        .glass-message {
+            background: rgba(255, 255, 255, 0.15) !important;
+            backdrop-filter: blur(20px) !important;
+            -webkit-backdrop-filter: blur(20px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.2) !important;
+            border-radius: 16px !important;
+            color: rgba(255, 255, 255, 0.9) !important;
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', sans-serif !important;
+            font-weight: 500 !important;
+            padding: 16px 20px !important;
         }
         
-        .seattle-accent::before {
-            content: '☕';
-            position: absolute;
-            top: -10px;
-            left: -15px;
-            font-size: 20px;
-            opacity: 0.6;
+        .glass-message.positive {
+            background: rgba(52, 199, 89, 0.2) !important;
+            border-color: rgba(52, 199, 89, 0.3) !important;
         }
         
-        .seattle-accent::after {
-            content: '🌧️';
-            position: absolute;
-            top: -10px;
-            right: -15px;
-            font-size: 20px;
-            opacity: 0.6;
+        .glass-message.negative {
+            background: rgba(255, 69, 58, 0.2) !important;
+            border-color: rgba(255, 69, 58, 0.3) !important;
+        }
+        
+        /* Container spacing */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .puzzle-spacing {
+            margin: 3rem auto;
         }
 
 
@@ -202,87 +275,87 @@
 <body>
 
     <!-- Puzzle Game Section -->
-    <div class="ui container" style="margin-top: 40px;">
-        <h1 class="ui header vintage-header seattle-accent" style="text-align:center;">Seattle Puzzles</h1>
+    <div class="container">
+        <h1 class="glass-header">Seattle Puzzles</h1>
         
         <!-- Player Name Input -->
-        <div id="player-name-section" class="ui segment puzzle-container vintage-segment" style="max-width: 500px; margin: 0 auto;">
-            <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">Welcome, Puzzle Solver!</div>
-            <div class="ui medium header" style="text-align:center; margin-bottom: 20px; font-size: 1.2em; font-family: 'Crimson Text', serif;">
+        <div id="player-name-section" class="glass-container puzzle-spacing">
+            <div class="glass-title" style="text-align:center;">Welcome, Puzzle Solver!</div>
+            <div class="glass-subtitle" style="text-align:center;">
                 Before we begin your Seattle adventure,<br>
                 what should we call you?
             </div>
-            <form id="player-name-form" class="ui form vintage-input">
+            <form id="player-name-form" class="glass-input">
                 <div class="field">
                     <input type="text" id="player-name-input" placeholder="Enter your name" required maxlength="50">
                 </div>
-                <button class="ui primary button vintage-button" type="submit" style="width:100%; margin-top: 15px;">Start Adventure</button>
+                <button class="glass-button" type="submit" style="width:100%; margin-top: 20px;">Start Adventure</button>
             </form>
-            <div style="text-align:center; margin-top: 15px; font-size: 0.9em; color: #8b4513; font-family: 'Crimson Text', serif;">
+            <div style="text-align:center; margin-top: 15px;" class="glass-hint">
                 Your name will be used to personalize your puzzle experience
             </div>
         </div>
         
         <!-- Puzzle 1 -->
-        <div id="puzzle1" class="ui segment puzzle-container vintage-segment" style="max-width: 500px; margin: 0 auto; display: none; opacity: 0;">
-            <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">Puzzle 1</div>
-            <div class="ui medium header" style="text-align:center; margin-bottom: 20px; font-size: 1.2em; font-family: 'Crimson Text', serif;">
+        <div id="puzzle1" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
+            <div class="glass-title" style="text-align:center;">Puzzle 1</div>
+            <div class="glass-subtitle" style="text-align:center;">
                 三球如梦，藏林于城。<br>
                 镜影如诗，谜途由此生。
             </div>
-            <form id="puzzle1-form" class="ui form vintage-input">
+            <form id="puzzle1-form" class="glass-input">
                 <div class="field">
                     <input type="text" placeholder="Enter your answer" required>
                 </div>
-                <button class="ui primary button vintage-button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
+                <button class="glass-button" type="submit" style="width:100%; margin-top: 20px;">Submit</button>
             </form>
-            <div id="puzzle1-message" class="ui message" style="display:none; margin-top: 15px;"></div>
+            <div id="puzzle1-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
             <div style="text-align:center; margin-top: 20px;">
                 <form id="hint-form-1" style="display: inline;">
-                    <button type="button" id="hint-btn-1" class="ui button vintage-button">Hint</button>
+                    <button type="button" id="hint-btn-1" class="glass-button">Hint</button>
                 </form>
-                <span id="hint-message-1" style="margin-left: 15px; font-size: 1.1em; color: #8b4513; font-family: 'Crimson Text', serif;"></span>
+                <span id="hint-message-1" class="glass-hint" style="margin-left: 15px;"></span>
             </div>
         </div>
 
         <!-- Puzzle 2 -->
-        <div id="puzzle2" class="ui segment puzzle-container vintage-segment" style="max-width: 500px; margin: 0 auto; display: none; opacity: 0;">
-            <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">四位旧识</div>
-            <div class="ui medium header" style="text-align:center; margin-bottom: 20px; font-size: 1.2em; font-family: 'Crimson Text', serif;">
+        <div id="puzzle2" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
+            <div class="glass-title" style="text-align:center;">四位旧识</div>
+            <div class="glass-subtitle" style="text-align:center;">
                 Madrona 与 Magnolia 对望；<br>
                 Coe 向 Jefferson 静静走近。<br>
                 不曾言语，却也重逢。
             </div>
-            <form id="puzzle2-form" class="ui form vintage-input">
+            <form id="puzzle2-form" class="glass-input">
                 <div class="field">
                     <input type="text" placeholder="Enter your answer" required>
                 </div>
-                <button class="ui primary button vintage-button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
+                <button class="glass-button" type="submit" style="width:100%; margin-top: 20px;">Submit</button>
             </form>
-            <div id="puzzle2-message" class="ui message" style="display:none; margin-top: 15px;"></div>
+            <div id="puzzle2-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
             <div style="text-align:center; margin-top: 20px;">
                 <form id="hint-form-2" style="display: inline;">
-                    <button type="button" id="hint-btn-2" class="ui button vintage-button">Hint</button>
+                    <button type="button" id="hint-btn-2" class="glass-button">Hint</button>
                 </form>
-                <span id="hint-message-2" style="margin-left: 15px; font-size: 1.1em; color: #8b4513; font-family: 'Crimson Text', serif;"></span>
+                <span id="hint-message-2" class="glass-hint" style="margin-left: 15px;"></span>
             </div>
         </div>
 
         <!-- Puzzle 3 -->
-        <div id="puzzle3" class="ui segment puzzle-container vintage-segment" style="max-width: 500px; margin: 0 auto; display: none; opacity: 0;">
-            <div class="ui large header" style="text-align:center; margin-bottom: 20px; font-family: 'Playfair Display', serif; color: #34495e;">一笔静绿，中心留墨</div>
-            <form id="puzzle3-form" class="ui form vintage-input">
+        <div id="puzzle3" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
+            <div class="glass-title" style="text-align:center;">一笔静绿，中心留墨</div>
+            <form id="puzzle3-form" class="glass-input">
                 <div class="field">
                     <input type="text" placeholder="Enter your answer" required>
                 </div>
-                <button class="ui primary button vintage-button" type="submit" style="width:100%; margin-top: 15px;">Submit</button>
+                <button class="glass-button" type="submit" style="width:100%; margin-top: 20px;">Submit</button>
             </form>
-            <div id="puzzle3-message" class="ui message" style="display:none; margin-top: 15px;"></div>
+            <div id="puzzle3-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
             <div style="text-align:center; margin-top: 20px;">
                 <form id="hint-form-3" style="display: inline;">
-                    <button type="button" id="hint-btn-3" class="ui button vintage-button">Hint</button>
+                    <button type="button" id="hint-btn-3" class="glass-button">Hint</button>
                 </form>
-                <span id="hint-message-3" style="margin-left: 15px; font-size: 1.1em; color: #8b4513; font-family: 'Crimson Text', serif;"></span>
+                <span id="hint-message-3" class="glass-hint" style="margin-left: 15px;"></span>
             </div>
         </div>
     </div>
@@ -459,13 +532,13 @@
     initializeHintButton(2);
     initializeHintButton(3);
     
-    // Nature transition function
+    // Glass transition function
     function transitionToNextPuzzle(currentPuzzleId, nextPuzzleId) {
         const currentPuzzleDiv = document.getElementById(currentPuzzleId);
         const nextPuzzleDiv = document.getElementById(nextPuzzleId);
         
-        // Add nature glow effect to current puzzle
-        currentPuzzleDiv.classList.add('nature-transition');
+        // Add glass glow effect to current puzzle
+        currentPuzzleDiv.classList.add('glass-glow');
         
         // Fade out current puzzle
         setTimeout(() => {
@@ -501,7 +574,7 @@
         });
         
         if (answer === _0x2e1f(_0x4f2a)) {
-            messageDiv.className = 'ui positive message success-message';
+            messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Excellent work, ${playerName}! 🔑 You solved the first puzzle!`;
             messageDiv.style.display = 'block';
             
@@ -513,12 +586,12 @@
                 'value': 1
             });
             
-            // Transition to puzzle 2 with nature effects
+            // Transition to puzzle 2 with glass effects
             setTimeout(() => {
                 transitionToNextPuzzle('puzzle1', 'puzzle2');
             }, 2000);
         } else {
-            messageDiv.className = 'ui negative message';
+            messageDiv.className = 'glass-message negative';
             messageDiv.textContent = 'Incorrect. Try again, you\'ve got this!';
             messageDiv.style.display = 'block';
             
@@ -548,7 +621,7 @@
         });
         
         if (answer === _0x2e1f(_0x7b3c)) {
-            messageDiv.className = 'ui positive message success-message';
+            messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Outstanding, ${playerName}! 🗼 You solved the second puzzle!`;
             messageDiv.style.display = 'block';
             
@@ -560,12 +633,12 @@
                 'value': 2
             });
             
-            // Transition to puzzle 3 with nature effects
+            // Transition to puzzle 3 with glass effects
             setTimeout(() => {
                 transitionToNextPuzzle('puzzle2', 'puzzle3');
             }, 2000);
         } else {
-            messageDiv.className = 'ui negative message';
+            messageDiv.className = 'glass-message negative';
             messageDiv.textContent = 'Incorrect. Keep trying, you\'re doing great!';
             messageDiv.style.display = 'block';
             
@@ -595,7 +668,7 @@
         });
         
         if (answer === _0x2e1f(_0x9d4e) || answer === _0x2e1f(_0x7f8g)) {
-            messageDiv.className = 'ui positive message success-message';
+            messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Congratulations, ${playerName}! 🦆 You solved all three puzzles! You're a true Seattle puzzle master!`;
             messageDiv.style.display = 'block';
             
@@ -614,12 +687,12 @@
                 'value': 3
             });
             
-            // Add final nature celebration effect
+            // Add final glass celebration effect
             setTimeout(() => {
-                document.getElementById('puzzle3').classList.add('nature-transition');
+                document.getElementById('puzzle3').classList.add('glass-glow');
             }, 1000);
         } else {
-            messageDiv.className = 'ui negative message';
+            messageDiv.className = 'glass-message negative';
             messageDiv.textContent = 'Incorrect. You\'re so close to completing the challenge!';
             messageDiv.style.display = 'block';
             
@@ -634,7 +707,6 @@
     });
     </script>
 
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+
 </body>
 </html>
