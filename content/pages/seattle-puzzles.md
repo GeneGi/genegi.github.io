@@ -1,21 +1,16 @@
 ---
 title: "Seattle Puzzles"
-date: 2024-07-09
+date: 2025-07-10
 draft: false
 type: "page"
 layout: "seattle-puzzles"
-description: "A collection of Seattle-themed puzzles to challenge your mind"
+description: "A collection of Seattle-themed puzzles"
 ---
 
-# Seattle Puzzles
+起因是和Ray一起吃饭的时候聊到一部叫《伊丽莎白镇》的电影，电影里女主给心灰意冷的男主一份自制的当地地图，男主最后根据地图找到女主，重拾生活的信心。
 
-Welcome to our collection of Seattle-themed puzzles! Test your knowledge and problem-solving skills with these three interconnected challenges.
+我们就想自己设计一份基于西雅图的解谜，所有就有了这个。
 
-## How to Play
+如果能线下去走一走的，推荐去走一走。在线上基于Google地图街景也能玩。
 
-1. Start with Puzzle 1 and work your way through each challenge
-2. Each puzzle has a unique theme related to Seattle
-3. Use the hint system if you get stuck (but try to solve them first!)
-4. Progress through all three puzzles to complete the challenge
-
-Good luck exploring the puzzles of the Emerald City!
+Have Fun！
