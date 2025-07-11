@@ -394,6 +394,53 @@
                 margin-right: 8px;
             }
             
+            /* MOBILE TEXT VISIBILITY OVERRIDES - HIGHEST PRIORITY */
+            .glass-message,
+            div.glass-message,
+            #puzzle1-message,
+            #puzzle2-message,
+            #puzzle3-message,
+            #puzzle4-message {
+                font-size: 16px !important;
+                padding: 20px !important;
+                border-radius: 15px !important;
+                margin: 20px 0 !important;
+                text-align: center !important;
+                font-weight: 700 !important;
+                border: 3px solid !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+                line-height: 1.4 !important;
+                min-height: 60px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+            }
+            
+            /* SUCCESS - Bright Green */
+            .glass-message.positive,
+            .glass-message.success-message,
+            div.glass-message.positive,
+            div.glass-message.success-message {
+                background: #34c759 !important;
+                background-color: #34c759 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border-color: #30d158 !important;
+            }
+            
+            /* ERROR - Bright Red */
+            .glass-message.negative,
+            div.glass-message.negative {
+                background: #ff453a !important;
+                background-color: #ff453a !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border-color: #ff6961 !important;
+            }
+            
             /* CRITICAL: Fix Change Name button visibility on mobile */
             #change-name-btn,
             button#change-name-btn,
@@ -435,35 +482,68 @@
                 padding: 20px !important;
                 margin: 15px auto !important;
                 max-width: 95% !important;
+                background: rgba(255, 255, 255, 0.95) !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                border: 1px solid rgba(0, 0, 0, 0.1) !important;
             }
             
             #credits-card .glass-title {
                 font-size: 1.5rem !important;
                 color: #333 !important;
                 margin-bottom: 1rem !important;
+                font-weight: 700 !important;
             }
             
             #credits-card .glass-subtitle {
                 font-size: 0.9rem !important;
                 color: #555 !important;
                 line-height: 1.4 !important;
+                font-weight: 600 !important;
             }
             
             #credits-card h3 {
                 color: #333 !important;
                 font-size: 1rem !important;
+                font-weight: 700 !important;
             }
             
             #credits-card p {
-                color: #555 !important;
-                font-size: 0.8rem !important;
+                color: #444 !important;
+                font-size: 0.85rem !important;
                 margin-bottom: 0.8rem !important;
+                font-weight: 500 !important;
+                line-height: 1.5 !important;
+            }
+            
+            #credits-card strong {
+                color: #222 !important;
+                font-weight: 700 !important;
+            }
+            
+            #credits-card em {
+                color: #666 !important;
+                font-style: italic !important;
             }
             
             #credits-card a {
                 color: #7877c6 !important;
                 text-decoration: underline !important;
                 font-weight: 600 !important;
+            }
+            
+            #credits-card a:hover,
+            #credits-card a:focus {
+                color: #5a59a3 !important;
+                text-decoration: underline !important;
+            }
+            
+            /* Credits card inner section styling */
+            #credits-card div[style*="background: rgba(255, 255, 255, 0.1)"] {
+                background: rgba(240, 240, 240, 0.9) !important;
+                border: 1px solid rgba(0, 0, 0, 0.1) !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
             }
             
             #restart-game-btn {
@@ -478,6 +558,7 @@
                 backdrop-filter: none !important;
                 -webkit-backdrop-filter: none !important;
                 text-shadow: none !important;
+                min-height: 44px !important;
             }
             
             #restart-game-btn:hover,
@@ -486,6 +567,59 @@
                 background: #6a69b5 !important;
                 color: white !important;
                 -webkit-text-fill-color: white !important;
+            }
+            
+            /* ENHANCED SUCCESS/ERROR MESSAGES FOR MOBILE */
+            .glass-message {
+                font-size: 16px !important;
+                padding: 20px !important;
+                border-radius: 15px !important;
+                margin: 20px 0 !important;
+                text-align: center !important;
+                font-weight: 700 !important;
+                border: 3px solid !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3) !important;
+                line-height: 1.4 !important;
+                min-height: 60px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            /* SUCCESS MESSAGE - Bright Green with high contrast */
+            .glass-message.positive,
+            .glass-message.success-message {
+                background: #34c759 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border-color: #30d158 !important;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+            }
+            
+            /* ERROR MESSAGE - Bright Red with high contrast */
+            .glass-message.negative {
+                background: #ff453a !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border-color: #ff6961 !important;
+                text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5) !important;
+            }
+            
+            /* Enhanced icons for better visibility */
+            .glass-message.positive::before {
+                content: "✅ ";
+                font-size: 24px !important;
+                margin-right: 10px !important;
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
+            }
+            
+            .glass-message.negative::before {
+                content: "❌ ";
+                font-size: 24px !important;
+                margin-right: 10px !important;
+                filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3)) !important;
             }
             
             /* Alternative high contrast version */
