@@ -667,6 +667,58 @@
             }
         }
         
+         
+        .error-shake {
+            animation: errorShake 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes errorShake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+        
+         
+        .input-error {
+            animation: inputError 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes inputError {
+            0% { border-color: rgba(255, 255, 255, 0.15); }
+            50% { 
+                border-color: rgba(255, 69, 58, 0.8); 
+                box-shadow: 0 0 0 4px rgba(255, 69, 58, 0.2);
+            }
+            100% { border-color: rgba(255, 255, 255, 0.15); }
+        }
+        
+         
+        .button-press {
+            animation: buttonPress 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes buttonPress {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        
+         
+        .message-slide-in {
+            animation: messageSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        @keyframes messageSlideIn {
+            0% { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.9); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
         .puzzle-container {
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -1092,6 +1144,57 @@
     }
     
     
+    function addInteractionFeedback(isCorrect, puzzleNum, inputElement, buttonElement, messageDiv) {
+        
+        if (buttonElement) {
+            buttonElement.classList.add('button-press');
+            setTimeout(() => {
+                buttonElement.classList.remove('button-press');
+            }, 200);
+        }
+        
+        if (isCorrect) {
+            
+            if (messageDiv) {
+                messageDiv.classList.add('success-message', 'message-slide-in');
+            }
+        } else {
+            
+            const puzzleContainer = document.getElementById(`puzzle${puzzleNum}`);
+            
+            
+            if (puzzleContainer) {
+                puzzleContainer.classList.add('error-shake');
+                setTimeout(() => {
+                    puzzleContainer.classList.remove('error-shake');
+                }, 600);
+            }
+            
+            
+            if (inputElement) {
+                inputElement.classList.add('input-error');
+                setTimeout(() => {
+                    inputElement.classList.remove('input-error');
+                }, 400);
+                
+                
+                setTimeout(() => {
+                    inputElement.value = '';
+                    inputElement.focus();
+                }, 300);
+            }
+            
+            
+            if (messageDiv) {
+                messageDiv.classList.add('message-slide-in');
+                setTimeout(() => {
+                    messageDiv.classList.remove('message-slide-in');
+                }, 500);
+            }
+        }
+    }
+    
+    
     function completePuzzle(puzzleNum) {
         
         if (!puzzleProgress.completed.includes(puzzleNum)) {
@@ -1302,10 +1405,14 @@
     document.getElementById('puzzle1-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
+        const button = this.querySelector('button');
         const rawAnswer = input.value.trim();
         const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle1-message');
         const isCorrect = _0x2e1f(_0x4f2a, answer);
+        
+        
+        addInteractionFeedback(isCorrect, 1, input, button, messageDiv);
         
         
         if (typeof window.trackPuzzleEvent === 'function') {
@@ -1354,10 +1461,14 @@
     document.getElementById('puzzle2-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
+        const button = this.querySelector('button');
         const rawAnswer = input.value.trim();
         const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle2-message');
         const isCorrect = _0x2e1f(_0x7b3c, answer);
+        
+        
+        addInteractionFeedback(isCorrect, 2, input, button, messageDiv);
         
         
         if (typeof window.trackPuzzleEvent === 'function') {
@@ -1406,10 +1517,14 @@
     document.getElementById('puzzle3-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
+        const button = this.querySelector('button');
         const rawAnswer = input.value.trim();
         const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle3-message');
         const isCorrect = _0x2e1f(_0x9d4e, answer);
+        
+        
+        addInteractionFeedback(isCorrect, 3, input, button, messageDiv);
         
         
         if (typeof window.trackPuzzleEvent === 'function') {
@@ -1458,10 +1573,14 @@
     document.getElementById('puzzle4-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
+        const button = this.querySelector('button');
         const rawAnswer = input.value.trim();
         const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle4-message');
         const isCorrect = _0x2e1f(_0x7f8g, answer);
+        
+        
+        addInteractionFeedback(isCorrect, 4, input, button, messageDiv);
         
         
         if (typeof window.trackPuzzleEvent === 'function') {
