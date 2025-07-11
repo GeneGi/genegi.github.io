@@ -431,6 +431,64 @@
             }
             
              
+            #credits-card {
+                padding: 20px !important;
+                margin: 15px auto !important;
+                max-width: 95% !important;
+            }
+            
+            #credits-card .glass-title {
+                font-size: 1.5rem !important;
+                color: #333 !important;
+                margin-bottom: 1rem !important;
+            }
+            
+            #credits-card .glass-subtitle {
+                font-size: 0.9rem !important;
+                color: #555 !important;
+                line-height: 1.4 !important;
+            }
+            
+            #credits-card h3 {
+                color: #333 !important;
+                font-size: 1rem !important;
+            }
+            
+            #credits-card p {
+                color: #555 !important;
+                font-size: 0.8rem !important;
+                margin-bottom: 0.8rem !important;
+            }
+            
+            #credits-card a {
+                color: #7877c6 !important;
+                text-decoration: underline !important;
+                font-weight: 600 !important;
+            }
+            
+            #restart-game-btn {
+                background: #7877c6 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border: 2px solid #5a59a3 !important;
+                font-weight: 600 !important;
+                padding: 12px 24px !important;
+                font-size: 0.9rem !important;
+                border-radius: 12px !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                text-shadow: none !important;
+            }
+            
+            #restart-game-btn:hover,
+            #restart-game-btn:focus,
+            #restart-game-btn:active {
+                background: #6a69b5 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+            }
+            
+             
             @supports not (backdrop-filter: blur(10px)) {
                 #change-name-btn {
                     background: #ffffff !important;
@@ -915,6 +973,56 @@
             </form>
             <div id="puzzle4-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
         </div>
+
+        
+        <div id="credits-card" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
+            <div class="glass-title" style="text-align:center;">🎉 Congratulations! 🎉</div>
+            <div class="glass-subtitle" style="text-align:center; margin-bottom: 2rem;">
+                You've completed all four Seattle puzzles!<br>
+                <span style="font-size: 1.2rem; font-weight: 600; color: rgba(255, 255, 255, 0.9);">You're a true Seattle explorer!</span>
+            </div>
+            
+            
+            <div style="background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border: 1px solid rgba(255, 255, 255, 0.2);">
+                <h3 style="text-align: center; margin-bottom: 1rem; font-size: 1.1rem; color: rgba(255, 255, 255, 0.95);">Credits</h3>
+                
+                <div style="text-align: center; line-height: 1.6; font-size: 0.9rem; color: rgba(255, 255, 255, 0.85);">
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Puzzle Design:</strong> Gene Gi<br>
+                        <em>with the help of ChatGPT, Deepseek, and AWS Q CLI</em>
+                    </p>
+                    
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Trip Route Design:</strong> 
+                        <a href="https://theticket.seattletimes.com/city-guides/so-you-want-to-look-at-public-art-in-south-lake-union/" 
+                           target="_blank" 
+                           style="color: rgba(255, 255, 255, 0.95); text-decoration: underline;">
+                            Jas Keimig's Seattle Times Post
+                        </a>
+                    </p>
+                    
+                    <p style="margin-bottom: 1rem;">
+                        <strong>Inspired by:</strong><br>
+                        <a href="https://ray7mason.github.io/ray_puzzle/" 
+                           target="_blank" 
+                           style="color: rgba(255, 255, 255, 0.95); text-decoration: underline;">
+                            Ray's Seattle Puzzle
+                        </a><br>
+                        <em>and the movie "Elizabethtown"</em>
+                    </p>
+                </div>
+            </div>
+            
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 1rem;">
+                    Thank you for exploring Seattle's public art with us!
+                </p>
+                <button id="restart-game-btn" class="glass-button" style="padding: 12px 24px; font-size: 0.9rem; background: rgba(255, 255, 255, 0.15) !important;">
+                    Play Again
+                </button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1236,6 +1344,66 @@
         
         
         updateProgressDisplay();
+    }
+    
+    
+    function showCreditsCard() {
+        
+        const puzzle4 = document.getElementById('puzzle4');
+        if (puzzle4) {
+            puzzle4.style.display = 'none';
+            puzzle4.style.opacity = '0';
+        }
+        
+        
+        const playerInfoBar = document.getElementById('player-info-bar');
+        if (playerInfoBar) {
+            playerInfoBar.style.display = 'none';
+        }
+        
+        
+        const creditsCard = document.getElementById('credits-card');
+        if (creditsCard) {
+            creditsCard.style.display = 'block';
+            creditsCard.classList.add('fade-in');
+            creditsCard.style.opacity = '1';
+        }
+        
+        
+        setupRestartButton();
+        
+        
+        if (typeof window.trackPuzzleEvent === 'function') {
+            window.trackPuzzleEvent({
+                eventType: 'credits_viewed',
+                playerName: playerName,
+                category: 'game_completion'
+            });
+        }
+    }
+    
+    
+    function setupRestartButton() {
+        const restartBtn = document.getElementById('restart-game-btn');
+        if (restartBtn) {
+            restartBtn.addEventListener('click', function() {
+                
+                if (typeof window.trackPuzzleEvent === 'function') {
+                    window.trackPuzzleEvent({
+                        eventType: 'game_restart',
+                        playerName: playerName,
+                        category: 'user_interaction'
+                    });
+                }
+                
+                
+                localStorage.removeItem('seattlePuzzlePlayerName');
+                localStorage.removeItem('seattlePuzzleProgress');
+                
+                
+                window.location.reload();
+            });
+        }
     }
     
     
@@ -1648,6 +1816,11 @@
             
             setTimeout(() => {
                 document.getElementById('puzzle4').classList.add('glass-glow');
+                
+                
+                setTimeout(() => {
+                    showCreditsCard();
+                }, 2000);
             }, 1000);
         } else {
             messageDiv.className = 'glass-message negative';
