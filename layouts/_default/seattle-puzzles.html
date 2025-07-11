@@ -510,8 +510,8 @@
             #credits-card .glass-title {
                 font-size: 1.5rem !important;
                 color: #1c1b1f !important;
-                margin-bottom: 16px !important;
-                font-weight: 400 !important;
+                margin-bottom: 8px !important;
+                font-weight: 500 !important;
                 letter-spacing: 0 !important;
                 text-align: center !important;
             }
@@ -526,32 +526,43 @@
                 letter-spacing: 0.15px !important;
             }
             
+            #credits-card .glass-subtitle span {
+                color: #1c1b1f !important;
+                font-weight: 500 !important;
+            }
+            
             #credits-card h3 {
                 color: #1c1b1f !important;
                 font-size: 1.125rem !important;
                 font-weight: 500 !important;
                 margin-bottom: 16px !important;
                 letter-spacing: 0.15px !important;
+                text-align: center !important;
             }
             
             #credits-card p {
                 color: #49454f !important;
                 font-size: 0.875rem !important;
-                margin-bottom: 16px !important;
+                margin-bottom: 12px !important;
                 font-weight: 400 !important;
                 line-height: 1.43 !important;
                 letter-spacing: 0.25px !important;
+                text-align: left !important;
+                padding: 0 8px !important;
             }
             
             #credits-card strong {
                 color: #1c1b1f !important;
                 font-weight: 500 !important;
+                display: block !important;
+                margin-bottom: 4px !important;
             }
             
             #credits-card em {
                 color: #79747e !important;
                 font-style: italic !important;
                 font-weight: 400 !important;
+                font-size: 0.8125rem !important;
             }
             
             #credits-card a {
@@ -574,33 +585,43 @@
                 border-radius: 8px !important;
                 backdrop-filter: none !important;
                 -webkit-backdrop-filter: none !important;
+                padding: 20px !important;
+                margin: 16px 0 !important;
             }
             
-            /* Material Design Restart Button */
+            /* Material Design Play Again Button */
             #restart-game-btn {
                 background: #6750a4 !important;
+                background-color: #6750a4 !important;
                 color: white !important;
                 -webkit-text-fill-color: white !important;
                 border: none !important;
                 font-weight: 500 !important;
-                padding: 10px 24px !important;
+                padding: 12px 32px !important;
                 font-size: 0.875rem !important;
                 border-radius: 20px !important;
                 backdrop-filter: none !important;
                 -webkit-backdrop-filter: none !important;
                 text-shadow: none !important;
-                min-height: 40px !important;
+                min-height: 48px !important;
                 box-shadow: 
-                    0 1px 3px rgba(0, 0, 0, 0.12),
-                    0 1px 2px rgba(0, 0, 0, 0.24) !important;
+                    0 2px 4px rgba(0, 0, 0, 0.14),
+                    0 3px 4px rgba(0, 0, 0, 0.12),
+                    0 1px 5px rgba(0, 0, 0, 0.20) !important;
                 transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
                 font-family: 'Roboto', sans-serif !important;
                 letter-spacing: 0.1px !important;
                 text-transform: uppercase !important;
+                cursor: pointer !important;
+                opacity: 1 !important;
+                margin-top: 8px !important;
             }
             
             #restart-game-btn:hover {
                 background: #7c4dff !important;
+                background-color: #7c4dff !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
                 box-shadow: 
                     0 3px 6px rgba(0, 0, 0, 0.16),
                     0 3px 6px rgba(0, 0, 0, 0.23) !important;
@@ -608,6 +629,9 @@
             
             #restart-game-btn:active {
                 background: #5a3d99 !important;
+                background-color: #5a3d99 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
                 box-shadow: 
                     0 1px 3px rgba(0, 0, 0, 0.12),
                     0 1px 2px rgba(0, 0, 0, 0.24) !important;
@@ -1398,50 +1422,52 @@
             <div class="glass-title" style="text-align:center;">🎉 Congratulations! 🎉</div>
             <div class="glass-subtitle" style="text-align:center; margin-bottom: 2rem;">
                 You've completed all four Seattle puzzles!<br>
-                <span style="font-size: 1.2rem; font-weight: 600; color: rgba(255, 255, 255, 0.9);">You're a true Seattle explorer!</span>
+                <span style="font-size: 1.1rem; font-weight: 600;">You're a true Seattle explorer!</span>
             </div>
             
             <!-- Credits Section -->
-            <div style="background: rgba(255, 255, 255, 0.1); border-radius: 15px; padding: 1.5rem; margin: 1.5rem 0; border: 1px solid rgba(255, 255, 255, 0.2);">
-                <h3 style="text-align: center; margin-bottom: 1rem; font-size: 1.1rem; color: rgba(255, 255, 255, 0.95);">Credits</h3>
+            <div style="background: rgba(247, 242, 250, 0.9); border-radius: 12px; padding: 20px; margin: 20px 0; border: 1px solid rgba(231, 224, 236, 1);">
+                <h3 style="text-align: center; margin-bottom: 20px; font-size: 1.125rem; color: #1c1b1f; font-weight: 500;">Credits</h3>
                 
-                <div style="text-align: center; line-height: 1.6; font-size: 0.9rem; color: rgba(255, 255, 255, 0.85);">
-                    <p style="margin-bottom: 1rem;">
-                        <strong>Puzzle Design:</strong> Gene Gi<br>
-                        <em>with the help of ChatGPT, Deepseek, and AWS Q CLI</em>
-                    </p>
+                <div style="text-align: left; line-height: 1.6; font-size: 0.875rem;">
+                    <div style="margin-bottom: 16px; padding: 0 8px;">
+                        <strong style="color: #1c1b1f; font-weight: 500; display: block; margin-bottom: 4px;">Puzzle Design:</strong>
+                        <span style="color: #49454f;">Gene Gi</span><br>
+                        <em style="color: #79747e; font-size: 0.8125rem;">with the help of ChatGPT, Deepseek, and AWS Q CLI</em>
+                    </div>
                     
-                    <p style="margin-bottom: 1rem;">
-                        <strong>Website Development:</strong> AWS Q CLI
-                    </p>
+                    <div style="margin-bottom: 16px; padding: 0 8px;">
+                        <strong style="color: #1c1b1f; font-weight: 500; display: block; margin-bottom: 4px;">Website Development:</strong>
+                        <span style="color: #49454f;">AWS Q CLI</span>
+                    </div>
                     
-                    <p style="margin-bottom: 1rem;">
-                        <strong>Trip Route Design:</strong> 
+                    <div style="margin-bottom: 16px; padding: 0 8px;">
+                        <strong style="color: #1c1b1f; font-weight: 500; display: block; margin-bottom: 4px;">Trip Route Design:</strong>
                         <a href="https://theticket.seattletimes.com/city-guides/so-you-want-to-look-at-public-art-in-south-lake-union/" 
                            target="_blank" 
-                           style="color: rgba(255, 255, 255, 0.95); text-decoration: underline;">
+                           style="color: #6750a4; text-decoration: none; font-weight: 500; border-bottom: 1px solid transparent;">
                             Jas Keimig's Seattle Times Post
                         </a>
-                    </p>
+                    </div>
                     
-                    <p style="margin-bottom: 1rem;">
-                        <strong>Inspired by:</strong><br>
+                    <div style="margin-bottom: 0; padding: 0 8px;">
+                        <strong style="color: #1c1b1f; font-weight: 500; display: block; margin-bottom: 4px;">Inspired by:</strong>
                         <a href="https://ray7mason.github.io/ray_puzzle/" 
                            target="_blank" 
-                           style="color: rgba(255, 255, 255, 0.95); text-decoration: underline;">
+                           style="color: #6750a4; text-decoration: none; font-weight: 500; border-bottom: 1px solid transparent;">
                             Ray's Seattle Puzzle
                         </a><br>
-                        <em>and the movie "Elizabethtown"</em>
-                    </p>
+                        <em style="color: #79747e; font-size: 0.8125rem;">and the movie "Elizabethtown"</em>
+                    </div>
                 </div>
             </div>
             
             <!-- Thank You Message -->
-            <div style="text-align: center; margin-top: 2rem;">
-                <p style="font-size: 1rem; color: rgba(255, 255, 255, 0.9); margin-bottom: 1rem;">
+            <div style="text-align: center; margin-top: 24px;">
+                <p style="font-size: 1rem; color: #49454f; margin-bottom: 16px; font-weight: 400;">
                     Thank you for exploring Seattle's public art with us!
                 </p>
-                <button id="restart-game-btn" class="glass-button" style="padding: 12px 24px; font-size: 0.9rem; background: rgba(255, 255, 255, 0.15) !important;">
+                <button id="restart-game-btn" class="glass-button">
                     Play Again
                 </button>
             </div>
