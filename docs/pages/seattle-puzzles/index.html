@@ -6,13 +6,46 @@
     <meta name="description" content="Seattle Puzzles - A beautiful puzzle game featuring Chinese poetry riddles about Seattle landmarks">
     
     
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-VFDF2K5XMP"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+      import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-firestore.js";
+      
+      
+      const firebaseConfig = {
+        apiKey: "AIzaSyDHyayHDdBCdtGOrWhUq6QHk4iPS2QJDnc",
+        authDomain: "seattlepuzzle-fcd89.firebaseapp.com",
+        projectId: "seattlepuzzle-fcd89",
+        storageBucket: "seattlepuzzle-fcd89.firebasestorage.app",
+        messagingSenderId: "791934150017",
+        appId: "1:791934150017:web:58827f896c2b453bb67480",
+        measurementId: "G-9BQ7KQMDN0"
+      };
 
-      gtag('config', 'G-VFDF2K5XMP');
+      
+      const app = initializeApp(firebaseConfig);
+      const db = getFirestore(app);
+      
+      
+      const sessionId = 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+      
+      
+      window.trackPuzzleEvent = async function(eventData) {
+        try {
+          await addDoc(collection(db, "puzzle_events"), {
+            ...eventData,
+            sessionId: sessionId,
+            timestamp: serverTimestamp(),
+            userAgent: navigator.userAgent,
+            screenSize: `${screen.width}x${screen.height}`,
+            url: window.location.href
+          });
+          console.log('Event tracked successfully');
+        } catch (error) {
+          console.error('Error tracking event:', error);
+          
+          console.log('Fallback tracking:', eventData);
+        }
+      };
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +53,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Seattle Puzzles - Gene Gi&#39;s Blog</title>
-    <meta name="description" content="A collection of Seattle-themed puzzles to challenge your mind">
+    <meta name="description" content="A collection of Seattle-themed puzzles">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
          
@@ -707,6 +740,9 @@
         
         <div id="puzzle1" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
             <div class="glass-title" style="text-align:center;">Puzzle 1</div>
+            <div id="welcome-message" class="glass-subtitle" style="text-align:center; margin-bottom: 1rem;">
+                
+            </div>
             <div class="glass-subtitle" style="text-align:center;">
                 三球如梦，藏林于城。<br>
                 镜影如诗，谜途始发。
@@ -716,17 +752,22 @@
                 <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle1-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="change-name-btn" class="glass-button" style="font-size: 0.9rem; padding: 8px 16px; background: rgba(255, 255, 255, 0.1) !important;">
+                    Change Name
+                </button>
+            </div>
         </div>
 
         
         <div id="puzzle2" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
             <div class="glass-title" style="text-align:center;">Puzzle 2</div>
             <div class="glass-subtitle" style="text-align:center;">
-                出球向南，不远即转。<br>
-                三角街角，雾中藏句。<br>
-                白云非云，是钢成诗。<br>
-                ——寻觅那如云般轻柔的诗篇，<br>
-                你能细听风吟，感它金属之心？
+                出球向东北，右转第七街。<br>
+                车流交汇处，三角孤岛中。<br>
+                形似水泥袋，枕形金属云。<br>
+                ——寻觅那云中俳句，<br>
+                且听风吟，感其金属之心，是何铸其形？
             </div>
             <form id="puzzle2-form" class="glass-input" style="margin: 2rem 0;">
                 <input type="text" placeholder="Enter your answer" required>
@@ -739,7 +780,7 @@
         <div id="puzzle3" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
             <div class="glass-title" style="text-align:center;">Puzzle 3</div>
             <div class="glass-subtitle" style="text-align:center;">
-                沿街东行，绿影之侧，<br>
+                沿街向北，绿影之侧，<br>
                 三人并立，不语凝思。<br>
                 童年记忆，铸身为像，<br>
                 目光游移，各守心池。<br>
@@ -777,6 +818,32 @@
     let playerName = '';
     
     
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedPlayerName = localStorage.getItem('seattlePuzzlePlayerName');
+        if (savedPlayerName) {
+            playerName = savedPlayerName;
+            
+            document.getElementById('player-name-section').style.display = 'none';
+            document.getElementById('puzzle1').style.display = 'block';
+            document.getElementById('puzzle1').style.opacity = '1';
+            updatePuzzleGreeting();
+            
+            
+            window.gameStartTime = Date.now();
+            window.puzzle1StartTime = Date.now();
+            
+            
+            if (typeof window.trackPuzzleEvent === 'function') {
+                window.trackPuzzleEvent({
+                    eventType: 'returning_player',
+                    playerName: playerName,
+                    category: 'game_start'
+                });
+            }
+        }
+    });
+    
+    
     document.getElementById('player-name-form').addEventListener('submit', function(e) {
         e.preventDefault();
         console.log('Form submitted'); 
@@ -791,20 +858,16 @@
         }
         
         
-        const sanitizedName = playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20);
+        localStorage.setItem('seattlePuzzlePlayerName', playerName);
         
         
-        try {
-            if (typeof gtag !== 'undefined') {
-                gtag('event', 'player_name_entered', {
-                    'event_category': 'game_start',
-                    'event_label': 'player_registration',
-                    'custom_parameter_1': sanitizedName,
-                    'value': 1
-                });
-            }
-        } catch (error) {
-            console.log('Analytics error (non-critical):', error);
+        if (typeof window.trackPuzzleEvent === 'function') {
+            window.trackPuzzleEvent({
+                eventType: 'player_name_entered',
+                playerName: playerName,
+                category: 'game_start',
+                label: 'player_registration'
+            });
         }
         
         
@@ -831,6 +894,11 @@
             
             
             updatePuzzleGreeting();
+            
+            
+            window.gameStartTime = Date.now();
+            window.puzzle1StartTime = Date.now();
+            
             console.log('Transition complete'); 
         }, 1000);
     });
@@ -838,10 +906,40 @@
     
     function updatePuzzleGreeting() {
         const puzzle1Header = document.querySelector('#puzzle1 .glass-title');
+        const welcomeMessage = document.getElementById('welcome-message');
         if (puzzle1Header && playerName) {
             puzzle1Header.textContent = `Puzzle 1 - Welcome, ${playerName}!`;
+            if (welcomeMessage) {
+                welcomeMessage.innerHTML = `Ready for your Seattle adventure?<br><small style="opacity: 0.7;">Good luck solving the puzzles!</small>`;
+            }
         }
     }
+    
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        
+        setTimeout(() => {
+            const changeNameBtn = document.getElementById('change-name-btn');
+            if (changeNameBtn) {
+                changeNameBtn.addEventListener('click', function() {
+                    
+                    localStorage.removeItem('seattlePuzzlePlayerName');
+                    
+                    
+                    if (typeof window.trackPuzzleEvent === 'function') {
+                        window.trackPuzzleEvent({
+                            eventType: 'name_change_requested',
+                            playerName: playerName,
+                            category: 'user_interaction'
+                        });
+                    }
+                    
+                    
+                    window.location.reload();
+                });
+            }
+        }, 100);
+    });
     
     
     (function() {
@@ -987,56 +1085,48 @@
     document.getElementById('puzzle1-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
-        const rawAnswer = input.value.trim(); 
+        const rawAnswer = input.value.trim();
         const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle1-message');
+        const isCorrect = _0x2e1f(_0x4f2a, answer);
         
         
-        gtag('event', 'puzzle_1_answer_attempt', {
-            'event_category': 'puzzle_answers',
-            'event_label': 'puzzle_1_attempt',
-            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-            'custom_parameter_2': rawAnswer.substring(0, 50), 
-            'value': 1
-        });
+        if (typeof window.trackPuzzleEvent === 'function') {
+            window.trackPuzzleEvent({
+                eventType: 'puzzle_attempt',
+                playerName: playerName,
+                puzzleNumber: 1,
+                answer: rawAnswer, 
+                isCorrect: isCorrect,
+                category: 'puzzle_interaction',
+                timeSpent: Date.now() - (window.puzzle1StartTime || Date.now())
+            });
+        }
         
-        
-        gtag('event', 'puzzle_1_submit', {
-            'event_category': 'puzzle_interaction',
-            'event_label': 'puzzle_1_submit',
-            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-            'value': 1
-        });
-        
-        if (_0x2e1f(_0x4f2a, answer)) {
+        if (isCorrect) {
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Excellent work, ${playerName}! 🔑 You solved the first puzzle!`;
             messageDiv.style.display = 'block';
             
             
-            gtag('event', 'puzzle_1_correct', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'puzzle_1_correct',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 1
-            });
+            if (typeof window.trackPuzzleEvent === 'function') {
+                window.trackPuzzleEvent({
+                    eventType: 'puzzle_solved',
+                    playerName: playerName,
+                    puzzleNumber: 1,
+                    category: 'puzzle_success'
+                });
+            }
             
             
             setTimeout(() => {
                 transitionToNextPuzzle('puzzle1', 'puzzle2');
+                window.puzzle2StartTime = Date.now(); 
             }, 1200);
         } else {
             messageDiv.className = 'glass-message negative';
             messageDiv.textContent = 'Incorrect. Try again, you\'ve got this!';
             messageDiv.style.display = 'block';
-            
-            
-            gtag('event', 'puzzle_1_incorrect', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'puzzle_1_incorrect',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 1
-            });
         }
     });
 
@@ -1044,56 +1134,48 @@
     document.getElementById('puzzle2-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
-        const rawAnswer = input.value.trim(); 
+        const rawAnswer = input.value.trim();
         const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle2-message');
+        const isCorrect = _0x2e1f(_0x7b3c, answer);
         
         
-        gtag('event', 'puzzle_2_answer_attempt', {
-            'event_category': 'puzzle_answers',
-            'event_label': 'puzzle_2_attempt',
-            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-            'custom_parameter_2': rawAnswer.substring(0, 50), 
-            'value': 2
-        });
+        if (typeof window.trackPuzzleEvent === 'function') {
+            window.trackPuzzleEvent({
+                eventType: 'puzzle_attempt',
+                playerName: playerName,
+                puzzleNumber: 2,
+                answer: rawAnswer,
+                isCorrect: isCorrect,
+                category: 'puzzle_interaction',
+                timeSpent: Date.now() - (window.puzzle2StartTime || Date.now())
+            });
+        }
         
-        
-        gtag('event', 'puzzle_2_submit', {
-            'event_category': 'puzzle_interaction',
-            'event_label': 'puzzle_2_submit',
-            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-            'value': 2
-        });
-        
-        if (_0x2e1f(_0x7b3c, answer)) {
+        if (isCorrect) {
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Outstanding, ${playerName}! 🗼 You solved the second puzzle!`;
             messageDiv.style.display = 'block';
             
             
-            gtag('event', 'puzzle_2_correct', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'puzzle_2_correct',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 2
-            });
+            if (typeof window.trackPuzzleEvent === 'function') {
+                window.trackPuzzleEvent({
+                    eventType: 'puzzle_solved',
+                    playerName: playerName,
+                    puzzleNumber: 2,
+                    category: 'puzzle_success'
+                });
+            }
             
             
             setTimeout(() => {
                 transitionToNextPuzzle('puzzle2', 'puzzle3');
+                window.puzzle3StartTime = Date.now();
             }, 1200);
         } else {
             messageDiv.className = 'glass-message negative';
             messageDiv.textContent = 'Incorrect. Keep trying, you\'re doing great!';
             messageDiv.style.display = 'block';
-            
-            
-            gtag('event', 'puzzle_2_incorrect', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'puzzle_2_incorrect',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 2
-            });
         }
     });
 
@@ -1101,56 +1183,48 @@
     document.getElementById('puzzle3-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
-        const rawAnswer = input.value.trim(); 
+        const rawAnswer = input.value.trim();
         const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle3-message');
+        const isCorrect = _0x2e1f(_0x9d4e, answer);
         
         
-        gtag('event', 'puzzle_3_answer_attempt', {
-            'event_category': 'puzzle_answers',
-            'event_label': 'puzzle_3_attempt',
-            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-            'custom_parameter_2': rawAnswer.substring(0, 50), 
-            'value': 3
-        });
+        if (typeof window.trackPuzzleEvent === 'function') {
+            window.trackPuzzleEvent({
+                eventType: 'puzzle_attempt',
+                playerName: playerName,
+                puzzleNumber: 3,
+                answer: rawAnswer,
+                isCorrect: isCorrect,
+                category: 'puzzle_interaction',
+                timeSpent: Date.now() - (window.puzzle3StartTime || Date.now())
+            });
+        }
         
-        
-        gtag('event', 'puzzle_3_submit', {
-            'event_category': 'puzzle_interaction',
-            'event_label': 'puzzle_3_submit',
-            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-            'value': 3
-        });
-        
-        if (_0x2e1f(_0x9d4e, answer)) {
+        if (isCorrect) {
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Excellent, ${playerName}! 🎯 You solved the third puzzle!`;
             messageDiv.style.display = 'block';
             
             
-            gtag('event', 'puzzle_3_correct', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'puzzle_3_correct',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 3
-            });
+            if (typeof window.trackPuzzleEvent === 'function') {
+                window.trackPuzzleEvent({
+                    eventType: 'puzzle_solved',
+                    playerName: playerName,
+                    puzzleNumber: 3,
+                    category: 'puzzle_success'
+                });
+            }
             
             
             setTimeout(() => {
                 transitionToNextPuzzle('puzzle3', 'puzzle4');
+                window.puzzle4StartTime = Date.now();
             }, 1200);
         } else {
             messageDiv.className = 'glass-message negative';
             messageDiv.textContent = 'Incorrect. You\'re getting closer to the final challenge!';
             messageDiv.style.display = 'block';
-            
-            
-            gtag('event', 'puzzle_3_incorrect', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'puzzle_3_incorrect',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 3
-            });
         }
     });
 
@@ -1158,46 +1232,45 @@
     document.getElementById('puzzle4-form').addEventListener('submit', function(e) {
         e.preventDefault();
         const input = this.querySelector('input');
-        const rawAnswer = input.value.trim(); 
+        const rawAnswer = input.value.trim();
         const answer = rawAnswer.toLowerCase().replace(/\s/g, '');
         const messageDiv = document.getElementById('puzzle4-message');
+        const isCorrect = _0x2e1f(_0x7f8g, answer);
         
         
-        gtag('event', 'puzzle_4_answer_attempt', {
-            'event_category': 'puzzle_answers',
-            'event_label': 'puzzle_4_attempt',
-            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-            'custom_parameter_2': rawAnswer.substring(0, 50), 
-            'value': 4
-        });
+        if (typeof window.trackPuzzleEvent === 'function') {
+            window.trackPuzzleEvent({
+                eventType: 'puzzle_attempt',
+                playerName: playerName,
+                puzzleNumber: 4,
+                answer: rawAnswer,
+                isCorrect: isCorrect,
+                category: 'puzzle_interaction',
+                timeSpent: Date.now() - (window.puzzle4StartTime || Date.now())
+            });
+        }
         
-        
-        gtag('event', 'puzzle_4_submit', {
-            'event_category': 'puzzle_interaction',
-            'event_label': 'puzzle_4_submit',
-            'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-            'value': 4
-        });
-        
-        if (_0x2e1f(_0x7f8g, answer)) {
+        if (isCorrect) {
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Congratulations, ${playerName}! 🌟 You solved all four puzzles! You're a true Seattle puzzle master!`;
             messageDiv.style.display = 'block';
             
             
-            gtag('event', 'puzzle_4_correct', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'puzzle_4_correct',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 4
-            });
-            
-            gtag('event', 'all_puzzles_completed', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'all_puzzles_completed',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 4
-            });
+            if (typeof window.trackPuzzleEvent === 'function') {
+                window.trackPuzzleEvent({
+                    eventType: 'puzzle_solved',
+                    playerName: playerName,
+                    puzzleNumber: 4,
+                    category: 'puzzle_success'
+                });
+                
+                window.trackPuzzleEvent({
+                    eventType: 'game_completed',
+                    playerName: playerName,
+                    category: 'game_completion',
+                    totalTime: Date.now() - (window.gameStartTime || Date.now())
+                });
+            }
             
             
             setTimeout(() => {
@@ -1207,14 +1280,6 @@
             messageDiv.className = 'glass-message negative';
             messageDiv.textContent = 'Incorrect. You\'re so close to completing the final challenge!';
             messageDiv.style.display = 'block';
-            
-            
-            gtag('event', 'puzzle_4_incorrect', {
-                'event_category': 'puzzle_interaction',
-                'event_label': 'puzzle_4_incorrect',
-                'custom_parameter_1': playerName.replace(/[^a-zA-Z0-9\s]/g, '').substring(0, 20),
-                'value': 4
-            });
         }
     });
     </script>

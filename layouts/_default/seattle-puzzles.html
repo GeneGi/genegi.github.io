@@ -740,6 +740,9 @@
         <!-- Puzzle 1 -->
         <div id="puzzle1" class="glass-container puzzle-container puzzle-spacing" style="display: none; opacity: 0;">
             <div class="glass-title" style="text-align:center;">Puzzle 1</div>
+            <div id="welcome-message" class="glass-subtitle" style="text-align:center; margin-bottom: 1rem;">
+                <!-- Welcome message will be inserted here -->
+            </div>
             <div class="glass-subtitle" style="text-align:center;">
                 三球如梦，藏林于城。<br>
                 镜影如诗，谜途始发。
@@ -749,6 +752,11 @@
                 <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle1-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
+            <div style="text-align: center; margin-top: 20px;">
+                <button id="change-name-btn" class="glass-button" style="font-size: 0.9rem; padding: 8px 16px; background: rgba(255, 255, 255, 0.1) !important;">
+                    Change Name
+                </button>
+            </div>
         </div>
 
         <!-- Puzzle 2 -->
@@ -806,8 +814,34 @@
     </div>
 
     <script>
-    // Player name management
+    // Player name management with localStorage
     let playerName = '';
+    
+    // Check for existing player name on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const savedPlayerName = localStorage.getItem('seattlePuzzlePlayerName');
+        if (savedPlayerName) {
+            playerName = savedPlayerName;
+            // Skip name input and go directly to first puzzle
+            document.getElementById('player-name-section').style.display = 'none';
+            document.getElementById('puzzle1').style.display = 'block';
+            document.getElementById('puzzle1').style.opacity = '1';
+            updatePuzzleGreeting();
+            
+            // Initialize game timing
+            window.gameStartTime = Date.now();
+            window.puzzle1StartTime = Date.now();
+            
+            // Track returning player
+            if (typeof window.trackPuzzleEvent === 'function') {
+                window.trackPuzzleEvent({
+                    eventType: 'returning_player',
+                    playerName: playerName,
+                    category: 'game_start'
+                });
+            }
+        }
+    });
     
     // Player name form handler
     document.getElementById('player-name-form').addEventListener('submit', function(e) {
@@ -822,6 +856,9 @@
             console.log('Empty name, returning'); // Debug log
             return;
         }
+        
+        // Save player name to localStorage
+        localStorage.setItem('seattlePuzzlePlayerName', playerName);
         
         // Track player name entry with Firebase
         if (typeof window.trackPuzzleEvent === 'function') {
@@ -869,10 +906,40 @@
     // Function to update puzzle greeting with player name
     function updatePuzzleGreeting() {
         const puzzle1Header = document.querySelector('#puzzle1 .glass-title');
+        const welcomeMessage = document.getElementById('welcome-message');
         if (puzzle1Header && playerName) {
             puzzle1Header.textContent = `Puzzle 1 - Welcome, ${playerName}!`;
+            if (welcomeMessage) {
+                welcomeMessage.innerHTML = `Ready for your Seattle adventure?<br><small style="opacity: 0.7;">Good luck solving the puzzles!</small>`;
+            }
         }
     }
+    
+    // Change name functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add event listener for change name button (will be added after DOM loads)
+        setTimeout(() => {
+            const changeNameBtn = document.getElementById('change-name-btn');
+            if (changeNameBtn) {
+                changeNameBtn.addEventListener('click', function() {
+                    // Clear stored name
+                    localStorage.removeItem('seattlePuzzlePlayerName');
+                    
+                    // Track name change
+                    if (typeof window.trackPuzzleEvent === 'function') {
+                        window.trackPuzzleEvent({
+                            eventType: 'name_change_requested',
+                            playerName: playerName,
+                            category: 'user_interaction'
+                        });
+                    }
+                    
+                    // Reload page to show name input again
+                    window.location.reload();
+                });
+            }
+        }, 100);
+    });
     
     // Anti-debugging techniques
     (function() {
