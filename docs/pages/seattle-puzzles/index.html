@@ -725,6 +725,38 @@
         <h1 class="glass-header">Seattle Puzzles</h1>
         
         
+        <div id="player-info-bar" class="glass-container" style="display: none; margin-bottom: 2rem; padding: 1.5rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin-bottom: 1rem;">
+                <div>
+                    <span style="font-size: 1.1rem; font-weight: 500;">Welcome back, </span>
+                    <span id="player-name-display" style="font-size: 1.2rem; font-weight: 600; color: rgba(255, 255, 255, 0.95);"></span>
+                </div>
+                <button id="change-name-btn" class="glass-button" style="font-size: 0.9rem; padding: 8px 16px; background: rgba(255, 255, 255, 0.1) !important;">
+                    Change Name
+                </button>
+            </div>
+            
+            
+            <div style="margin-bottom: 1rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                    <span style="font-size: 0.9rem; opacity: 0.8;">Progress:</span>
+                    <span id="progress-text" style="font-size: 0.9rem; font-weight: 500;"></span>
+                </div>
+                <div style="background: rgba(255, 255, 255, 0.1); border-radius: 10px; height: 8px; overflow: hidden;">
+                    <div id="progress-bar" style="background: linear-gradient(90deg, #34c759, #30d158); height: 100%; width: 0%; transition: width 0.3s ease;"></div>
+                </div>
+            </div>
+            
+            
+            <div id="puzzle-nav" style="display: flex; gap: 0.5rem; flex-wrap: wrap; justify-content: center;">
+                <button class="puzzle-nav-btn" data-puzzle="1" style="padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); cursor: pointer; transition: all 0.2s;">Puzzle 1</button>
+                <button class="puzzle-nav-btn" data-puzzle="2" style="padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); cursor: pointer; transition: all 0.2s;">Puzzle 2</button>
+                <button class="puzzle-nav-btn" data-puzzle="3" style="padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); cursor: pointer; transition: all 0.2s;">Puzzle 3</button>
+                <button class="puzzle-nav-btn" data-puzzle="4" style="padding: 8px 12px; border-radius: 8px; font-size: 0.85rem; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); cursor: pointer; transition: all 0.2s;">Puzzle 4</button>
+            </div>
+        </div>
+        
+        
         <div id="player-name-section" class="glass-container puzzle-spacing">
             <div class="glass-title" style="text-align:center;">Welcome, Puzzle Solver!</div>
             <div class="glass-subtitle" style="text-align:center;">
@@ -752,11 +784,6 @@
                 <button class="glass-button" type="submit" style="width:100%; margin-top: 24px;">Submit</button>
             </form>
             <div id="puzzle1-message" class="glass-message" style="display:none; margin-top: 20px;"></div>
-            <div style="text-align: center; margin-top: 20px;">
-                <button id="change-name-btn" class="glass-button" style="font-size: 0.9rem; padding: 8px 16px; background: rgba(255, 255, 255, 0.1) !important;">
-                    Change Name
-                </button>
-            </div>
         </div>
 
         
@@ -816,31 +843,49 @@
     <script>
     
     let playerName = '';
+    let puzzleProgress = {
+        completed: [], 
+        currentPuzzle: 1 
+    };
     
     
     document.addEventListener('DOMContentLoaded', function() {
         const savedPlayerName = localStorage.getItem('seattlePuzzlePlayerName');
+        const savedProgress = localStorage.getItem('seattlePuzzleProgress');
+        
         if (savedPlayerName) {
             playerName = savedPlayerName;
             
+            
+            if (savedProgress) {
+                try {
+                    puzzleProgress = JSON.parse(savedProgress);
+                } catch (e) {
+                    console.log('Error parsing saved progress, using defaults');
+                    puzzleProgress = { completed: [], currentPuzzle: 1 };
+                }
+            }
+            
+            
+            showPlayerInfoBar();
+            
             document.getElementById('player-name-section').style.display = 'none';
-            document.getElementById('puzzle1').style.display = 'block';
-            document.getElementById('puzzle1').style.opacity = '1';
-            updatePuzzleGreeting();
-            
-            
-            window.gameStartTime = Date.now();
-            window.puzzle1StartTime = Date.now();
+            showCurrentPuzzle();
             
             
             if (typeof window.trackPuzzleEvent === 'function') {
                 window.trackPuzzleEvent({
                     eventType: 'returning_player',
                     playerName: playerName,
-                    category: 'game_start'
+                    category: 'game_start',
+                    completedPuzzles: puzzleProgress.completed.length,
+                    currentPuzzle: puzzleProgress.currentPuzzle
                 });
             }
         }
+        
+        
+        setupChangeNameButton();
     });
     
     
@@ -893,6 +938,9 @@
             puzzle1.style.opacity = '1';
             
             
+            showPlayerInfoBar();
+            
+            
             updatePuzzleGreeting();
             
             
@@ -902,6 +950,201 @@
             console.log('Transition complete'); 
         }, 1000);
     });
+    
+    
+    function showPlayerInfoBar() {
+        const playerInfoBar = document.getElementById('player-info-bar');
+        const playerNameDisplay = document.getElementById('player-name-display');
+        
+        if (playerInfoBar && playerNameDisplay && playerName) {
+            playerNameDisplay.textContent = playerName;
+            playerInfoBar.style.display = 'block';
+            updateProgressDisplay();
+            setupPuzzleNavigation();
+        }
+    }
+    
+    
+    function updateProgressDisplay() {
+        const progressText = document.getElementById('progress-text');
+        const progressBar = document.getElementById('progress-bar');
+        const navButtons = document.querySelectorAll('.puzzle-nav-btn');
+        
+        if (progressText && progressBar) {
+            const completedCount = puzzleProgress.completed.length;
+            const progressPercent = (completedCount / 4) * 100;
+            
+            progressText.textContent = `${completedCount}/4 puzzles completed`;
+            progressBar.style.width = `${progressPercent}%`;
+        }
+        
+        
+        navButtons.forEach(btn => {
+            const puzzleNum = parseInt(btn.dataset.puzzle);
+            const isCompleted = puzzleProgress.completed.includes(puzzleNum);
+            const isCurrent = puzzleNum === puzzleProgress.currentPuzzle;
+            const isAccessible = puzzleNum <= puzzleProgress.currentPuzzle;
+            
+            
+            btn.style.background = 'rgba(255, 255, 255, 0.1)';
+            btn.style.color = 'rgba(255, 255, 255, 0.9)';
+            btn.style.border = '1px solid rgba(255, 255, 255, 0.2)';
+            btn.style.cursor = 'pointer';
+            btn.style.opacity = '1';
+            
+            if (isCompleted) {
+                
+                btn.style.background = 'rgba(52, 199, 89, 0.3)';
+                btn.style.border = '1px solid rgba(52, 199, 89, 0.5)';
+                btn.innerHTML = `Puzzle ${puzzleNum} ✓`;
+            } else if (isCurrent) {
+                
+                btn.style.background = 'rgba(255, 255, 255, 0.2)';
+                btn.style.border = '1px solid rgba(255, 255, 255, 0.4)';
+                btn.innerHTML = `Puzzle ${puzzleNum} →`;
+            } else if (!isAccessible) {
+                
+                btn.style.opacity = '0.5';
+                btn.style.cursor = 'not-allowed';
+                btn.innerHTML = `Puzzle ${puzzleNum} 🔒`;
+            } else {
+                btn.innerHTML = `Puzzle ${puzzleNum}`;
+            }
+        });
+    }
+    
+    
+    function setupPuzzleNavigation() {
+        const navButtons = document.querySelectorAll('.puzzle-nav-btn');
+        
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const puzzleNum = parseInt(this.dataset.puzzle);
+                const isAccessible = puzzleNum <= puzzleProgress.currentPuzzle;
+                
+                if (isAccessible) {
+                    navigateToPuzzle(puzzleNum);
+                    
+                    
+                    if (typeof window.trackPuzzleEvent === 'function') {
+                        window.trackPuzzleEvent({
+                            eventType: 'puzzle_navigation',
+                            playerName: playerName,
+                            fromPuzzle: getCurrentVisiblePuzzle(),
+                            toPuzzle: puzzleNum,
+                            category: 'user_interaction'
+                        });
+                    }
+                }
+            });
+        });
+    }
+    
+    
+    function navigateToPuzzle(puzzleNum) {
+        
+        for (let i = 1; i <= 4; i++) {
+            const puzzle = document.getElementById(`puzzle${i}`);
+            if (puzzle) {
+                puzzle.style.display = 'none';
+                puzzle.style.opacity = '0';
+            }
+        }
+        
+        
+        const targetPuzzle = document.getElementById(`puzzle${puzzleNum}`);
+        if (targetPuzzle) {
+            targetPuzzle.style.display = 'block';
+            targetPuzzle.style.opacity = '1';
+            
+            
+            if (!window[`puzzle${puzzleNum}StartTime`]) {
+                window[`puzzle${puzzleNum}StartTime`] = Date.now();
+            }
+        }
+        
+        updateProgressDisplay();
+    }
+    
+    
+    function showCurrentPuzzle() {
+        navigateToPuzzle(puzzleProgress.currentPuzzle);
+        updatePuzzleGreeting();
+        
+        
+        if (!window.gameStartTime) {
+            window.gameStartTime = Date.now();
+        }
+        if (!window[`puzzle${puzzleProgress.currentPuzzle}StartTime`]) {
+            window[`puzzle${puzzleProgress.currentPuzzle}StartTime`] = Date.now();
+        }
+    }
+    
+    
+    function getCurrentVisiblePuzzle() {
+        for (let i = 1; i <= 4; i++) {
+            const puzzle = document.getElementById(`puzzle${i}`);
+            if (puzzle && puzzle.style.display !== 'none' && puzzle.style.opacity !== '0') {
+                return i;
+            }
+        }
+        return 1;
+    }
+    
+    
+    function completePuzzle(puzzleNum) {
+        
+        if (!puzzleProgress.completed.includes(puzzleNum)) {
+            puzzleProgress.completed.push(puzzleNum);
+        }
+        
+        
+        if (puzzleNum < 4) {
+            puzzleProgress.currentPuzzle = puzzleNum + 1;
+        }
+        
+        
+        localStorage.setItem('seattlePuzzleProgress', JSON.stringify(puzzleProgress));
+        
+        
+        updateProgressDisplay();
+    }
+    
+    
+    function setupChangeNameButton() {
+        const changeNameBtn = document.getElementById('change-name-btn');
+        if (changeNameBtn) {
+            changeNameBtn.addEventListener('click', function() {
+                
+                const hasProgress = puzzleProgress.completed.length > 0;
+                let shouldClear = true;
+                
+                if (hasProgress) {
+                    shouldClear = confirm(`This will clear your progress (${puzzleProgress.completed.length}/4 puzzles completed). Are you sure?`);
+                }
+                
+                if (shouldClear) {
+                    
+                    localStorage.removeItem('seattlePuzzlePlayerName');
+                    localStorage.removeItem('seattlePuzzleProgress');
+                    
+                    
+                    if (typeof window.trackPuzzleEvent === 'function') {
+                        window.trackPuzzleEvent({
+                            eventType: 'name_change_requested',
+                            playerName: playerName,
+                            category: 'user_interaction',
+                            progressCleared: hasProgress,
+                            completedPuzzles: puzzleProgress.completed.length
+                        });
+                    }
+                    
+                    
+                    window.location.reload();
+                }
+            });
+        }
+    }
     
     
     function updatePuzzleGreeting() {
@@ -914,32 +1157,6 @@
             }
         }
     }
-    
-    
-    document.addEventListener('DOMContentLoaded', function() {
-        
-        setTimeout(() => {
-            const changeNameBtn = document.getElementById('change-name-btn');
-            if (changeNameBtn) {
-                changeNameBtn.addEventListener('click', function() {
-                    
-                    localStorage.removeItem('seattlePuzzlePlayerName');
-                    
-                    
-                    if (typeof window.trackPuzzleEvent === 'function') {
-                        window.trackPuzzleEvent({
-                            eventType: 'name_change_requested',
-                            playerName: playerName,
-                            category: 'user_interaction'
-                        });
-                    }
-                    
-                    
-                    window.location.reload();
-                });
-            }
-        }, 100);
-    });
     
     
     (function() {
@@ -1096,7 +1313,7 @@
                 eventType: 'puzzle_attempt',
                 playerName: playerName,
                 puzzleNumber: 1,
-                answer: rawAnswer, 
+                answer: rawAnswer,
                 isCorrect: isCorrect,
                 category: 'puzzle_interaction',
                 timeSpent: Date.now() - (window.puzzle1StartTime || Date.now())
@@ -1107,6 +1324,9 @@
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Excellent work, ${playerName}! 🔑 You solved the first puzzle!`;
             messageDiv.style.display = 'block';
+            
+            
+            completePuzzle(1);
             
             
             if (typeof window.trackPuzzleEvent === 'function') {
@@ -1120,8 +1340,8 @@
             
             
             setTimeout(() => {
-                transitionToNextPuzzle('puzzle1', 'puzzle2');
-                window.puzzle2StartTime = Date.now(); 
+                navigateToPuzzle(2);
+                window.puzzle2StartTime = Date.now();
             }, 1200);
         } else {
             messageDiv.className = 'glass-message negative';
@@ -1158,6 +1378,9 @@
             messageDiv.style.display = 'block';
             
             
+            completePuzzle(2);
+            
+            
             if (typeof window.trackPuzzleEvent === 'function') {
                 window.trackPuzzleEvent({
                     eventType: 'puzzle_solved',
@@ -1169,7 +1392,7 @@
             
             
             setTimeout(() => {
-                transitionToNextPuzzle('puzzle2', 'puzzle3');
+                navigateToPuzzle(3);
                 window.puzzle3StartTime = Date.now();
             }, 1200);
         } else {
@@ -1207,6 +1430,9 @@
             messageDiv.style.display = 'block';
             
             
+            completePuzzle(3);
+            
+            
             if (typeof window.trackPuzzleEvent === 'function') {
                 window.trackPuzzleEvent({
                     eventType: 'puzzle_solved',
@@ -1218,7 +1444,7 @@
             
             
             setTimeout(() => {
-                transitionToNextPuzzle('puzzle3', 'puzzle4');
+                navigateToPuzzle(4);
                 window.puzzle4StartTime = Date.now();
             }, 1200);
         } else {
@@ -1254,6 +1480,9 @@
             messageDiv.className = 'glass-message positive success-message';
             messageDiv.textContent = `Congratulations, ${playerName}! 🌟 You solved all four puzzles! You're a true Seattle puzzle master!`;
             messageDiv.style.display = 'block';
+            
+            
+            completePuzzle(4);
             
             
             if (typeof window.trackPuzzleEvent === 'function') {
