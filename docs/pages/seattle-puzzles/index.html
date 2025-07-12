@@ -46,6 +46,25 @@
           console.log('Fallback tracking:', eventData);
         }
       };
+      
+      
+      window.submitFeedback = async function(feedbackData) {
+        try {
+          await addDoc(collection(db, "puzzle_feedback"), {
+            ...feedbackData,
+            sessionId: sessionId,
+            timestamp: serverTimestamp(),
+            userAgent: navigator.userAgent,
+            screenSize: `${screen.width}x${screen.height}`,
+            url: window.location.href
+          });
+          console.log('Feedback submitted successfully');
+          return { success: true };
+        } catch (error) {
+          console.error('Error submitting feedback:', error);
+          return { success: false, error: error.message };
+        }
+      };
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -635,6 +654,121 @@
                 box-shadow: 
                     0 1px 3px rgba(0, 0, 0, 0.12),
                     0 1px 2px rgba(0, 0, 0, 0.24) !important;
+            }
+            
+             
+            #feedback-form textarea {
+                font-size: 16px !important;
+                padding: 12px !important;
+                border: 1px solid #79747e !important;
+                border-radius: 4px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                background: #ffffff !important;
+                color: #1c1b1f !important;
+                -webkit-text-fill-color: #1c1b1f !important;
+                font-family: 'Roboto', sans-serif !important;
+                resize: vertical !important;
+                min-height: 80px !important;
+                transition: border-color 0.2s ease !important;
+            }
+            
+            #feedback-form textarea:focus {
+                border-color: #6750a4 !important;
+                border-width: 2px !important;
+                outline: none !important;
+            }
+            
+            #feedback-form textarea::placeholder {
+                color: #79747e !important;
+                opacity: 1 !important;
+                -webkit-text-fill-color: #79747e !important;
+            }
+            
+            #feedback-submit-btn {
+                background: #6750a4 !important;
+                background-color: #6750a4 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border: none !important;
+                font-weight: 500 !important;
+                padding: 12px 24px !important;
+                font-size: 0.875rem !important;
+                border-radius: 20px !important;
+                min-height: 48px !important;
+                width: 100% !important;
+                cursor: pointer !important;
+                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                font-family: 'Roboto', sans-serif !important;
+                letter-spacing: 0.1px !important;
+                text-transform: uppercase !important;
+                text-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                opacity: 1 !important;
+                box-shadow: 
+                    0 1px 3px rgba(0, 0, 0, 0.12),
+                    0 1px 2px rgba(0, 0, 0, 0.24) !important;
+            }
+            
+            #feedback-submit-btn:hover {
+                background: #7c4dff !important;
+                background-color: #7c4dff !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                box-shadow: 
+                    0 3px 6px rgba(0, 0, 0, 0.16),
+                    0 3px 6px rgba(0, 0, 0, 0.23) !important;
+            }
+            
+            #feedback-submit-btn:active {
+                background: #5a3d99 !important;
+                background-color: #5a3d99 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                box-shadow: 
+                    0 1px 3px rgba(0, 0, 0, 0.12),
+                    0 1px 2px rgba(0, 0, 0, 0.24) !important;
+            }
+            
+            #feedback-submit-btn:disabled {
+                background: #79747e !important;
+                background-color: #79747e !important;
+                color: #ffffff !important;
+                -webkit-text-fill-color: #ffffff !important;
+                cursor: not-allowed !important;
+                opacity: 0.6 !important;
+            }
+            
+             
+            .star {
+                font-size: 24px !important;
+                color: #e7e0ec !important;
+                cursor: pointer !important;
+                transition: color 0.2s ease !important;
+                user-select: none !important;
+                -webkit-user-select: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+            
+            .star:hover {
+                color: #ffc107 !important;
+            }
+            
+             
+            #char-count {
+                font-size: 0.75rem !important;
+                color: #79747e !important;
+                font-family: 'Roboto', sans-serif !important;
+            }
+            
+             
+            #feedback-form label {
+                color: #1c1b1f !important;
+                font-weight: 500 !important;
+                font-size: 0.875rem !important;
+                font-family: 'Roboto', sans-serif !important;
+                letter-spacing: 0.25px !important;
             }
             
              
@@ -1463,6 +1597,58 @@
             </div>
             
             
+            <div style="background: rgba(247, 242, 250, 0.9); border-radius: 12px; padding: 20px; margin: 20px 0; border: 1px solid rgba(231, 224, 236, 1);">
+                <h3 style="text-align: center; margin-bottom: 20px; font-size: 1.125rem; color: #1c1b1f; font-weight: 500;">Share Your Experience</h3>
+                
+                <div id="feedback-form-container">
+                    <form id="feedback-form" style="margin-bottom: 16px;">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; margin-bottom: 8px; color: #1c1b1f; font-weight: 500; font-size: 0.875rem;">
+                                How was your puzzle experience? (1-5 stars)
+                            </label>
+                            <div id="star-rating" style="display: flex; gap: 4px; margin-bottom: 8px;">
+                                <span class="star" data-rating="1" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
+                                <span class="star" data-rating="2" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
+                                <span class="star" data-rating="3" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
+                                <span class="star" data-rating="4" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
+                                <span class="star" data-rating="5" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; margin-bottom: 8px; color: #1c1b1f; font-weight: 500; font-size: 0.875rem;">
+                                Comments or suggestions (optional):
+                            </label>
+                            <textarea id="feedback-text" 
+                                      placeholder="Tell us what you thought about the puzzles, difficulty level, or any suggestions for improvement..."
+                                      style="width: 100%; min-height: 80px; padding: 12px; border: 1px solid #79747e; border-radius: 4px; font-family: 'Roboto', sans-serif; font-size: 0.875rem; color: #1c1b1f; background: #ffffff; resize: vertical; box-sizing: border-box;"
+                                      maxlength="500"></textarea>
+                            <div style="text-align: right; font-size: 0.75rem; color: #79747e; margin-top: 4px;">
+                                <span id="char-count">0</span>/500 characters
+                            </div>
+                        </div>
+                        
+                        <button type="submit" id="feedback-submit-btn" 
+                                style="background: #6750a4; color: white; border: none; padding: 12px 24px; border-radius: 20px; font-weight: 500; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; text-transform: uppercase; letter-spacing: 0.1px; font-family: 'Roboto', sans-serif; width: 100%;">
+                            Submit Feedback
+                        </button>
+                    </form>
+                    
+                    <div id="feedback-message" class="glass-message" style="display: none; margin-top: 16px;"></div>
+                </div>
+                
+                <div id="feedback-thank-you" style="display: none; text-align: center; padding: 20px;">
+                    <div style="font-size: 2rem; margin-bottom: 12px;">🙏</div>
+                    <div style="font-size: 1rem; color: #1c1b1f; font-weight: 500; margin-bottom: 8px;">
+                        Thank you for your feedback!
+                    </div>
+                    <div style="font-size: 0.875rem; color: #49454f;">
+                        Your input helps us improve the puzzle experience for everyone.
+                    </div>
+                </div>
+            </div>
+            
+            
             <div style="text-align: center; margin-top: 24px;">
                 <p style="font-size: 1rem; color: #49454f; margin-bottom: 16px; font-weight: 400;">
                     Thank you for exploring Seattle's public art with us!
@@ -1820,6 +2006,7 @@
         
         
         setupRestartButton();
+        setupFeedbackSystem();
         
         
         if (typeof window.trackPuzzleEvent === 'function') {
@@ -1852,6 +2039,161 @@
                 
                 window.location.reload();
             });
+        }
+    }
+    
+    
+    function setupFeedbackSystem() {
+        const stars = document.querySelectorAll('.star');
+        const feedbackForm = document.getElementById('feedback-form');
+        const feedbackText = document.getElementById('feedback-text');
+        const charCount = document.getElementById('char-count');
+        const feedbackMessage = document.getElementById('feedback-message');
+        const feedbackContainer = document.getElementById('feedback-form-container');
+        const thankYouSection = document.getElementById('feedback-thank-you');
+        
+        let selectedRating = 0;
+        
+        
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                selectedRating = parseInt(this.dataset.rating);
+                updateStarDisplay();
+                
+                
+                if (typeof window.trackPuzzleEvent === 'function') {
+                    window.trackPuzzleEvent({
+                        eventType: 'feedback_rating_selected',
+                        playerName: playerName,
+                        rating: selectedRating,
+                        category: 'feedback_interaction'
+                    });
+                }
+            });
+            
+            star.addEventListener('mouseover', function() {
+                const hoverRating = parseInt(this.dataset.rating);
+                highlightStars(hoverRating);
+            });
+        });
+        
+        
+        document.getElementById('star-rating').addEventListener('mouseleave', function() {
+            updateStarDisplay();
+        });
+        
+        
+        if (feedbackText && charCount) {
+            feedbackText.addEventListener('input', function() {
+                const currentLength = this.value.length;
+                charCount.textContent = currentLength;
+                
+                
+                if (currentLength > 450) {
+                    charCount.style.color = '#d32f2f';
+                } else if (currentLength > 400) {
+                    charCount.style.color = '#f57c00';
+                } else {
+                    charCount.style.color = '#79747e';
+                }
+            });
+        }
+        
+        
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                
+                if (selectedRating === 0) {
+                    showFeedbackMessage('Please select a star rating before submitting.', 'error');
+                    return;
+                }
+                
+                const feedbackData = {
+                    playerName: playerName,
+                    rating: selectedRating,
+                    comment: feedbackText.value.trim(),
+                    completedPuzzles: puzzleProgress.completed.length,
+                    totalGameTime: Date.now() - (window.gameStartTime || Date.now())
+                };
+                
+                
+                const submitBtn = document.getElementById('feedback-submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                try {
+                    
+                    const result = await window.submitFeedback(feedbackData);
+                    
+                    if (result.success) {
+                        
+                        if (typeof window.trackPuzzleEvent === 'function') {
+                            window.trackPuzzleEvent({
+                                eventType: 'feedback_submitted',
+                                playerName: playerName,
+                                rating: selectedRating,
+                                hasComment: feedbackData.comment.length > 0,
+                                category: 'feedback_completion'
+                            });
+                        }
+                        
+                        
+                        feedbackContainer.style.display = 'none';
+                        thankYouSection.style.display = 'block';
+                        
+                        
+                        thankYouSection.classList.add('message-slide-in');
+                        
+                    } else {
+                        throw new Error(result.error || 'Failed to submit feedback');
+                    }
+                } catch (error) {
+                    console.error('Feedback submission error:', error);
+                    showFeedbackMessage('Sorry, there was an error submitting your feedback. Please try again.', 'error');
+                    
+                    
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+        
+        function updateStarDisplay() {
+            stars.forEach((star, index) => {
+                if (index < selectedRating) {
+                    star.style.color = '#ffc107'; 
+                } else {
+                    star.style.color = '#e7e0ec'; 
+                }
+            });
+        }
+        
+        function highlightStars(rating) {
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.style.color = '#ffc107';
+                } else {
+                    star.style.color = '#e7e0ec';
+                }
+            });
+        }
+        
+        function showFeedbackMessage(message, type) {
+            if (feedbackMessage) {
+                feedbackMessage.textContent = message;
+                feedbackMessage.className = `glass-message ${type === 'error' ? 'negative' : 'positive'}`;
+                feedbackMessage.style.display = 'block';
+                feedbackMessage.classList.add('message-slide-in');
+                
+                
+                setTimeout(() => {
+                    feedbackMessage.style.display = 'none';
+                    feedbackMessage.classList.remove('message-slide-in');
+                }, 5000);
+            }
         }
     }
     
