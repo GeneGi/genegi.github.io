@@ -749,9 +749,20 @@
                 user-select: none !important;
                 -webkit-user-select: none !important;
                 -webkit-tap-highlight-color: transparent !important;
+                padding: 2px !important;
+                display: inline-block !important;
             }
             
             .star:hover {
+                color: #ffc107 !important;
+                transform: scale(1.1) !important;
+            }
+            
+            .star.selected {
+                color: #ffc107 !important;
+            }
+            
+            .star.active {
                 color: #ffc107 !important;
             }
             
@@ -921,14 +932,27 @@
                 font-size: 28px !important;
                 color: #e7e0ec !important;
                 cursor: pointer !important;
-                transition: color 0.2s ease !important;
+                transition: all 0.2s ease !important;
                 user-select: none !important;
                 -webkit-user-select: none !important;
                 -webkit-tap-highlight-color: transparent !important;
                 padding: 4px !important;
+                display: inline-block !important;
+                border-radius: 4px !important;
             }
             
             .modal-star:hover {
+                color: #ffc107 !important;
+                transform: scale(1.1) !important;
+                background: rgba(255, 193, 7, 0.1) !important;
+            }
+            
+            .modal-star.selected {
+                color: #ffc107 !important;
+                background: rgba(255, 193, 7, 0.1) !important;
+            }
+            
+            .modal-star.active {
                 color: #ffc107 !important;
             }
             
@@ -1791,11 +1815,11 @@
                                 How was your puzzle experience? (1-5 stars)
                             </label>
                             <div id="star-rating" style="display: flex; gap: 4px; margin-bottom: 8px;">
-                                <span class="star" data-rating="1" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
-                                <span class="star" data-rating="2" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
-                                <span class="star" data-rating="3" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
-                                <span class="star" data-rating="4" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
-                                <span class="star" data-rating="5" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">⭐</span>
+                                <span class="star" data-rating="1" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">★</span>
+                                <span class="star" data-rating="2" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">★</span>
+                                <span class="star" data-rating="3" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">★</span>
+                                <span class="star" data-rating="4" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">★</span>
+                                <span class="star" data-rating="5" style="font-size: 24px; color: #e7e0ec; cursor: pointer; transition: color 0.2s;">★</span>
                             </div>
                         </div>
                         
@@ -1860,11 +1884,11 @@
                                 How is your puzzle experience so far? (1-5 stars)
                             </label>
                             <div id="modal-star-rating" style="display: flex; gap: 4px; margin-bottom: 8px;">
-                                <span class="modal-star" data-rating="1" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
-                                <span class="modal-star" data-rating="2" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
-                                <span class="modal-star" data-rating="3" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
-                                <span class="modal-star" data-rating="4" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
-                                <span class="modal-star" data-rating="5" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
+                                <span class="modal-star" data-rating="1" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">★</span>
+                                <span class="modal-star" data-rating="2" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">★</span>
+                                <span class="modal-star" data-rating="3" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">★</span>
+                                <span class="modal-star" data-rating="4" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">★</span>
+                                <span class="modal-star" data-rating="5" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">★</span>
                             </div>
                         </div>
                         
@@ -2314,6 +2338,12 @@
                 selectedRating = parseInt(this.dataset.rating);
                 updateStarDisplay();
                 
+                // Add click animation
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+                
                 // Track star rating interaction
                 if (typeof window.trackPuzzleEvent === 'function') {
                     window.trackPuzzleEvent({
@@ -2328,6 +2358,10 @@
             star.addEventListener('mouseover', function() {
                 const hoverRating = parseInt(this.dataset.rating);
                 highlightStars(hoverRating);
+            });
+            
+            star.addEventListener('mouseout', function() {
+                updateStarDisplay();
             });
         });
         
@@ -2417,8 +2451,10 @@
         
         function updateStarDisplay() {
             stars.forEach((star, index) => {
+                star.classList.remove('selected', 'active');
                 if (index < selectedRating) {
                     star.style.color = '#ffc107'; // Gold color for selected stars
+                    star.classList.add('selected');
                 } else {
                     star.style.color = '#e7e0ec'; // Gray color for unselected stars
                 }
@@ -2427,8 +2463,10 @@
         
         function highlightStars(rating) {
             stars.forEach((star, index) => {
+                star.classList.remove('active');
                 if (index < rating) {
                     star.style.color = '#ffc107';
+                    star.classList.add('active');
                 } else {
                     star.style.color = '#e7e0ec';
                 }
@@ -2547,6 +2585,12 @@
                 window.modalSelectedRating = parseInt(this.dataset.rating);
                 updateModalStarDisplay();
                 
+                // Add click animation
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 150);
+                
                 // Track star rating interaction
                 if (typeof window.trackPuzzleEvent === 'function') {
                     window.trackPuzzleEvent({
@@ -2562,6 +2606,10 @@
             star.addEventListener('mouseover', function() {
                 const hoverRating = parseInt(this.dataset.rating);
                 highlightModalStars(hoverRating);
+            });
+            
+            star.addEventListener('mouseout', function() {
+                updateModalStarDisplay();
             });
         });
         
@@ -2676,8 +2724,10 @@
         function updateModalStarDisplay() {
             const stars = document.querySelectorAll('.modal-star');
             stars.forEach((star, index) => {
+                star.classList.remove('selected', 'active');
                 if (index < window.modalSelectedRating) {
                     star.style.color = '#ffc107'; // Gold color for selected stars
+                    star.classList.add('selected');
                 } else {
                     star.style.color = '#e7e0ec'; // Gray color for unselected stars
                 }
@@ -2687,8 +2737,10 @@
         function highlightModalStars(rating) {
             const stars = document.querySelectorAll('.modal-star');
             stars.forEach((star, index) => {
+                star.classList.remove('active');
                 if (index < rating) {
                     star.style.color = '#ffc107';
+                    star.classList.add('active');
                 } else {
                     star.style.color = '#e7e0ec';
                 }
