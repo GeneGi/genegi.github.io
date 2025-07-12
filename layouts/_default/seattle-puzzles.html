@@ -771,6 +771,183 @@
                 letter-spacing: 0.25px !important;
             }
             
+            /* Feedback Button in Player Info Bar */
+            #feedback-btn {
+                background: rgba(255, 255, 255, 0.15) !important;
+                border: 1px solid rgba(255, 255, 255, 0.3) !important;
+                color: rgba(255, 255, 255, 0.9) !important;
+                -webkit-text-fill-color: rgba(255, 255, 255, 0.9) !important;
+                font-size: 0.8rem !important;
+                padding: 8px 16px !important;
+                border-radius: 12px !important;
+                min-height: 36px !important;
+                font-weight: 500 !important;
+                font-family: 'Roboto', sans-serif !important;
+                cursor: pointer !important;
+                transition: all 0.2s ease !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+                text-shadow: none !important;
+            }
+            
+            #feedback-btn:hover {
+                background: rgba(255, 255, 255, 0.25) !important;
+                border-color: rgba(255, 255, 255, 0.4) !important;
+                color: rgba(255, 255, 255, 1) !important;
+                -webkit-text-fill-color: rgba(255, 255, 255, 1) !important;
+            }
+            
+            /* Feedback Modal Mobile Styling */
+            .feedback-modal {
+                z-index: 1000 !important;
+            }
+            
+            .feedback-modal-content {
+                max-width: 90% !important;
+                width: 90% !important;
+                max-height: 85vh !important;
+                padding: 20px !important;
+                border-radius: 12px !important;
+                background: #ffffff !important;
+                box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+            }
+            
+            /* Modal Header */
+            #feedback-modal-close {
+                background: none !important;
+                border: none !important;
+                font-size: 28px !important;
+                color: #79747e !important;
+                cursor: pointer !important;
+                padding: 8px !important;
+                border-radius: 50% !important;
+                transition: background-color 0.2s !important;
+                min-height: 44px !important;
+                min-width: 44px !important;
+                display: flex !important;
+                align-items: center !important;
+                justify-content: center !important;
+            }
+            
+            #feedback-modal-close:hover {
+                background: rgba(121, 116, 126, 0.1) !important;
+            }
+            
+            /* Modal Form Elements */
+            #modal-feedback-text {
+                font-size: 16px !important;
+                padding: 12px !important;
+                border: 1px solid #79747e !important;
+                border-radius: 4px !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+                background: #ffffff !important;
+                color: #1c1b1f !important;
+                -webkit-text-fill-color: #1c1b1f !important;
+                font-family: 'Roboto', sans-serif !important;
+                resize: vertical !important;
+                min-height: 100px !important;
+                transition: border-color 0.2s ease !important;
+            }
+            
+            #modal-feedback-text:focus {
+                border-color: #6750a4 !important;
+                border-width: 2px !important;
+                outline: none !important;
+            }
+            
+            #modal-feedback-text::placeholder {
+                color: #79747e !important;
+                opacity: 1 !important;
+                -webkit-text-fill-color: #79747e !important;
+            }
+            
+            /* Modal Buttons */
+            #modal-feedback-submit-btn,
+            #modal-feedback-cancel,
+            #modal-continue-btn {
+                font-size: 0.875rem !important;
+                padding: 12px 20px !important;
+                border-radius: 20px !important;
+                font-weight: 500 !important;
+                cursor: pointer !important;
+                transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+                font-family: 'Roboto', sans-serif !important;
+                text-transform: uppercase !important;
+                letter-spacing: 0.1px !important;
+                min-height: 48px !important;
+                text-shadow: none !important;
+                backdrop-filter: none !important;
+                -webkit-backdrop-filter: none !important;
+            }
+            
+            #modal-feedback-submit-btn,
+            #modal-continue-btn {
+                background: #6750a4 !important;
+                background-color: #6750a4 !important;
+                color: white !important;
+                -webkit-text-fill-color: white !important;
+                border: none !important;
+            }
+            
+            #modal-feedback-submit-btn:hover,
+            #modal-continue-btn:hover {
+                background: #7c4dff !important;
+                background-color: #7c4dff !important;
+            }
+            
+            #modal-feedback-submit-btn:disabled {
+                background: #79747e !important;
+                background-color: #79747e !important;
+                color: #ffffff !important;
+                -webkit-text-fill-color: #ffffff !important;
+                cursor: not-allowed !important;
+                opacity: 0.6 !important;
+            }
+            
+            #modal-feedback-cancel {
+                background: transparent !important;
+                color: #6750a4 !important;
+                -webkit-text-fill-color: #6750a4 !important;
+                border: 1px solid #6750a4 !important;
+            }
+            
+            #modal-feedback-cancel:hover {
+                background: rgba(103, 80, 164, 0.1) !important;
+            }
+            
+            /* Modal Star Rating */
+            .modal-star {
+                font-size: 28px !important;
+                color: #e7e0ec !important;
+                cursor: pointer !important;
+                transition: color 0.2s ease !important;
+                user-select: none !important;
+                -webkit-user-select: none !important;
+                -webkit-tap-highlight-color: transparent !important;
+                padding: 4px !important;
+            }
+            
+            .modal-star:hover {
+                color: #ffc107 !important;
+            }
+            
+            /* Modal Labels */
+            .feedback-modal-content label {
+                color: #1c1b1f !important;
+                font-weight: 500 !important;
+                font-size: 0.875rem !important;
+                font-family: 'Roboto', sans-serif !important;
+                letter-spacing: 0.25px !important;
+            }
+            
+            /* Modal Character Counter */
+            #modal-char-count {
+                font-size: 0.75rem !important;
+                color: #79747e !important;
+                font-family: 'Roboto', sans-serif !important;
+            }
+            
             /* Material Design Text Rendering */
             * {
                 -webkit-font-smoothing: antialiased !important;
@@ -1466,6 +1643,13 @@
                 <button class="puzzle-nav-btn" data-puzzle="3" style="padding: 10px 8px; border-radius: 8px; font-size: 0.8rem; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); cursor: pointer; transition: all 0.2s; text-align: center; min-height: 40px; display: flex; align-items: center; justify-content: center;">Puzzle 3</button>
                 <button class="puzzle-nav-btn" data-puzzle="4" style="padding: 10px 8px; border-radius: 8px; font-size: 0.8rem; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.1); color: rgba(255, 255, 255, 0.9); cursor: pointer; transition: all 0.2s; text-align: center; min-height: 40px; display: flex; align-items: center; justify-content: center;">Puzzle 4</button>
             </div>
+            
+            <!-- Feedback Button -->
+            <div style="margin-top: 16px; text-align: center;">
+                <button id="feedback-btn" class="glass-button" style="font-size: 0.8rem; padding: 8px 16px; background: rgba(255, 255, 255, 0.15) !important; border: 1px solid rgba(255, 255, 255, 0.3) !important; color: rgba(255, 255, 255, 0.9) !important; border-radius: 12px; min-height: 36px;">
+                    💬 Share Feedback
+                </button>
+            </div>
         </div>
         
         <!-- Player Name Input -->
@@ -1658,6 +1842,75 @@
                 </button>
             </div>
         </div>
+        
+        <!-- Feedback Modal (available from any puzzle) -->
+        <div id="feedback-modal" class="feedback-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 1000; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px);">
+            <div class="feedback-modal-content" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #ffffff; border-radius: 16px; padding: 24px; max-width: 500px; width: 90%; max-height: 80vh; overflow-y: auto; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+                <!-- Modal Header -->
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h3 style="margin: 0; color: #1c1b1f; font-size: 1.25rem; font-weight: 500; font-family: 'Roboto', sans-serif;">Share Your Feedback</h3>
+                    <button id="feedback-modal-close" style="background: none; border: none; font-size: 24px; color: #79747e; cursor: pointer; padding: 4px; border-radius: 50%; transition: background-color 0.2s;">×</button>
+                </div>
+                
+                <!-- Feedback Form Container -->
+                <div id="modal-feedback-form-container">
+                    <form id="modal-feedback-form" style="margin-bottom: 16px;">
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; margin-bottom: 8px; color: #1c1b1f; font-weight: 500; font-size: 0.875rem; font-family: 'Roboto', sans-serif;">
+                                How is your puzzle experience so far? (1-5 stars)
+                            </label>
+                            <div id="modal-star-rating" style="display: flex; gap: 4px; margin-bottom: 8px;">
+                                <span class="modal-star" data-rating="1" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
+                                <span class="modal-star" data-rating="2" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
+                                <span class="modal-star" data-rating="3" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
+                                <span class="modal-star" data-rating="4" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
+                                <span class="modal-star" data-rating="5" style="font-size: 28px; color: #e7e0ec; cursor: pointer; transition: color 0.2s; user-select: none; -webkit-user-select: none;">⭐</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 16px;">
+                            <label style="display: block; margin-bottom: 8px; color: #1c1b1f; font-weight: 500; font-size: 0.875rem; font-family: 'Roboto', sans-serif;">
+                                Comments or suggestions (optional):
+                            </label>
+                            <textarea id="modal-feedback-text" 
+                                      placeholder="Tell us about your experience, difficulty level, or any suggestions..."
+                                      style="width: 100%; min-height: 100px; padding: 12px; border: 1px solid #79747e; border-radius: 4px; font-family: 'Roboto', sans-serif; font-size: 0.875rem; color: #1c1b1f; background: #ffffff; resize: vertical; box-sizing: border-box; transition: border-color 0.2s;"
+                                      maxlength="500"></textarea>
+                            <div style="text-align: right; font-size: 0.75rem; color: #79747e; margin-top: 4px; font-family: 'Roboto', sans-serif;">
+                                <span id="modal-char-count">0</span>/500 characters
+                            </div>
+                        </div>
+                        
+                        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+                            <button type="button" id="modal-feedback-cancel" 
+                                    style="background: transparent; color: #6750a4; border: 1px solid #6750a4; padding: 10px 20px; border-radius: 20px; font-weight: 500; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; font-family: 'Roboto', sans-serif; text-transform: uppercase; letter-spacing: 0.1px;">
+                                Cancel
+                            </button>
+                            <button type="submit" id="modal-feedback-submit-btn" 
+                                    style="background: #6750a4; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-weight: 500; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; font-family: 'Roboto', sans-serif; text-transform: uppercase; letter-spacing: 0.1px;">
+                                Submit Feedback
+                            </button>
+                        </div>
+                    </form>
+                    
+                    <div id="modal-feedback-message" class="glass-message" style="display: none; margin-top: 16px; background: #e8f5e8; color: #1b5e20; border: 1px solid #4caf50; border-radius: 8px; padding: 12px;"></div>
+                </div>
+                
+                <div id="modal-feedback-thank-you" style="display: none; text-align: center; padding: 20px;">
+                    <div style="font-size: 3rem; margin-bottom: 16px;">🙏</div>
+                    <div style="font-size: 1.125rem; color: #1c1b1f; font-weight: 500; margin-bottom: 8px; font-family: 'Roboto', sans-serif;">
+                        Thank you for your feedback!
+                    </div>
+                    <div style="font-size: 0.875rem; color: #49454f; margin-bottom: 20px; font-family: 'Roboto', sans-serif;">
+                        Your input helps us improve the puzzle experience.
+                    </div>
+                    <button id="modal-continue-btn" 
+                            style="background: #6750a4; color: white; border: none; padding: 12px 24px; border-radius: 20px; font-weight: 500; font-size: 0.875rem; cursor: pointer; transition: all 0.2s; font-family: 'Roboto', sans-serif; text-transform: uppercase; letter-spacing: 0.1px;">
+                        Continue Playing
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1781,6 +2034,7 @@
             playerInfoBar.style.display = 'block';
             updateProgressDisplay();
             setupPuzzleNavigation();
+            setupFeedbackButton();
         }
     }
     
@@ -2192,6 +2446,264 @@
                 setTimeout(() => {
                     feedbackMessage.style.display = 'none';
                     feedbackMessage.classList.remove('message-slide-in');
+                }, 5000);
+            }
+        }
+    }
+    
+    // Function to set up feedback button in player info bar
+    function setupFeedbackButton() {
+        const feedbackBtn = document.getElementById('feedback-btn');
+        if (feedbackBtn) {
+            feedbackBtn.addEventListener('click', function() {
+                showFeedbackModal();
+                
+                // Track feedback button click
+                if (typeof window.trackPuzzleEvent === 'function') {
+                    window.trackPuzzleEvent({
+                        eventType: 'feedback_button_clicked',
+                        playerName: playerName,
+                        currentPuzzle: getCurrentVisiblePuzzle(),
+                        completedPuzzles: puzzleProgress.completed.length,
+                        category: 'feedback_interaction'
+                    });
+                }
+            });
+        }
+    }
+    
+    // Function to show feedback modal
+    function showFeedbackModal() {
+        const modal = document.getElementById('feedback-modal');
+        if (modal) {
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+            
+            // Reset form state
+            resetModalFeedbackForm();
+            
+            // Set up modal event listeners
+            setupModalFeedbackSystem();
+        }
+    }
+    
+    // Function to hide feedback modal
+    function hideFeedbackModal() {
+        const modal = document.getElementById('feedback-modal');
+        if (modal) {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restore scrolling
+        }
+    }
+    
+    // Function to reset modal feedback form
+    function resetModalFeedbackForm() {
+        const formContainer = document.getElementById('modal-feedback-form-container');
+        const thankYouSection = document.getElementById('modal-feedback-thank-you');
+        const form = document.getElementById('modal-feedback-form');
+        const textarea = document.getElementById('modal-feedback-text');
+        const charCount = document.getElementById('modal-char-count');
+        const stars = document.querySelectorAll('.modal-star');
+        
+        // Show form, hide thank you
+        if (formContainer) formContainer.style.display = 'block';
+        if (thankYouSection) thankYouSection.style.display = 'none';
+        
+        // Reset form
+        if (form) form.reset();
+        if (textarea) textarea.value = '';
+        if (charCount) charCount.textContent = '0';
+        
+        // Reset stars
+        stars.forEach(star => {
+            star.style.color = '#e7e0ec';
+        });
+        
+        // Reset selected rating
+        window.modalSelectedRating = 0;
+    }
+    
+    // Function to set up modal feedback system
+    function setupModalFeedbackSystem() {
+        const stars = document.querySelectorAll('.modal-star');
+        const feedbackForm = document.getElementById('modal-feedback-form');
+        const feedbackText = document.getElementById('modal-feedback-text');
+        const charCount = document.getElementById('modal-char-count');
+        const feedbackMessage = document.getElementById('modal-feedback-message');
+        const formContainer = document.getElementById('modal-feedback-form-container');
+        const thankYouSection = document.getElementById('modal-feedback-thank-you');
+        const closeBtn = document.getElementById('feedback-modal-close');
+        const cancelBtn = document.getElementById('modal-feedback-cancel');
+        const continueBtn = document.getElementById('modal-continue-btn');
+        
+        // Initialize selected rating
+        if (typeof window.modalSelectedRating === 'undefined') {
+            window.modalSelectedRating = 0;
+        }
+        
+        // Star rating interaction
+        stars.forEach(star => {
+            star.addEventListener('click', function() {
+                window.modalSelectedRating = parseInt(this.dataset.rating);
+                updateModalStarDisplay();
+                
+                // Track star rating interaction
+                if (typeof window.trackPuzzleEvent === 'function') {
+                    window.trackPuzzleEvent({
+                        eventType: 'modal_feedback_rating_selected',
+                        playerName: playerName,
+                        rating: window.modalSelectedRating,
+                        currentPuzzle: getCurrentVisiblePuzzle(),
+                        category: 'feedback_interaction'
+                    });
+                }
+            });
+            
+            star.addEventListener('mouseover', function() {
+                const hoverRating = parseInt(this.dataset.rating);
+                highlightModalStars(hoverRating);
+            });
+        });
+        
+        // Reset stars on mouse leave
+        const starContainer = document.getElementById('modal-star-rating');
+        if (starContainer) {
+            starContainer.addEventListener('mouseleave', function() {
+                updateModalStarDisplay();
+            });
+        }
+        
+        // Character counter for textarea
+        if (feedbackText && charCount) {
+            feedbackText.addEventListener('input', function() {
+                const currentLength = this.value.length;
+                charCount.textContent = currentLength;
+                
+                // Change color when approaching limit
+                if (currentLength > 450) {
+                    charCount.style.color = '#d32f2f';
+                } else if (currentLength > 400) {
+                    charCount.style.color = '#f57c00';
+                } else {
+                    charCount.style.color = '#79747e';
+                }
+            });
+        }
+        
+        // Close button handlers
+        if (closeBtn) {
+            closeBtn.addEventListener('click', hideFeedbackModal);
+        }
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', hideFeedbackModal);
+        }
+        if (continueBtn) {
+            continueBtn.addEventListener('click', hideFeedbackModal);
+        }
+        
+        // Click outside to close
+        const modal = document.getElementById('feedback-modal');
+        if (modal) {
+            modal.addEventListener('click', function(e) {
+                if (e.target === modal) {
+                    hideFeedbackModal();
+                }
+            });
+        }
+        
+        // Form submission
+        if (feedbackForm) {
+            feedbackForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                // Validate rating
+                if (window.modalSelectedRating === 0) {
+                    showModalFeedbackMessage('Please select a star rating before submitting.', 'error');
+                    return;
+                }
+                
+                const feedbackData = {
+                    playerName: playerName,
+                    rating: window.modalSelectedRating,
+                    comment: feedbackText.value.trim(),
+                    completedPuzzles: puzzleProgress.completed.length,
+                    currentPuzzle: getCurrentVisiblePuzzle(),
+                    totalGameTime: Date.now() - (window.gameStartTime || Date.now()),
+                    feedbackSource: 'modal' // Distinguish from completion feedback
+                };
+                
+                // Show loading state
+                const submitBtn = document.getElementById('modal-feedback-submit-btn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Submitting...';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Submit feedback to Firebase
+                    const result = await window.submitFeedback(feedbackData);
+                    
+                    if (result.success) {
+                        // Track successful feedback submission
+                        if (typeof window.trackPuzzleEvent === 'function') {
+                            window.trackPuzzleEvent({
+                                eventType: 'modal_feedback_submitted',
+                                playerName: playerName,
+                                rating: window.modalSelectedRating,
+                                hasComment: feedbackData.comment.length > 0,
+                                currentPuzzle: getCurrentVisiblePuzzle(),
+                                category: 'feedback_completion'
+                            });
+                        }
+                        
+                        // Hide form and show thank you message
+                        formContainer.style.display = 'none';
+                        thankYouSection.style.display = 'block';
+                        
+                    } else {
+                        throw new Error(result.error || 'Failed to submit feedback');
+                    }
+                } catch (error) {
+                    console.error('Modal feedback submission error:', error);
+                    showModalFeedbackMessage('Sorry, there was an error submitting your feedback. Please try again.', 'error');
+                    
+                    // Reset button
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+        
+        function updateModalStarDisplay() {
+            const stars = document.querySelectorAll('.modal-star');
+            stars.forEach((star, index) => {
+                if (index < window.modalSelectedRating) {
+                    star.style.color = '#ffc107'; // Gold color for selected stars
+                } else {
+                    star.style.color = '#e7e0ec'; // Gray color for unselected stars
+                }
+            });
+        }
+        
+        function highlightModalStars(rating) {
+            const stars = document.querySelectorAll('.modal-star');
+            stars.forEach((star, index) => {
+                if (index < rating) {
+                    star.style.color = '#ffc107';
+                } else {
+                    star.style.color = '#e7e0ec';
+                }
+            });
+        }
+        
+        function showModalFeedbackMessage(message, type) {
+            if (feedbackMessage) {
+                feedbackMessage.textContent = message;
+                feedbackMessage.className = `glass-message ${type === 'error' ? 'negative' : 'positive'}`;
+                feedbackMessage.style.display = 'block';
+                
+                // Auto-hide after 5 seconds
+                setTimeout(() => {
+                    feedbackMessage.style.display = 'none';
                 }, 5000);
             }
         }
