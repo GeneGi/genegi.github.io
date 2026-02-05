@@ -6,7 +6,7 @@
  * 验证需求：4.1, 4.2, 4.3, 4.4
  */
 
-import { doc, getDoc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { db } from './firebase';
 import type { LotteryState } from '../types';
 
@@ -83,7 +83,8 @@ export class StorageService {
       prizes: [],
       isDrawing: false,
       totalDrawn: 0,
-      currentResult: undefined
+      currentResult: undefined,
+      history: [],
     };
     
     setDoc(doc(db, 'lottery', this.DOC_ID), emptyState).catch(error => {

@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDi4w47VIST9RIQLlCAOmZK7jM-7J7HRx4",
+  apiKey: "AIzaSyC3Tfu97CDjg7jUxg3GRsEjQm-jHTo6L3o",
   authDomain: "springfestivallottery.firebaseapp.com",
   projectId: "springfestivallottery",
   storageBucket: "springfestivallottery.firebasestorage.app",
