@@ -100,7 +100,7 @@ export class StorageService {
    * @returns 如果 localStorage 可用返回 true，否则返回 false
    * @private
    */
-  private isLocalStorageAvailable(): boolean {
+  isLocalStorageAvailable(): boolean {
     try {
       const testKey = '__storage_test__';
       localStorage.setItem(testKey, 'test');

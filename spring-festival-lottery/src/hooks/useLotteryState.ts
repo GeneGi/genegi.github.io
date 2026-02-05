@@ -7,10 +7,11 @@
  * 验证需求：1.1, 1.4, 2.1, 4.1, 4.2, 5.3
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import type { LotteryState, Prize } from '../types';
 import { StorageService } from '../services/StorageService';
 import { LotteryEngine } from '../services/LotteryEngine';
+import { subscribeToLotteryState } from '../services/firebase';
 
 /**
  * 默认奖品列表
@@ -88,6 +89,22 @@ export function useLotteryState() {
     }
     return INITIAL_STATE;
   });
+
+  // Subscribe to Firebase real-time updates
+  useEffect(() => {
+    const unsubscribe = subscribeToLotteryState((newState) => {
+      setState({
+        ...newState,
+        history: newState.history || [],
+      });
+      // Also update localStorage
+      if (storageService.isLocalStorageAvailable()) {
+        localStorage.setItem('lottery_state', JSON.stringify(newState));
+      }
+    });
+    
+    return () => unsubscribe();
+  }, [storageService]);
 
   /**
    * 保存状态到 localStorage

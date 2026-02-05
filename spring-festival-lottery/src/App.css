@@ -51,6 +51,10 @@
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
+.app-header h1 {
+  white-space: nowrap;
+}
+
 .header-buttons {
   position: fixed;
   top: 2rem;
@@ -345,6 +349,7 @@
   font-size: 2.5rem;
   font-weight: bold;
   color: #ccc;
+  padding-bottom: 20px;
 }
 
 .slot-machine {
@@ -386,9 +391,11 @@
   font-weight: bold;
   background: linear-gradient(135deg, #fff 0%, #fffacd 100%);
   color: #ff0844;
-  padding: 1rem;
+  padding: 0 1rem;
   text-align: center;
   text-shadow: 2px 2px 4px rgba(255,215,0,0.3);
+  word-break: break-word;
+  line-height: 1.2;
 }
 
 .slot-handle-container {
@@ -563,7 +570,7 @@
 
 .stats-large {
   position: absolute;
-  bottom: 50px;
+  bottom: 80px;
   left: 50%;
   transform: translateX(-50%);
   color: white;
@@ -579,6 +586,20 @@
   font-size: 3rem;
   animation: rainbow 3s linear infinite;
   margin: 0;
+}
+
+.stats-info {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-size: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+  justify-content: center;
+  align-items: center;
 }
 
 @keyframes rainbow {
@@ -625,6 +646,21 @@
   color: #666;
 }
 
+.delete-button {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  opacity: 0.6;
+  transition: all 0.2s;
+}
+
+.delete-button:hover {
+  opacity: 1;
+  transform: scale(1.2);
+}
+
 .reset-button {
   padding: 0.75rem 2rem;
   background: #ff4444;
@@ -639,4 +675,88 @@
 .reset-button:hover {
   background: #cc0000;
   transform: scale(1.05);
+}
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .app-header h1 {
+    font-size: 1.5rem;
+    white-space: normal;
+  }
+  
+  .header-buttons {
+    top: 1rem;
+    right: 1rem;
+    gap: 0.5rem;
+  }
+  
+  .config-toggle,
+  .mute-toggle {
+    padding: 0.4rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .slot-machine-container {
+    transform: scale(0.8);
+  }
+  
+  .slot-machine-body {
+    width: 280px;
+    height: 350px;
+  }
+  
+  .slot-window {
+    height: 150px;
+  }
+  
+  .slot-item {
+    height: 150px;
+    font-size: 1.8rem;
+  }
+  
+  .slot-handle-container {
+    right: 140px;
+  }
+  
+  .handle-ball {
+    width: 60px;
+    height: 60px;
+    font-size: 2rem;
+  }
+  
+  .handle-stick {
+    width: 8px;
+    height: 80px;
+  }
+  
+  .stats-large {
+    bottom: 80px;
+  }
+  
+  .stats-large .result-text {
+    font-size: 2rem;
+  }
+  
+  .stats-info {
+    bottom: 20px;
+    font-size: 1.2rem;
+  }
+  
+  .config-content {
+    padding: 1rem;
+  }
+  
+  .prize-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .count-input {
+    width: 60px;
+  }
+  
+  .envelope {
+    font-size: 2rem;
+  }
 }

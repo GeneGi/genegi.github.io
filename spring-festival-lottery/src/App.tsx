@@ -14,7 +14,7 @@ interface SlotItem {
 }
 
 function App() {
-  const { state, addPrize, updatePrize, draw, reset } = useLotteryState();
+  const { state, addPrize, updatePrize, removePrize, draw, reset } = useLotteryState();
   const [isAnimating, setIsAnimating] = useState(false);
   const [showConfig, setShowConfig] = useState(false);
   const [slotItems, setSlotItems] = useState<SlotItem[]>([]);
@@ -100,7 +100,7 @@ function App() {
       
       // Start scroll animation
       setTimeout(() => {
-        setSlotOffset(20 * 180);
+        setSlotOffset((items.length - 1) * 180);
       }, 50);
       
       // Show result after animation
@@ -172,6 +172,17 @@ function App() {
                           className="count-input"
                         />
                         <span className="count-total">/ {prize.totalCount}</span>
+                        <button 
+                          className="delete-button"
+                          onClick={() => {
+                            if (confirm(`确定要删除 "${prize.name}" 吗？`)) {
+                              removePrize(prize.id);
+                            }
+                          }}
+                          title="删除奖品"
+                        >
+                          🗑️
+                        </button>
                       </div>
                     </li>
                   ))}
@@ -247,6 +258,12 @@ function App() {
             <h2 className="result-text">🎉 恭喜中奖 🎉</h2>
           </div>
         )}
+        
+        <div className="stats-info">
+          <span>已抽取：{state.totalDrawn} 个</span>
+          <span>•</span>
+          <span>剩余：{state.prizes.reduce((sum, p) => sum + p.remainingCount, 0)} 个</span>
+        </div>
       </main>
     </div>
   );

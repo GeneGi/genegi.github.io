@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
+import { getFirestore, doc, onSnapshot } from "firebase/firestore";
+import type { LotteryState } from '../types';
 
 const firebaseConfig = {
   apiKey: "AIzaSyC3Tfu97CDjg7jUxg3GRsEjQm-jHTo6L3o",
@@ -13,3 +14,14 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
+
+// Subscribe to real-time updates
+export function subscribeToLotteryState(callback: (state: LotteryState) => void) {
+  const docRef = doc(db, 'lottery', 'lottery_state');
+  return onSnapshot(docRef, (docSnap) => {
+    if (docSnap.exists()) {
+      const state = docSnap.data() as LotteryState;
+      callback(state);
+    }
+  });
+}
