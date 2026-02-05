@@ -1,0 +1,163 @@
+/**
+ * 春晚庙会抽奖系统 - 奖品配置表单样式
+ * 
+ * 采用春节主题配色（红色、金色）
+ * 确保清晰可见的操作按钮和状态信息
+ * 
+ * 验证需求：6.2, 6.4, 6.5
+ */
+
+.prize-config-form {
+  background: linear-gradient(135deg, #fff5f5 0%, #ffe8e8 100%);
+  border: 2px solid #d4380d;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(212, 56, 13, 0.15);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.form-title {
+  color: #d4380d;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 24px 0;
+  text-align: center;
+  text-shadow: 1px 1px 2px rgba(212, 56, 13, 0.1);
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  color: #8c0000;
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.required {
+  color: #ff4d4f;
+  font-weight: bold;
+}
+
+.optional {
+  color: #8c8c8c;
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.form-input,
+.form-textarea {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border: 2px solid #ffa39e;
+  border-radius: 8px;
+  background-color: #ffffff;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-input:focus,
+.form-textarea:focus {
+  outline: none;
+  border-color: #ff7875;
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.1);
+}
+
+.form-input.error,
+.form-textarea.error {
+  border-color: #ff4d4f;
+  background-color: #fff1f0;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: #bfbfbf;
+}
+
+/* 移除数字输入框的默认箭头（可选） */
+.form-input[type="number"]::-webkit-inner-spin-button,
+.form-input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+.form-textarea {
+  resize: vertical;
+  min-height: 80px;
+  font-family: inherit;
+}
+
+.error-message {
+  display: block;
+  color: #ff4d4f;
+  font-size: 14px;
+  margin-top: 6px;
+  animation: shake 0.3s ease;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+.submit-button {
+  width: 100%;
+  padding: 14px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffffff;
+  background: linear-gradient(135deg, #ff4d4f 0%, #d4380d 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(212, 56, 13, 0.3);
+  margin-top: 8px;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #ff7875 0%, #ff4d4f 100%);
+  box-shadow: 0 6px 12px rgba(212, 56, 13, 0.4);
+  transform: translateY(-2px);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(212, 56, 13, 0.3);
+}
+
+.submit-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 77, 79, 0.3);
+}
+
+/* 响应式设计 - 针对较小屏幕 */
+@media (max-width: 600px) {
+  .prize-config-form {
+    padding: 20px;
+  }
+
+  .form-title {
+    font-size: 20px;
+  }
+
+  .form-label {
+    font-size: 14px;
+  }
+
+  .form-input,
+  .form-textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .submit-button {
+    font-size: 16px;
+    padding: 12px 20px;
+  }
+}
