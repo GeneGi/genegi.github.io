@@ -33,19 +33,6 @@ const DEFAULT_PRIZES: Omit<Prize, 'id'>[] = [
 ];
 
 /**
- * 初始状态
- * 
- * 当没有保存的状态时使用的默认状态
- */
-const INITIAL_STATE: LotteryState = {
-  prizes: DEFAULT_PRIZES.map(p => ({ ...p, id: generateUniqueId() })),
-  currentResult: undefined,
-  isDrawing: false,
-  totalDrawn: 0,
-  history: [],
-};
-
-/**
  * 生成唯一 ID
  * 
  * 使用时间戳和随机数生成唯一标识符
@@ -73,21 +60,14 @@ function generateUniqueId(): string {
  * @returns 状态和操作方法
  */
 export function useLotteryState() {
-  // 创建服务实例（使用 useState 确保实例在组件生命周期内保持不变）
   const [storageService] = useState(() => new StorageService());
   
-  // 状态管理
-  const [state, setState] = useState<LotteryState>(() => {
-    // 在初始化时从 localStorage 加载状态
-    const savedState = storageService.loadState();
-    if (savedState) {
-      // 确保 history 字段存在
-      return {
-        ...savedState,
-        history: savedState.history || [],
-      };
-    }
-    return INITIAL_STATE;
+  const [state, setState] = useState<LotteryState>({
+    prizes: [],
+    currentResult: null,
+    isDrawing: false,
+    totalDrawn: 0,
+    history: [],
   });
 
   // Subscribe to Firebase real-time updates
@@ -97,26 +77,16 @@ export function useLotteryState() {
         ...newState,
         history: newState.history || [],
       });
-      // Also update localStorage
-      if (storageService.isLocalStorageAvailable()) {
-        localStorage.setItem('lottery_state', JSON.stringify(newState));
-      }
     });
     
     return () => unsubscribe();
-  }, [storageService]);
+  }, []);
 
-  /**
-   * 保存状态到 localStorage
-   * 
-   * 每次状态更新时自动调用
-   */
   const saveState = useCallback(async (newState: LotteryState) => {
     try {
       await storageService.saveState(newState);
     } catch (error) {
       console.error('Failed to save state:', error);
-      // 即使保存失败，也不影响应用的正常运行
     }
   }, [storageService]);
 
@@ -125,9 +95,9 @@ export function useLotteryState() {
    * 
    * 统一的状态更新方法，确保每次更新都会保存到 localStorage
    */
-  const updateState = useCallback((newState: LotteryState) => {
+  const updateState = useCallback(async (newState: LotteryState) => {
     setState(newState);
-    saveState(newState);
+    await saveState(newState);
   }, [saveState]);
 
   /**
@@ -292,7 +262,7 @@ export function useLotteryState() {
         ...state,
         prizes: updatedPrizes,
         // 如果删除的是当前结果，清除当前结果
-        currentResult: state.currentResult?.id === prizeId ? undefined : state.currentResult,
+        currentResult: state.currentResult?.id === prizeId ? null : state.currentResult,
       };
       
       updateState(newState);
@@ -391,7 +361,7 @@ export function useLotteryState() {
       // 重置为初始状态（恢复原始库存数量）
       const newState: LotteryState = {
         prizes: DEFAULT_PRIZES.map(p => ({ ...p, id: generateUniqueId() })),
-        currentResult: undefined,
+        currentResult: null,
         isDrawing: false,
         totalDrawn: 0,
         history: [],

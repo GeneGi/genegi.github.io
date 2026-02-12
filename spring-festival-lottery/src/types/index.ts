@@ -53,7 +53,7 @@ export interface DrawHistory {
  */
 export interface LotteryState {
   prizes: Prize[];
-  currentResult?: Prize;
+  currentResult: Prize | null;
   isDrawing: boolean;
   totalDrawn: number;
   history: DrawHistory[];
