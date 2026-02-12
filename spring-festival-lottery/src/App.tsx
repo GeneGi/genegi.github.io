@@ -20,39 +20,24 @@ function App() {
   const [slotItems, setSlotItems] = useState<SlotItem[]>([]);
   const [slotOffset, setSlotOffset] = useState<number>(0);
   const [finalPrize, setFinalPrize] = useState<string>('');
-  const [isMuted, setIsMuted] = useState(false);
-  const [audioRef] = useState(() => new Audio(bgMusic));
+  const [isMuted, setIsMuted] = useState(true);
+  const [audioRef] = useState(() => {
+    const audio = new Audio(bgMusic);
+    audio.loop = true;
+    audio.volume = 0.3;
+    return audio;
+  });
 
   useEffect(() => {
-    audioRef.loop = true;
-    audioRef.volume = 0.3;
-    
-    const playAudio = () => {
-      audioRef.play().catch(err => console.log('Audio play failed:', err));
-    };
-    
-    // Try to play immediately
-    playAudio();
-    
-    // If blocked, play on first user interaction
-    const handleInteraction = () => {
-      playAudio();
-      document.removeEventListener('click', handleInteraction);
-    };
-    document.addEventListener('click', handleInteraction);
-    
-    return () => {
-      audioRef.pause();
-      document.removeEventListener('click', handleInteraction);
-    };
+    return () => { audioRef.pause(); };
   }, [audioRef]);
 
   const toggleMute = () => {
     if (isMuted) {
-      audioRef.volume = 0.3;
+      audioRef.play().catch(err => console.log('Audio play failed:', err));
       setIsMuted(false);
     } else {
-      audioRef.volume = 0;
+      audioRef.pause();
       setIsMuted(true);
     }
   };
@@ -130,7 +115,13 @@ function App() {
         <div className="header-buttons">
           <button 
             className="config-toggle"
-            onClick={() => setShowConfig(!showConfig)}
+            onClick={() => {
+              if (!showConfig) {
+                const pwd = prompt('请输入管理密码：');
+                if (!pwd || btoa(pwd) !== 'c21pbGUyMDI2') return;
+              }
+              setShowConfig(!showConfig);
+            }}
           >
             {showConfig ? '隐藏配置 ▲' : '显示配置 ▼'}
           </button>

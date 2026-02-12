@@ -17,19 +17,19 @@ import { subscribeToLotteryState } from '../services/firebase';
  * 默认奖品列表
  */
 const DEFAULT_PRIZES: Omit<Prize, 'id'>[] = [
-  { name: '大统华 Gift Card', totalCount: 46, remainingCount: 46, description: '$100 × 1, $20 × 5, $10 × 40' },
-  { name: '文创帆布包', totalCount: 300, remainingCount: 300 },
-  { name: '课代表 Hoodie', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 1', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 2', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 3', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 4', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 5', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 6', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 7', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 8', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 9', totalCount: 50, remainingCount: 50 },
-  { name: '赞助商小礼物 - 10', totalCount: 50, remainingCount: 50 },
+  { name: 'Smile - 帆布袋', totalCount: 300, remainingCount: 300 },
+  { name: 'Smile - 精美故宫文创', totalCount: 5, remainingCount: 5 },
+  { name: 'Smile - 帽子', totalCount: 20, remainingCount: 20 },
+  { name: 'Smile - 文创', totalCount: 30, remainingCount: 30 },
+  { name: 'Smile - 扇子', totalCount: 26, remainingCount: 26 },
+  { name: 'Smile - 火锅筷', totalCount: 7, remainingCount: 7 },
+  { name: '课代表立正 - Hoodie', totalCount: 50, remainingCount: 50 },
+  { name: '大统华 - T&T Gift Card', totalCount: 46, remainingCount: 46 },
+  { name: '大统华 - 新年冰箱贴', totalCount: 15, remainingCount: 15 },
+  { name: '大统华 - 新年贴纸', totalCount: 5, remainingCount: 5 },
+  { name: '大统华 - 钥匙串', totalCount: 5, remainingCount: 5 },
+  { name: 'RC医美 - 美妆礼品袋', totalCount: 30, remainingCount: 30 },
+  { name: '佳遇十番 - 小马挂件', totalCount: 50, remainingCount: 50 },
 ];
 
 /**
