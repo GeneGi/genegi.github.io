@@ -7,7 +7,7 @@
  * 验证需求：1.1, 1.4, 2.1, 4.1, 4.2, 5.3
  */
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import type { LotteryState, Prize } from '../types';
 import { StorageService } from '../services/StorageService';
 import { LotteryEngine } from '../services/LotteryEngine';
@@ -30,6 +30,8 @@ const DEFAULT_PRIZES: Omit<Prize, 'id'>[] = [
   { name: '大统华 - 钥匙串', totalCount: 5, remainingCount: 5 },
   { name: 'RC医美 - 美妆礼品袋', totalCount: 30, remainingCount: 30 },
   { name: '佳遇十番 - 小马挂件', totalCount: 50, remainingCount: 50 },
+  { name: 'Maggie - 精美礼盒', totalCount: 50, remainingCount: 50 },
+  { name: 'Smile - 马年红包', totalCount: 50, remainingCount: 50 },
 ];
 
 /**
@@ -69,6 +71,9 @@ export function useLotteryState() {
     totalDrawn: 0,
     history: [],
   });
+
+  const stateRef = useRef(state);
+  useEffect(() => { stateRef.current = state; }, [state]);
 
   // Subscribe to Firebase real-time updates
   useEffect(() => {
@@ -158,9 +163,10 @@ export function useLotteryState() {
       };
       
       // 更新状态
+      const current = stateRef.current;
       const newState: LotteryState = {
-        ...state,
-        prizes: [...state.prizes, newPrize],
+        ...current,
+        prizes: [...current.prizes, newPrize],
       };
       
       updateState(newState);
@@ -170,7 +176,7 @@ export function useLotteryState() {
       // 重新抛出错误，让调用者处理
       throw error;
     }
-  }, [state, updateState]);
+  }, [updateState]);
 
   /**
    * 更新奖品数量
@@ -190,8 +196,10 @@ export function useLotteryState() {
         throw new Error('Prize ID must be a non-empty string');
       }
 
+      const current = stateRef.current;
+
       // 查找奖品
-      const prize = state.prizes.find(p => p.id === prizeId);
+      const prize = current.prizes.find(p => p.id === prizeId);
       if (!prize) {
         throw new Error(`Prize with ID ${prizeId} not found`);
       }
@@ -214,22 +222,21 @@ export function useLotteryState() {
       }
 
       // 更新奖品数量
-      const updatedPrizes = state.prizes.map(p =>
+      const updatedPrizes = current.prizes.map(p =>
         p.id === prizeId ? { ...p, remainingCount: newCount } : p
       );
       
       // 更新状态
       const newState: LotteryState = {
-        ...state,
+        ...current,
         prizes: updatedPrizes,
       };
       
       updateState(newState);
     } catch (error) {
-      // 重新抛出错误，让调用者处理
       throw error;
     }
-  }, [state, updateState]);
+  }, [updateState]);
 
   /**
    * 删除奖品
@@ -248,29 +255,29 @@ export function useLotteryState() {
         throw new Error('Prize ID must be a non-empty string');
       }
 
+      const current = stateRef.current;
+
       // 查找奖品索引
-      const index = state.prizes.findIndex(p => p.id === prizeId);
+      const index = current.prizes.findIndex(p => p.id === prizeId);
       if (index === -1) {
         throw new Error(`Prize with ID ${prizeId} not found`);
       }
 
       // 删除奖品
-      const updatedPrizes = state.prizes.filter(p => p.id !== prizeId);
+      const updatedPrizes = current.prizes.filter(p => p.id !== prizeId);
       
       // 更新状态
       const newState: LotteryState = {
-        ...state,
+        ...current,
         prizes: updatedPrizes,
-        // 如果删除的是当前结果，清除当前结果
-        currentResult: state.currentResult?.id === prizeId ? null : state.currentResult,
+        currentResult: current.currentResult?.id === prizeId ? null : current.currentResult,
       };
       
       updateState(newState);
     } catch (error) {
-      // 重新抛出错误，让调用者处理
       throw error;
     }
-  }, [state, updateState]);
+  }, [updateState]);
 
   /**
    * 执行抽奖
@@ -283,25 +290,21 @@ export function useLotteryState() {
    */
   const draw = useCallback((): Prize | null => {
     try {
-      // 创建 LotteryEngine 实例并执行抽奖
-      const lotteryEngine = new LotteryEngine(state.prizes);
+      const current = stateRef.current;
+      const lotteryEngine = new LotteryEngine(current.prizes);
       
-      // 检查是否有可用奖品
       if (!lotteryEngine.hasAvailablePrizes()) {
         return null;
       }
       
-      // 设置抽奖中状态
       setState(prevState => ({
         ...prevState,
         isDrawing: true,
       }));
       
-      // 使用 LotteryEngine 执行抽奖
       const selectedPrize = lotteryEngine.draw();
       
       if (selectedPrize === null) {
-        // 如果没有选中奖品，恢复状态
         setState(prevState => ({
           ...prevState,
           isDrawing: false,
@@ -309,36 +312,31 @@ export function useLotteryState() {
         return null;
       }
       
-      // 获取更新后的奖品列表
       const updatedPrizes = lotteryEngine.getAllPrizes();
       
-      // 创建库存快照
       const remainingInventory: { [prizeName: string]: number } = {};
       updatedPrizes.forEach(prize => {
         remainingInventory[prize.name] = prize.remainingCount;
       });
       
-      // 创建历史记录
       const historyEntry = {
         timestamp: Date.now(),
         prizeName: selectedPrize.name,
         remainingInventory,
       };
       
-      // 更新状态
       const newState: LotteryState = {
         prizes: updatedPrizes,
         currentResult: selectedPrize,
         isDrawing: false,
-        totalDrawn: state.totalDrawn + 1,
-        history: [...(state.history || []), historyEntry],
+        totalDrawn: current.totalDrawn + 1,
+        history: [...(current.history || []), historyEntry],
       };
       
       updateState(newState);
       
       return selectedPrize;
     } catch (error) {
-      // 发生错误时恢复状态
       setState(prevState => ({
         ...prevState,
         isDrawing: false,
@@ -347,7 +345,7 @@ export function useLotteryState() {
       console.error('Failed to draw prize:', error);
       throw error;
     }
-  }, [state, updateState]);
+  }, [updateState]);
 
   /**
    * 重置系统
