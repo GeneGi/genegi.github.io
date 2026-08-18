@@ -7,8 +7,6 @@ lastmod = 2025-06-05T16:15:01-07:00
 slug = "about-me"
 draft = false
 url = "/about-me"
-menu = "main"
-weight = 1
 +++
 
 ## Professional Summary {#professional-summary}

@@ -11,7 +11,7 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "deploy": "npm run build && cp -r dist/* ../docs/lottery/"
+    "deploy": "npm run build && rm -rf ../static/lottery && mkdir -p ../static/lottery && cp -r dist/* ../static/lottery/"
   },
   "dependencies": {
     "firebase": "^12.8.0",

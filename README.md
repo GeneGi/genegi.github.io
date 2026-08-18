@@ -1,36 +1,71 @@
 # Gene Gi's Blog
 
-This is the source code for my personal blog, hosted at [genegi.github.io](https://genegi.github.io).
+Source for [genegi.github.io](https://genegi.github.io). Hugo + [PaperMod](https://github.com/adityatelange/hugo-PaperMod).
 
-## Setup Instructions
+## Setup (once, or on a new machine)
 
-1. Clone this repository:
-   ```
-   git clone https://github.com/GeneGi/genegi.github.io.git
-   cd genegi.github.io
-   ```
+```bash
+git clone --recurse-submodules https://github.com/GeneGi/genegi.github.io.git
+cd genegi.github.io
+```
 
-2. Build the site:
-   ```
-   hugo
-   ```
+Already cloned without submodules? `git submodule update --init --recursive`
 
-3. Run locally:
-   ```
-   hugo server -D
-   ```
+Needs `hugo` (extended). `brew install hugo`
 
-## Writing New Posts
+## Writing a post
 
-In Emacs:
-1. Use `SPC X` to open the capture menu
-2. Select `b` for Blog post
-3. Fill in the required information
-4. Write your post in org-mode
-5. Export with `C-c C-e H H` or use `M-x org-hugo-export-wim-to-md`
+Two ways in. Both land in `content/posts/`.
 
-## Publishing
+**Straight markdown:**
 
-1. Set draft to false in the front matter
-2. Export the post
-3. Commit and push to GitHub
+```bash
+make new SLUG=my-post-title    # creates content/posts/my-post-title.md, draft = true
+make serve                     # preview at localhost:1313, drafts included
+# write, then set draft = false
+make publish M="post: my post title"
+```
+
+**From org-mode (ox-hugo):** write in org as before, export with `C-c C-e H H`
+(or `M-x org-hugo-export-wim-to-md`). It writes into `content/posts/`. Then:
+
+```bash
+make serve       # check it
+make publish
+```
+
+That's the whole flow. `make publish` commits and pushes; GitHub Actions builds
+and deploys. Nothing to build by hand, nothing to commit into `docs/`.
+
+Run `make` with no arguments to list every command.
+
+## Layout
+
+```
+content/
+  posts/            blog posts        -> /posts/
+  projects/         project pages     -> /projects/
+  about-me.md       -> /about-me/
+  search.md         PaperMod search page
+  archives.md       year-grouped archive
+layouts/_default/
+  seattle-puzzles.html   standalone template for the puzzle game
+static/lottery/     built output of spring-festival-lottery, served at /lottery/
+spring-festival-lottery/   React app source
+.github/workflows/deploy.yml   build + deploy on push to main
+```
+
+`params.mainSections = ["posts"]` in `hugo.toml` is what makes the homepage list
+posts. Without it Hugo guesses the section with the most pages.
+
+## The lottery app
+
+```bash
+make lottery       # builds and copies into static/lottery/
+make publish
+```
+
+## Adding a project
+
+Drop a markdown file in `content/projects/`. It shows up on `/projects/`
+automatically — no config change needed.

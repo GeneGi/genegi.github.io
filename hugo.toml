@@ -1,14 +1,90 @@
 baseURL = "https://genegi.github.io/"
-languageCode = "en-us"
+locale = "en-us"
 title = "Gene Gi's Blog"
-theme = "ananke"
-publishDir = "docs"
+theme = "PaperMod"
 
+enableRobotsTXT = true
+buildDrafts = false
+buildFuture = false
+summaryLength = 40
+
+# Posts drive the homepage list. Without this Hugo guesses, and guesses wrong.
 [params]
+  mainSections = ["posts"]
   author = "Gene Gi"
   description = "Thoughts, ideas, and projects"
-  github = "https://github.com/GeneGi"
-  favicon = ""
-  site_logo = ""
-  background_color_class = "bg-black"
-  recent_posts_number = 5
+  defaultTheme = "auto"
+  ShowReadingTime = true
+  ShowShareButtons = false
+  ShowPostNavLinks = true
+  ShowBreadCrumbs = true
+  ShowCodeCopyButtons = true
+  ShowToc = true
+  TocOpen = false
+  ShowWordCount = false
+  hidemeta = false
+  comments = false
+
+  [params.homeInfoParams]
+    Title = "Hi, I'm Gene 👋"
+    Content = "Software engineer in Seattle. I write about tools, AI agents, and side projects — and occasionally build puzzles."
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/GeneGi"
+  [[params.socialIcons]]
+    name = "email"
+    url = "mailto:junzheji@gmail.com"
+  [[params.socialIcons]]
+    name = "rss"
+    url = "/index.xml"
+
+  [params.assets]
+    disableHLJS = true
+
+[menus]
+  [[menus.main]]
+    identifier = "posts"
+    name = "Posts"
+    url = "/posts/"
+    weight = 10
+  [[menus.main]]
+    identifier = "projects"
+    name = "Projects"
+    url = "/projects/"
+    weight = 20
+  [[menus.main]]
+    identifier = "tags"
+    name = "Tags"
+    url = "/tags/"
+    weight = 30
+  [[menus.main]]
+    identifier = "archive"
+    name = "Archive"
+    url = "/archives/"
+    weight = 40
+  [[menus.main]]
+    identifier = "search"
+    name = "Search"
+    url = "/search/"
+    weight = 50
+  [[menus.main]]
+    identifier = "about"
+    name = "About"
+    url = "/about-me/"
+    weight = 60
+
+[taxonomies]
+  category = "categories"
+  tag = "tags"
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]   # JSON feeds PaperMod's search index
+
+[markup.goldmark.renderer]
+  unsafe = true                    # ox-hugo emits raw HTML for some blocks
+
+[markup.highlight]
+  noClasses = false
+  codeFences = true
+  guessSyntax = true
