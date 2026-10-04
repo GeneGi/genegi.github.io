@@ -9,8 +9,7 @@ import { metaSection } from "../../static/champions/meta.mjs";
 const url = "/projects/pokemon-champions/";
 const allSections = [...sections, metaSection];
 const totalLessons = allSections.reduce((n, s) => n + s.lessons.length, 0);
-const totalXp =
-  totalLessons * 30 + allSections.length * 50 + 100;
+const totalXp = totalLessons * 30 + allSections.length * 50 + 100;
 const action = (page, id) => page.locator(`[data-action="${id}"]`).first();
 async function answer(page, q) {
   for (const i of Array.isArray(q.answer) ? q.answer : [q.answer])
@@ -71,9 +70,7 @@ test("full curriculum, exact scoring, final challenge, reload and English copy",
   }
   await action(page, "final").click();
   await solve(page, finalQuiz);
-  await expect(page.locator(".score")).toContainText(
-    `${finalQuiz.length}`,
-  );
+  await expect(page.locator(".score")).toContainText(`${finalQuiz.length}`);
   await expect(page.locator(".review article")).toHaveCount(finalQuiz.length);
   await page.reload();
   await expect(page.locator(".xp")).toContainText(`${totalXp} XP`);
@@ -170,4 +167,36 @@ test("mobile and desktop accessibility, keyboard, project index and storage fail
   await page.reload();
   await action(page, "language").click();
   await expect(page.locator(".storage-warning")).toBeVisible();
+});
+
+test("applied battle brief keeps selections across languages and is accessible", async ({
+  page,
+}) => {
+  await page.goto(url);
+  await action(page, "level:competitive").click();
+  await action(page, "section:speed").click();
+  await action(page, "lesson:speed-sequencing").click();
+  await action(page, "practice:speed-sequencing").click();
+  const q = sections.find((s) => s.id === "speed").lessons[1].questions[0];
+  await page.locator('input[value="1"]').check();
+  await action(page, "language").click();
+  await expect(page.locator('input[value="1"]')).toBeChecked();
+  await expect(page.locator(".briefing")).toContainText(q.scenario.known.en);
+  await page.locator('[type="submit"]').click();
+  await expect(page.locator(".feedback.right")).toBeVisible();
+  await expect(page.locator(".reason")).toHaveCount(4);
+  await expect(page.locator(".reason").nth(1)).toContainText(q.why[1].en);
+  for (const width of [320, 390, 1280]) {
+    await page.setViewportSize({ width, height: 900 });
+    await noOverflow(page);
+    expect(
+      (
+        await new AxeBuilder({ page })
+          .withTags(["wcag2a", "wcag2aa", "wcag21aa"])
+          .analyze()
+      ).violations,
+    ).toEqual([]);
+  }
+  await action(page, "language").click();
+  await expect(page.locator(".reason").nth(1)).toContainText(q.why[1].zh);
 });

@@ -84,6 +84,10 @@ framework, backend, remote fonts, analytics, or external asset dependencies.
   45 independent mastery questions and 8 final decision questions. Placement is
   declared as explicit stable question IDs (`PLACEMENT_QUESTION_IDS`) and the
   sections it covers (`PLACEMENT_SECTION_IDS`), not by positional indexing.
+- `static/champions/advanced.mjs`: eight applied lessons, independent scenario
+  checks, the final exam and meta applications. Supplied Speed/damage values
+  are training assumptions; each option has a bilingual rationale. Foundational
+  recall checks remain alongside the applied checks.
 - `static/champions/meta.mjs`: dated M-6/M-C snapshot, ID-tagged sources, rules,
   ranked roster and three meta lessons. Core examples are pedagogical interpretations, not
   claims about measured core usage. The official news index was accessible but

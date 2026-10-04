@@ -42,7 +42,11 @@ test("beginner, experienced, and competitive routes preserve earned progress", (
 });
 test("placement only skips a contiguous proven foundation prefix; retake can reduce skips", () => {
   const s = fresh();
-  applyPlacement(s, [true, true, true, true, false, true, true, true], placement);
+  applyPlacement(
+    s,
+    [true, true, true, true, false, true, true, true],
+    placement,
+  );
   assert.equal(s.placement.score, 7);
   assert.deepEqual(s.skipped, ["types", "damage"]);
   applyPlacement(
@@ -63,8 +67,8 @@ test("placement questions resolve by stable ID and stay inside the placement sec
     placementFoundations.map((s) => s.id),
     PLACEMENT_SECTION_IDS,
   );
-  const foundationIds = PLACEMENT_SECTION_IDS.map((id) =>
-    all.find((s) => s.id === id).mastery.length,
+  const foundationIds = PLACEMENT_SECTION_IDS.map(
+    (id) => all.find((s) => s.id === id).mastery.length,
   );
   assert.ok(
     foundationIds.every((count) => count >= 2),
@@ -78,13 +82,14 @@ test("placement questions resolve by stable ID and stay inside the placement sec
       ...owner.mastery,
     ].find((q) => q.id === question.id);
     assert.ok(source, question.id);
-    assert.deepEqual(
-      { ...source, sectionId: question.sectionId },
-      question,
-    );
+    assert.deepEqual({ ...source, sectionId: question.sectionId }, question);
   }
   const storage = fresh();
-  applyPlacement(storage, [true, true, false, true, true, true, true, true], placement);
+  applyPlacement(
+    storage,
+    [true, true, false, true, true, true, true, true],
+    placement,
+  );
   assert.deepEqual(storage.skipped, ["types"]);
 });
 test("failed lesson does not unlock mastery; first pass earns XP once", () => {
@@ -154,12 +159,7 @@ test("storage normalization recovers malformed fields and unknown schema", () =>
     fresh(),
   );
   assert.deepEqual(
-    sanitize(
-      JSON.parse(JSON.stringify(s)),
-      lessonIds,
-      sectionIds,
-      placement,
-    ),
+    sanitize(JSON.parse(JSON.stringify(s)), lessonIds, sectionIds, placement),
     s,
   );
 });
@@ -184,6 +184,7 @@ test("published curriculum has complete bilingual data and executable question c
     assert.ok(o.zh.length);
     assert.equal(typeof o.en, "string");
     assert.ok(o.en.length);
+    assert.ok(!/\p{Script=Han}/u.test(o.en), `Untranslated English: ${o.en}`);
   };
   for (const s of all) {
     bilingual(s.title);
@@ -221,11 +222,13 @@ test("published curriculum has complete bilingual data and executable question c
       bilingual(q.scenario.known);
       assert.equal(q.why.length, q.options.length);
       q.why.forEach(bilingual);
+      if (q.scenario.goal) bilingual(q.scenario.goal);
+      if (q.note) bilingual(q.note);
     }
   }
   for (const s of all) {
     assert.ok(
-      s.mastery.every((q) => q.level !== "foundation"),
+      s.mastery.some((q) => q.level !== "foundation"),
       s.id,
     );
   }
