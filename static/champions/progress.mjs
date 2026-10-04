@@ -1,4 +1,18 @@
+import { answerIndexes, PASS_RATIO } from "./curriculum.mjs";
+
+export function placementSections(placementQuestions = []) {
+  const seen = [];
+  for (const question of placementQuestions) {
+    if (question.sectionId && !seen.includes(question.sectionId)) {
+      seen.push(question.sectionId);
+    }
+  }
+  return seen;
+}
+
 export const STORAGE_KEY = "doubles-academy:v1";
+export const LEVEL_SKIPS = { beginner: 0, some: 2, competitive: 4 };
+export const XP_REWARDS = { lesson: 30, mastery: 50, final: 100 };
 export const fresh = () => ({
   version: 1,
   lang: "zh",
@@ -11,7 +25,13 @@ export const fresh = () => ({
   days: [],
   placement: null,
 });
-export function sanitize(raw, validLessons, validSections) {
+export function sanitize(
+  raw,
+  validLessons,
+  validSections,
+  placementQuestions = [],
+) {
+  const skippableSections = placementSections(placementQuestions, validSections);
   const state = fresh();
   if (!raw || raw.version !== 1) return state;
   state.lang = raw.lang === "en" ? "en" : "zh";
@@ -24,7 +44,7 @@ export function sanitize(raw, validLessons, validSections) {
       : [];
   state.completed = pick(raw.completed, validLessons);
   state.mastered = pick(raw.mastered, [...validSections, "final"]);
-  state.skipped = pick(raw.skipped, validSections.slice(0, 4));
+  state.skipped = pick(raw.skipped, skippableSections);
   state.days = Array.isArray(raw.days)
     ? [
         ...new Set(
@@ -55,7 +75,7 @@ export function sanitize(raw, validLessons, validSections) {
     raw.placement &&
     Number.isInteger(raw.placement.score) &&
     raw.placement.score >= 0 &&
-    raw.placement.score <= 8
+    raw.placement.score <= placementQuestions.length
       ? { score: raw.placement.score }
       : null;
   return state;
@@ -83,19 +103,23 @@ export function activeDays(state) {
   const day = localDay();
   if (!state.days.includes(day)) state.days.push(day);
 }
-export function applyLevel(state, level, sections) {
+export function applyLevel(state, level, placementQuestions = []) {
+  const skippableSections = placementSections(placementQuestions);
   state.level = level;
-  const count = level === "competitive" ? 4 : level === "some" ? 2 : 0;
-  state.skipped = sections.slice(0, count).map((s) => s.id);
+  const count = LEVEL_SKIPS[level] ?? 0;
+  state.skipped = skippableSections.slice(0, count);
 }
-export function applyPlacement(state, answers, sections) {
-  // Two questions per foundation; only a contiguous fully-correct prefix is skipped.
+export function applyPlacement(state, answers, placementQuestions) {
+  const sections = placementSections(placementQuestions);
+  const perSection = Math.ceil(placementQuestions.length / sections.length);
   let count = 0;
-  for (let i = 0; i < 4; i++) {
-    if (answers[i * 2] && answers[i * 2 + 1]) count++;
+  for (let i = 0; i < sections.length; i++) {
+    const from = i * perSection;
+    const window = answers.slice(from, from + perSection);
+    if (window.length === perSection && window.every(Boolean)) count++;
     else break;
   }
-  state.skipped = sections.slice(0, count).map((s) => s.id);
+  state.skipped = sections.slice(0, count);
   state.placement = { score: answers.filter(Boolean).length };
 }
 export function unlocked(state, sections, index) {
@@ -111,19 +135,17 @@ export function unlocked(state, sections, index) {
 export function recordResult(state, key, score, kind) {
   state.scores[key] = Math.max(state.scores[key] || 0, score);
   activeDays(state);
-  if (score < 80) return false;
+  if (score < PASS_RATIO * 100) return false;
   const list = kind === "lesson" ? state.completed : state.mastered;
   const id = key.replace(/^mastery:/, "");
   if (!list.includes(id)) {
     list.push(id);
-    state.xp += kind === "lesson" ? 30 : kind === "final" ? 100 : 50;
+    state.xp += XP_REWARDS[kind] ?? 0;
   }
   return true;
 }
 export const correct = (question, selection) => {
-  const expected = Array.isArray(question.answer)
-    ? question.answer
-    : [question.answer];
+  const expected = answerIndexes(question);
   return (
     selection.length === expected.length &&
     expected.every((i) => selection.includes(i))

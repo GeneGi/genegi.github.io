@@ -80,10 +80,12 @@ framework, backend, remote fonts, analytics, or external asset dependencies.
 - `layouts/_default/champions.html`: document shell; Hugo fingerprints the CSS.
 - `assets/champions/academy.css`: responsive academy styling.
 - `static/champions/curriculum.mjs`: stable section/lesson/question IDs and paired
-  Chinese/English content. 15 sections including the meta lab, 17 short lessons,
-  30 independent mastery questions and 8 final decision questions.
-- `static/champions/meta.mjs`: dated M-6/M-C snapshot, sources, rules, ranked roster
-  and three meta lessons. Core examples are pedagogical interpretations, not
+  Chinese/English content. 15 sections including the meta lab, 25 short lessons,
+  45 independent mastery questions and 8 final decision questions. Placement is
+  declared as explicit stable question IDs (`PLACEMENT_QUESTION_IDS`) and the
+  sections it covers (`PLACEMENT_SECTION_IDS`), not by positional indexing.
+- `static/champions/meta.mjs`: dated M-6/M-C snapshot, ID-tagged sources, rules,
+  ranked roster and three meta lessons. Core examples are pedagogical interpretations, not
   claims about measured core usage. The official news index was accessible but
   the official announcement body was not; third-party rules are labeled.
 - `static/champions/progress.mjs`: versioned progress, grading, unlocks, XP and
@@ -92,13 +94,13 @@ framework, backend, remote fonts, analytics, or external asset dependencies.
 Chinese is the first-visit default; the language switch translates navigation,
 lessons, questions, answers and feedback without losing the current answer.
 Beginner starts at section 1; Some experience skips 2 foundations; Competitive
-skips 4. Placement has two questions per foundation and skips only a contiguous
-fully correct prefix. Retakes replace skips but retain completed lessons, mastery
+skips 4. Placement draws its section list from the placement question IDs and
+skips only a contiguous fully correct prefix. Retakes replace skips but retain completed lessons, mastery
 and earned XP. Skips are never shown as mastery. All skipped lessons are reviewable.
 
-Lesson and mastery passing requires 80% (both correct in a two-question check).
-First passes award 30/50 XP; the 8-question final requires 7 correct and awards
-100 XP. Repeats cannot farm XP. Completing an attempt records a learning day;
+Lesson, mastery and final passing requires 80% (`PASS_RATIO` in `curriculum.mjs`,
+`passMark` for the required count). First passes award 30/50/100 XP for lesson,
+mastery and final. Repeats cannot farm XP. Completing an attempt records a learning day;
 visiting the page does not. Completed attempts persist, not an unfinished quiz.
 Storage failure shows an explicit temporary-session notice. Reset touches only
 `doubles-academy:v1`, preserving language and other projects’ data.
@@ -109,6 +111,8 @@ Storage failure shows an explicit temporary-session notice. Reset touches only
    rankings; distinguish ranked usage from tournament usage and win rates.
 2. Update `meta.mjs` (version, verified/review dates, sources, rules and roster).
    Review all three meta lessons and the final scenarios against the new rules.
+   Meta questions cite the ranking source by its stable ID (`ranking-season-6`),
+   so reordering `meta.sources` cannot silently repoint the attribution.
 3. Keep stable IDs for unchanged concepts; use new IDs when replacing a lesson
    with materially different content, so old completions do not prove new mastery.
 4. Update both language fields together and run the checks below. The guide
@@ -128,6 +132,8 @@ npm test --prefix tests/champions
 Browser checks cover the complete course/final, placement, wrong answers,
 language changes mid-question, reload persistence, XP deduplication, reset
 isolation, unavailable storage, keyboard use, 320–1280px layout and automated
-WCAG accessibility scans. They start Hugo on port 4174. GitHub Actions runs these
+WCAG accessibility scans. Applied and final questions render a bilingual battle
+brief, a note when the figures are supplied training assumptions, and one reason
+per option after submission. They start Hugo on port 4174. GitHub Actions runs these
 checks on relevant PRs and main pushes; the existing deploy workflow publishes
 Hugo on main. Existing PaperMod deprecation warnings are unrelated to the academy.

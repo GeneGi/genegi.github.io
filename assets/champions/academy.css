@@ -860,6 +860,95 @@ fieldset {
 fieldset:disabled .answer {
   cursor: default;
 }
+.answer-slot {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+.answer-slot .reason {
+  margin: 0 4px;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.answer-slot .reason strong {
+  color: var(--green);
+  margin-right: 6px;
+}
+.briefing {
+  border: 2px solid var(--line);
+  border-radius: 18px;
+  background: var(--white);
+  padding: 20px 22px;
+  margin: 18px 0 24px;
+}
+.briefing h2 {
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 14px;
+}
+.briefing dl {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: 12px 24px;
+  margin: 0;
+}
+.briefing dl div {
+  min-width: 0;
+}
+.briefing dt {
+  font-size: 0.74rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 4px;
+}
+.briefing dd {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.briefing-note {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px dashed var(--line);
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.chip {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  background: var(--lime);
+  color: var(--green);
+  border: 1px solid #cddc94;
+  margin-bottom: 6px;
+}
+.chip-applied {
+  background: var(--purple);
+  border-color: #c3b9e4;
+}
+.chip-battle {
+  background: #ffe2cd;
+  border-color: #f0bf98;
+}
+.review-why {
+  margin: 10px 0 0;
+  padding-left: 20px;
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--muted);
+}
+.review-why li {
+  margin-bottom: 6px;
+  overflow-wrap: anywhere;
+}
 .feedback {
   border-radius: 16px;
   padding: 22px;

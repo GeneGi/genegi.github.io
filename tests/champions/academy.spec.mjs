@@ -7,12 +7,27 @@ import {
 } from "../../static/champions/curriculum.mjs";
 import { metaSection } from "../../static/champions/meta.mjs";
 const url = "/projects/pokemon-champions/";
+const allSections = [...sections, metaSection];
+const totalLessons = allSections.reduce((n, s) => n + s.lessons.length, 0);
+const totalXp =
+  totalLessons * 30 + allSections.length * 50 + 100;
 const action = (page, id) => page.locator(`[data-action="${id}"]`).first();
 async function answer(page, q) {
   for (const i of Array.isArray(q.answer) ? q.answer : [q.answer])
     await page.locator(`input[value="${i}"]`).check();
   await page.locator('[type="submit"]').click();
   await expect(page.locator(".feedback")).toBeVisible();
+  if (q.scenario) {
+    await expect(page.locator(".briefing")).toBeVisible();
+    await expect(page.locator(".briefing dd")).toHaveCount(
+      Object.keys(q.scenario).filter(
+        (k) => q.scenario[k] !== null && q.scenario[k] !== undefined,
+      ).length,
+    );
+  }
+  await expect(page.locator(".answer-slot .reason")).toHaveCount(
+    q.why ? q.options.length : 0,
+  );
   await action(page, "next").click();
 }
 async function solve(page, questions) {
@@ -34,14 +49,20 @@ test("full curriculum, exact scoring, final challenge, reload and English copy",
   await action(page, "language").click();
   await expect(page.locator("html")).toHaveAttribute("lang", "en");
   await action(page, "level:beginner").click();
-  for (const s of [...sections, metaSection]) {
+  for (const s of allSections) {
     await action(page, `section:${s.id}`).click();
+    await expect(page.locator(".mastery-card p")).toContainText(
+      `${s.mastery.length} independent questions`,
+    );
     for (const l of s.lessons) {
       await action(page, `lesson:${l.id}`).click();
       await expect(page.locator("h1")).toHaveText(l.title.en);
+      await expect(page.locator(".idea")).toHaveCount(l.cards.length);
       await action(page, `practice:${l.id}`).click();
       await solve(page, l.questions);
-      await expect(page.locator(".score")).toContainText("2");
+      await expect(page.locator(".score")).toContainText(
+        `${l.questions.length}`,
+      );
       await action(page, `section:${s.id}`).click();
     }
     await action(page, `mastery:${s.id}`).click();
@@ -50,10 +71,13 @@ test("full curriculum, exact scoring, final challenge, reload and English copy",
   }
   await action(page, "final").click();
   await solve(page, finalQuiz);
-  await expect(page.locator(".score")).toContainText("8");
+  await expect(page.locator(".score")).toContainText(
+    `${finalQuiz.length}`,
+  );
+  await expect(page.locator(".review article")).toHaveCount(finalQuiz.length);
   await page.reload();
-  await expect(page.locator(".xp")).toContainText("1360");
-  await expect(page.locator(".stats")).toContainText("15");
+  await expect(page.locator(".xp")).toContainText(`${totalXp} XP`);
+  await expect(page.locator(".stats")).toContainText(`${allSections.length}`);
   await expect(action(page, "final")).toBeEnabled();
   expect(errors).toEqual([]);
 });
@@ -70,6 +94,7 @@ test("placement, mid-question language switch, failed quiz, repeat XP and reset 
   await action(page, "next").click();
   await solve(page, placement.slice(1));
   await expect(page.locator(".result")).toContainText("Skipped 4");
+  await expect(page.locator(".score")).toContainText(`${placement.length}`);
   await action(page, "home").click();
   await expect(action(page, "section:position")).toBeEnabled();
   await expect(action(page, "section:doubles")).toBeDisabled();
