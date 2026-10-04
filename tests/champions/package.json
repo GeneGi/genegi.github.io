@@ -1,0 +1,12 @@
+{
+  "name": "doubles-academy-browser-checks",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.11.1",
+    "@playwright/test": "1.63.0"
+  }
+}

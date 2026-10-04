@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ .Title }} · {{ .Site.Title }}</title>
+  <meta name="description" content="{{ .Description }}">
+  <meta name="theme-color" content="#173e39">
+  <link rel="canonical" href="{{ .Permalink }}">
+  {{ $css := resources.Get "champions/academy.css" | minify | fingerprint }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+  <script type="module" src="{{ "champions/app.mjs" | relURL }}"></script>
+</head>
+<body>
+  <a class="skip" href="#main">跳至内容 / Skip to content</a>
+  <div id="app"><main class="loading"><h1>双打学堂 · Doubles Academy</h1><p>正在载入课程 / Loading lessons…</p></main></div>
+  <noscript><p>请启用 JavaScript 使用互动课程。 / Enable JavaScript for interactive lessons. <a href="{{ "projects/" | relURL }}">Projects</a></p></noscript>
+</body>
+</html>
