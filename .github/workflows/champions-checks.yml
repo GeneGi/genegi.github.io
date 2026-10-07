@@ -1,0 +1,44 @@
+name: Doubles Academy checks
+on:
+  pull_request:
+    paths:
+      [
+        "static/champions/**",
+        "assets/champions/**",
+        "layouts/_default/champions.html",
+        "content/projects/pokemon-champions.md",
+        "tests/champions/**",
+        ".github/workflows/champions-checks.yml",
+      ]
+  push:
+    branches: [main]
+    paths:
+      [
+        "static/champions/**",
+        "assets/champions/**",
+        "layouts/_default/champions.html",
+        "content/projects/pokemon-champions.md",
+        "tests/champions/**",
+        ".github/workflows/champions-checks.yml",
+      ]
+permissions:
+  contents: read
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: recursive
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install Hugo
+        run: |
+          curl -fsSL https://github.com/gohugoio/hugo/releases/download/v0.164.0/hugo_extended_0.164.0_linux-amd64.deb -o /tmp/hugo.deb
+          sudo dpkg -i /tmp/hugo.deb
+      - run: node --test tests/champions/progress.test.mjs
+      - run: hugo --minify
+      - run: npm ci --prefix tests/champions
+      - run: npx --prefix tests/champions playwright install --with-deps chromium
+      - run: npm test --prefix tests/champions
