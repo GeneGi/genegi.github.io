@@ -88,10 +88,11 @@ framework, backend, remote fonts, analytics, or external asset dependencies.
   checks, the final exam and meta applications. Supplied Speed/damage values
   are training assumptions; each option has a bilingual rationale. Foundational
   recall checks remain alongside the applied checks.
-- `static/champions/meta.mjs`: dated M-6/M-C snapshot, ID-tagged sources, rules,
+- `static/champions/meta.mjs`: dated M-6 usage snapshot, current M-7/M-C rules, ID-tagged sources,
   ranked roster and three meta lessons. Core examples are pedagogical interpretations, not
-  claims about measured core usage. The official news index was accessible but
-  the official announcement body was not; third-party rules are labeled.
+  claims about measured core usage. Official Japanese M-7 and M-C bodies were
+  verified October 7. M-7 usage is not yet verified; M-6 rankings stay explicitly
+  historical instead of being relabeled as current.
 - `static/champions/progress.mjs`: versioned progress, grading, unlocks, XP and
   local-calendar streaks. `app.mjs` renders the views and handles interaction.
 

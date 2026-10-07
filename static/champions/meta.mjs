@@ -2,7 +2,17 @@ import { b, dq, q, lesson, section, TRAINING_NOTE } from "./curriculum.mjs";
 // A dated, deliberately static snapshot. Replace this object and the meta lessons
 // together after verifying the next season; never silently relabel an old snapshot.
 export const meta = {
-  version: "2026-10-03-m6",
+  version: "2026-10-07-m7-rules-m6-usage",
+  current: {
+    season: "M-7",
+    verified: "2026-10-07",
+    start: "2026-10-07",
+    end: "2026-11-04T01:59:00Z",
+    note: b(
+      "2026-10-07 核实：M-7 已开始，沿用 M-C；官方截止为 11 月 4 日 01:59 UTC。下方使用榜仍是 10 月 3 日核实的 M-6 快照。尚未核实 M-7 使用榜，因此这些常见核心用于新赛季备战，不代表新赛季排名。",
+      "Checked 2026-10-07: M-7 has started under M-C, ending November 4 at 01:59 UTC per the official notice. The usage list below remains the M-6 snapshot checked October 3. M-7 usage has not been verified; these common cores guide preparation, not a claimed new-season ranking.",
+    ),
+  },
   verified: "2026-10-03",
   reviewAfter: "2026-10-07",
   season: "M-6",
@@ -19,6 +29,24 @@ export const meta = {
     "Two active Pokémon per side; select four (normally from a team of six), set to Lv.50. Team preview: 90 seconds; turn timer: 45 seconds; your time: 7 minutes. No duplicate species or held items; at most one Mega Evolution per battle. Check the in-game M-C roster for legality.",
   ),
   sources: [
+    {
+      id: "official-m7",
+      label: b("M-7 官方公告（日文）", "Official M-7 announcement (Japanese)"),
+      url: "https://news.pokemon-home.com/ja/page/845.html",
+      note: b(
+        "2026-10-07 读取官方正文，确认 M-C 与赛季截止时间。",
+        "Official body read 2026-10-07; confirms M-C and the season end time.",
+      ),
+    },
+    {
+      id: "official-mc-details",
+      label: b("M-C 官方规则（日文）", "Official M-C rules (Japanese)"),
+      url: "https://news.pokemon-home.com/ja/page/816.html",
+      note: b(
+        "确认 Mega 次数、道具重复限制及对战计时；合法成员详见游戏内规则。",
+        "Confirms Mega limit, item clause and timers; consult the in-game rules for eligible members.",
+      ),
+    },
     {
       id: "official-mc",
       label: b("官方 M-C 公告", "Official M-C announcement"),
@@ -96,7 +124,7 @@ export const meta = {
 export const metaSection = section(
   "meta",
   "当前环境实战室|Current meta lab",
-  "M-6 / M-C · 2026-10-03 核实|M-6 / M-C · checked 2026-10-03",
+  "M-7 / M-C 规则 · M-6 使用快照|M-7 / M-C rules · M-6 usage snapshot",
   "✧",
   [
     lesson(
