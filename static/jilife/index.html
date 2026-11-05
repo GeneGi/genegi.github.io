@@ -7,135 +7,287 @@
   <meta name="description" content="JiLife is a local-first life tracker. It builds a timeline of where you went and what you did, automatically. Your data stays on your devices, in files you can read.">
   <style>
     :root {
-      --ink: #1a1a1a;
-      --ink-2: #555;
-      --line: #e5e5e5;
-      --accent: #208AEF;
-      --bg: #fff;
-      --bg-2: #f7f9fb;
+      --bg: #14110d;
+      --bg-2: #1a1713;
+      --card: #1d1a15;
+      --line: rgba(239, 234, 226, 0.10);
+      --ink: #efeae2;
+      --ink-2: #b6aea2;
+      --ink-3: #8a8278;
+      --accent: #a8bf8f;
+      --accent-dim: rgba(168, 191, 143, 0.14);
+      --serif: Georgia, "Times New Roman", serif;
     }
-    @media (prefers-color-scheme: dark) {
+    @media (prefers-color-scheme: light) {
       :root {
-        --ink: #e8e8e8;
-        --ink-2: #a0a0a0;
-        --line: #2a2a2a;
-        --bg: #0f0f0f;
-        --bg-2: #161616;
+        --bg: #f4f1ec;
+        --bg-2: #efeae2;
+        --card: #ffffff;
+        --line: rgba(42, 37, 32, 0.10);
+        --ink: #2a2520;
+        --ink-2: #4a443c;
+        --ink-3: #8a8278;
+        --accent: #5f7350;
+        --accent-dim: rgba(95, 115, 80, 0.12);
       }
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
     body {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
       color: var(--ink);
       background: var(--bg);
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
     }
-    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    ::selection { background: var(--accent); color: var(--bg); }
+    a { color: inherit; }
 
-    header {
-      padding: 96px 0 64px;
+    /* ---- ambient background: two warm orbs drifting, always behind ---- */
+    .orbs { position: fixed; inset: 0; z-index: -2; overflow: hidden; }
+    .orb { position: absolute; border-radius: 50%; filter: blur(90px); will-change: transform; }
+    .orb-a {
+      width: 560px; height: 560px; left: -140px; top: -80px;
+      background: radial-gradient(circle, rgba(168,191,143,0.20), transparent 68%);
+      animation: drift-a 26s ease-in-out infinite alternate;
+    }
+    .orb-b {
+      width: 480px; height: 480px; right: -160px; top: 34%;
+      background: radial-gradient(circle, rgba(138,106,90,0.22), transparent 68%);
+      animation: drift-b 32s ease-in-out infinite alternate;
+    }
+    @keyframes drift-a { to { transform: translate(120px, 90px) scale(1.12); } }
+    @keyframes drift-b { to { transform: translate(-110px, -70px) scale(1.06); } }
+    @media (prefers-color-scheme: light) {
+      .orb-a { background: radial-gradient(circle, rgba(95,115,80,0.14), transparent 68%); }
+      .orb-b { background: radial-gradient(circle, rgba(138,106,90,0.13), transparent 68%); }
+    }
+    /* fine grain so large flat areas don't band */
+    .grain {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.5;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0 0.5 0 0 0 0.05 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; }
+
+    /* ---- top bar ---- */
+    nav {
+      position: sticky; top: 0; z-index: 10;
+      backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+      background: var(--bg);
+      background: color-mix(in srgb, var(--bg) 72%, transparent);
       border-bottom: 1px solid var(--line);
     }
+    nav .bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 0;
+    }
     .wordmark {
-      font-size: 15px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 24px;
+      font-family: var(--serif);
+      font-size: 21px; font-weight: 700; letter-spacing: 0.02em;
+      color: var(--ink); text-decoration: none;
+    }
+    .wordmark em { font-style: normal; color: var(--accent); }
+    .nav-links { display: flex; gap: 26px; font-size: 13.5px; }
+    .nav-links a { color: var(--ink-2); text-decoration: none; transition: color 0.25s; }
+    .nav-links a:hover { color: var(--ink); }
+
+    /* ---- hero ---- */
+    header { padding: 92px 0 0; position: relative; }
+    .kicker {
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--accent); margin-bottom: 26px;
     }
     h1 {
-      font-size: clamp(34px, 6vw, 52px);
-      font-weight: 700;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      margin-bottom: 20px;
+      font-family: var(--serif);
+      font-size: clamp(42px, 7.2vw, 74px);
+      font-weight: 700; letter-spacing: -0.025em; line-height: 1.04;
+      margin-bottom: 24px; max-width: 760px;
     }
+    h1 em { font-style: italic; color: var(--accent); }
     .tagline {
-      font-size: clamp(17px, 2.5vw, 20px);
-      color: var(--ink-2);
-      max-width: 560px;
-      margin-bottom: 36px;
+      font-size: clamp(16px, 2vw, 19px);
+      color: var(--ink-2); max-width: 560px; margin-bottom: 40px;
     }
+    .cta { display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
     .badge {
-      display: inline-block;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      padding: 10px 18px;
-      font-size: 14px;
-      color: var(--ink-2);
-      background: var(--bg-2);
+      display: inline-flex; align-items: center; gap: 10px;
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 11px 22px; font-size: 14px; color: var(--ink-2);
+      background: var(--bg-2); text-decoration: none;
+      transition: border-color 0.3s, transform 0.3s;
+    }
+    .badge:hover { border-color: var(--accent); transform: translateY(-1px); }
+    .badge .dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 0 0 var(--accent-dim);
+      animation: pulse 2.6s ease-out infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 var(--accent-dim); }
+      70% { box-shadow: 0 0 0 9px transparent; }
+      100% { box-shadow: 0 0 0 0 transparent; }
     }
     .badge strong { color: var(--ink); font-weight: 600; }
+    .cta-note { font-size: 13px; color: var(--ink-3); }
 
-    section { padding: 56px 0; border-bottom: 1px solid var(--line); }
+    /* ---- the living timeline strip ---- */
+    .daystrip { margin: 72px 0 0; padding-bottom: 72px; }
+    .daystrip-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .daystrip-head .cap {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--ink-3);
+    }
+    .daystrip-head .cap .live { color: var(--accent); }
+    .daywrap {
+      position: relative; border: 1px solid var(--line); border-radius: 20px;
+      background: var(--card);
+      background: color-mix(in srgb, var(--card) 66%, transparent);
+      backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+      overflow: hidden;
+      box-shadow: 0 30px 80px -30px rgba(0,0,0,0.55);
+    }
+    #daycanvas { display: block; width: 100%; height: 190px; }
+
+    /* ---- sections ---- */
+    section { padding: 88px 0; border-top: 1px solid var(--line); }
     h2 {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--ink-2);
-      margin-bottom: 32px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-3); margin-bottom: 44px;
     }
-    .features { display: grid; gap: 36px; }
-    .feature h3 {
-      font-size: 18px;
-      font-weight: 600;
-      margin-bottom: 6px;
+    .features {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
     }
-    .feature p { color: var(--ink-2); font-size: 16px; }
+    .feature {
+      border: 1px solid var(--line); border-radius: 16px;
+      padding: 26px 26px 24px;
+      background: var(--card);
+      background: color-mix(in srgb, var(--card) 60%, transparent);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+    }
+    .feature:hover {
+      transform: translateY(-3px);
+      border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+      box-shadow: 0 18px 44px -18px rgba(0,0,0,0.5), 0 0 0 1px var(--accent-dim);
+    }
+    .feature svg {
+      width: 22px; height: 22px; stroke: var(--accent); fill: none;
+      stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+      margin-bottom: 16px;
+    }
+    .feature h3 { font-size: 17px; font-weight: 600; margin-bottom: 7px; letter-spacing: -0.01em; }
+    .feature p { color: var(--ink-2); font-size: 14.5px; line-height: 1.65; }
 
     .principle {
-      font-size: 17px;
-      color: var(--ink-2);
-      max-width: 600px;
+      font-size: clamp(17px, 2.4vw, 21px);
+      font-family: var(--serif); line-height: 1.55;
+      color: var(--ink-2); max-width: 720px;
     }
     .principle strong { color: var(--ink); font-weight: 600; }
-    .principle + .principle { margin-top: 16px; }
+    .principle + .principle { margin-top: 22px; }
+    .principle a {
+      color: var(--accent); text-decoration: none;
+      border-bottom: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+      transition: border-color 0.25s;
+    }
+    .principle a:hover { border-color: var(--accent); }
 
-    footer { padding: 40px 0 64px; }
-    footer nav { display: flex; gap: 24px; font-size: 14px; }
-    footer a { color: var(--ink-2); text-decoration: none; }
+    footer { padding: 48px 0 72px; border-top: 1px solid var(--line); }
+    footer nav { display: flex; gap: 26px; font-size: 14px; position: static; backdrop-filter: none; -webkit-backdrop-filter: none; background: transparent; border: 0; }
+    footer a { color: var(--ink-2); text-decoration: none; transition: color 0.25s; }
     footer a:hover { color: var(--ink); }
-    footer .fine { margin-top: 24px; font-size: 13px; color: var(--ink-2); }
+    footer .fine { margin-top: 22px; font-size: 13px; color: var(--ink-3); }
+
+    /* ---- scroll reveals ---- */
+    .rise { opacity: 0; transform: translateY(26px); transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1); }
+    .rise.on { opacity: 1; transform: none; }
+    .d1 { transition-delay: 0.06s; } .d2 { transition-delay: 0.14s; }
+    .d3 { transition-delay: 0.22s; } .d4 { transition-delay: 0.30s; }
+
+    @media (max-width: 760px) {
+      .features { grid-template-columns: 1fr; }
+      header { padding-top: 64px; }
+      .daystrip { margin-top: 56px; padding-bottom: 56px; }
+      section { padding: 64px 0; }
+      .nav-links { gap: 18px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .orb, .badge .dot { animation: none; }
+      .rise { opacity: 1; transform: none; transition: none; }
+      .feature, .badge { transition: none; }
+    }
   </style>
 </head>
 <body>
+  <div class="orbs" aria-hidden="true"><div class="orb orb-a"></div><div class="orb orb-b"></div></div>
+  <div class="grain" aria-hidden="true"></div>
+
+  <nav>
+    <div class="wrap bar">
+      <a class="wordmark" href="./">Ji<em>Life</em></a>
+      <div class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="privacy.html">Privacy</a>
+      </div>
+    </div>
+  </nav>
+
   <div class="wrap">
 
     <header>
-      <div class="wordmark">JiLife</div>
-      <h1>Your life, on your devices.</h1>
-      <p class="tagline">
+      <div class="kicker rise">Local-first life tracking</div>
+      <h1 class="rise d1">Your life, <em>on your devices.</em></h1>
+      <p class="tagline rise d2">
         JiLife is a local-first life tracker. It builds a timeline of where you went
         and what you did — automatically — and keeps it in plain-text files that
         never leave your own devices.
       </p>
-      <span class="badge"><strong>Coming soon</strong> · App Store</span>
+      <div class="cta rise d3">
+        <a class="badge" href="#how"><span class="dot"></span><span><strong>Coming soon</strong> · App Store</span></a>
+        <span class="cta-note">iOS · no account needed</span>
+      </div>
+
+      <div class="daystrip rise d4">
+        <div class="daystrip-head">
+          <span class="cap">One day, recorded by itself</span>
+          <span class="cap"><span class="live">●</span> building</span>
+        </div>
+        <div class="daywrap">
+          <canvas id="daycanvas" aria-label="An animated example of a day JiLife records: sleep, commute, work, gym, dinner, sleep again."></canvas>
+        </div>
+      </div>
     </header>
 
-    <section>
-      <h2>How it works</h2>
+    <section id="how">
+      <h2 class="rise">How it works</h2>
       <div class="features">
-        <div class="feature">
+        <div class="feature rise">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg>
           <h3>Automatic timeline</h3>
           <p>JiLife watches motion and location to build your day as it happens —
           where you stopped, how you got there, how long you stayed. No check-ins,
           no manual logging unless you want to.</p>
         </div>
-        <div class="feature">
+        <div class="feature rise d1">
+          <svg viewBox="0 0 24 24"><path d="M17 3a2.8 2.8 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
           <h3>Correct it like a journal</h3>
           <p>The guess is always a question, never a silent write. Rename a place,
           fix a time, add what it missed — the timeline stays yours to edit.</p>
         </div>
-        <div class="feature">
+        <div class="feature rise d2">
+          <svg viewBox="0 0 24 24"><path d="M3 12h4l2-6 3 12 2.5-8 1.5 4h5"/></svg>
           <h3>Insights, on-device</h3>
           <p>Patterns surface from your own history: recurring places, sleep,
           how your weeks actually look. Analysis happens on your phone, not
           our servers — we don't have any.</p>
         </div>
-        <div class="feature">
+        <div class="feature rise d3">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6M9 13h6M9 17h4"/></svg>
           <h3>Plain files, yours forever</h3>
           <p>Everything lives as human-readable org files you can open in any
           editor. No account, no lock-in, no export step — it was never
@@ -145,12 +297,12 @@
     </section>
 
     <section>
-      <h2>Local-first</h2>
-      <p class="principle">
+      <h2 class="rise">Local-first</h2>
+      <p class="principle rise">
         <strong>We collect nothing.</strong> JiLife has no servers, no accounts,
         no analytics, and no ads. The app works entirely on your device.
       </p>
-      <p class="principle">
+      <p class="principle rise d1">
         The only times data leaves your phone are ones you choose: your own
         iCloud for sync between your devices, a one-time lookup to name a place
         you visited, and an optional git remote you configure yourself.
@@ -168,5 +320,158 @@
     </footer>
 
   </div>
+
+  <script>
+    // Scroll reveals — IntersectionObserver, no library.
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); }
+      }
+    }, { threshold: 0.15 });
+    document.querySelectorAll('.rise').forEach((el) => io.observe(el));
+
+    // The day strip — a canvas sketch of what JiLife draws all day:
+    // category-colored segments painting left→right, a moving cursor that
+    // "detects" each boundary and stamps its clock time, then loops.
+    (function () {
+      const cv = document.getElementById('daycanvas');
+      if (!cv || !cv.getContext) return;
+      const ctx = cv.getContext('2d');
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // A plausible day, minutes from midnight. Colors ≈ the app's category tiles.
+      const DAY = [
+        { to: 6.75 * 60, c: '#6a7a8f', label: 'sleep' },
+        { to: 7.10 * 60, c: '#8a8278', label: 'commute' },
+        { to: 12.10 * 60, c: '#6b7f5e', label: 'work' },
+        { to: 12.55 * 60, c: '#8a6a5a', label: 'lunch' },
+        { to: 17.65 * 60, c: '#6b7f5e', label: 'work' },
+        { to: 18.10 * 60, c: '#8a8278', label: 'commute' },
+        { to: 18.80 * 60, c: '#7a6a8f', label: 'gym' },
+        { to: 19.65 * 60, c: '#8a6a5a', label: 'dinner' },
+        { to: 23.90 * 60, c: '#4a443c', label: 'evening' },
+        { to: 24.00 * 60, c: '#6a7a8f', label: 'sleep' },
+      ];
+      const hhmm = (m) => `${String(Math.floor(m / 60)).padStart(2, '0')}:${String(Math.round(m % 60)).padStart(2, '0')}`;
+      // show a stamp only at some boundaries — every marker would crowd the strip
+      const STAMPS = new Set([0, 2, 5, 6, 7, 8]);
+
+      let W = 0, H = 0, dpr = 1;
+      function size() {
+        dpr = Math.min(2, window.devicePixelRatio || 1);
+        W = cv.clientWidth; H = cv.clientHeight;
+        cv.width = W * dpr; cv.height = H * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      size();
+      addEventListener('resize', size);
+
+      const START_MIN = 5.75 * 60;          // strip covers 05:45 → 24:00
+      const SPAN = 24 * 60 - START_MIN;
+      const PAINT_MS = 6400;                // time to paint the whole day
+      const HOLD_MS = 2600;                 // hold the finished day before looping
+
+      const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+      let ink3, line;
+      const theme = () => { ink3 = css('--ink-3'); line = css('--line'); };
+      theme();
+      matchMedia('(prefers-color-scheme: light)').addEventListener?.('change', theme);
+
+      const padL = 28, padR = 28, barY = 78, barH = 46, radius = 9;
+      const x = (m) => padL + ((m - START_MIN) / SPAN) * (W - padL - padR);
+
+      function draw(progress) {
+        ctx.clearRect(0, 0, W, H);
+
+        // hour ticks, faint
+        ctx.strokeStyle = line; ctx.fillStyle = ink3;
+        ctx.font = '10.5px -apple-system, system-ui, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.lineWidth = 1;
+        for (let h = 6; h <= 24; h += 3) {
+          const tx = x(h * 60);
+          if (tx < padL - 2 || tx > W - padR + 2) continue;
+          ctx.globalAlpha = 0.55;
+          ctx.beginPath(); ctx.moveTo(tx, barY - 16); ctx.lineTo(tx, barY - 8); ctx.stroke();
+          ctx.fillText(`${h % 24}:00`, tx, barY - 22);
+          ctx.globalAlpha = 1;
+        }
+
+        const nowMin = START_MIN + progress * SPAN;
+        let segStart = START_MIN;
+        const bounds = [];
+        DAY.forEach((seg, i) => {
+          const end = Math.min(seg.to, nowMin);
+          if (end <= segStart) return;
+          const x0 = x(segStart), x1 = x(end);
+          ctx.fillStyle = seg.c;
+          ctx.globalAlpha = 0.88;
+          ctx.beginPath();
+          // rounded only on the strip's outer ends; fall back to plain rect on old engines
+          const rL = i === 0 ? radius : 0;
+          const rR = i === DAY.length - 1 ? radius : 0;
+          if (ctx.roundRect) ctx.roundRect(x0, barY, x1 - x0, barH, [rL, rR, rR, rL]);
+          else ctx.rect(x0, barY, x1 - x0, barH);
+          ctx.fill();
+          ctx.globalAlpha = 1;
+          // label inside if wide enough
+          if (x1 - x0 > 52) {
+            ctx.fillStyle = 'rgba(14,12,10,0.72)';
+            ctx.font = '600 11px -apple-system, system-ui, sans-serif';
+            ctx.textAlign = 'left';
+            ctx.fillText(seg.label, x0 + 10, barY + barH / 2 + 4);
+          }
+          bounds.push(seg.to);
+          segStart = seg.to;
+        });
+
+        // clock stamps at chosen boundaries, once painted
+        ctx.textAlign = 'center';
+        bounds.forEach((b, i) => {
+          if (!STAMPS.has(i) || b > nowMin || b >= 24 * 60) return;
+          const bx = x(b);
+          ctx.strokeStyle = line;
+          ctx.beginPath(); ctx.moveTo(bx, barY + barH + 6); ctx.lineTo(bx, barY + barH + 14); ctx.stroke();
+          ctx.fillStyle = ink3;
+          ctx.font = '10.5px "SF Mono", ui-monospace, monospace';
+          ctx.fillText(hhmm(b), bx, barY + barH + 30);
+        });
+
+        // the writing cursor
+        if (progress < 1 && nowMin < 24 * 60) {
+          const cx = x(nowMin);
+          ctx.strokeStyle = css('--ink');
+          ctx.globalAlpha = 0.85;
+          ctx.beginPath(); ctx.moveTo(cx, barY - 6); ctx.lineTo(cx, barY + barH + 6); ctx.stroke();
+          ctx.fillStyle = css('--accent');
+          ctx.beginPath(); ctx.arc(cx, barY - 10, 3, 0, Math.PI * 2); ctx.fill();
+          ctx.globalAlpha = 1;
+        }
+      }
+
+      if (reduceMotion) { draw(1); return; }
+
+      let t0 = null, hold = 0;
+      let visible = true;
+      const vis = new IntersectionObserver((e) => { visible = e[0].isIntersecting; });
+      vis.observe(cv);
+
+      function frame(t) {
+        if (visible) {
+          if (t0 === null) t0 = t;
+          const el = t - t0;
+          if (el < PAINT_MS) {
+            draw(el / PAINT_MS);
+          } else if (el < PAINT_MS + HOLD_MS) {
+            draw(1);
+          } else {
+            t0 = t; // loop
+          }
+        }
+        requestAnimationFrame(frame);
+      }
+      requestAnimationFrame(frame);
+    })();
+  </script>
 </body>
 </html>
