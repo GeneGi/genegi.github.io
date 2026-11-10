@@ -1,0 +1,140 @@
+/* Resume-style page: about-me only (scoped by .post-single on this page's markup). */
+
+/* --- skill chips --- */
+.resume-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 6px 0 0;
+}
+
+.chip {
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--secondary);
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 3px 11px;
+    white-space: nowrap;
+}
+
+/* --- projects grid --- */
+.resume-projects {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 8px 0 0;
+}
+
+@media (max-width: 680px) {
+    .resume-projects {
+        grid-template-columns: 1fr;
+    }
+}
+
+.project-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.project-card:hover {
+    border-color: var(--tertiary);
+    transform: translateY(-1px);
+}
+
+.project-card h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+    border-bottom: 0;
+    padding-bottom: 0;
+}
+
+.project-card h3 a {
+    color: var(--primary);
+    text-decoration: none;
+    border-bottom: 0;
+}
+
+.project-card h3 a:hover {
+    color: var(--link-color, var(--primary));
+}
+
+.card-arrow {
+    display: inline-block;
+    margin-left: 6px;
+    color: var(--tertiary);
+    font-weight: 400;
+    transition: transform 0.15s ease;
+}
+
+.project-card:hover .card-arrow {
+    transform: translateX(3px);
+}
+
+.card-desc {
+    flex: 1;
+    margin: 0 0 14px;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--secondary);
+}
+
+.card-meta {
+    display: flex;
+    gap: 14px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.card-link {
+    color: var(--secondary);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1px;
+}
+
+.card-link:hover {
+    color: var(--primary);
+    border-bottom-color: var(--tertiary);
+}
+
+/* --- contact links --- */
+.resume-contact {
+    display: flex;
+    gap: 12px;
+    margin: 8px 0 0;
+}
+
+.resume-contact a {
+    display: inline-flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--primary);
+    background: var(--entry);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 8px 18px;
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    transition: border-color 0.15s ease;
+}
+
+.resume-contact a:hover {
+    border-color: var(--tertiary);
+}
+
+/* --- page typography tighten-up (resume pages only use this markup) --- */
+.post-single .resume-projects h3::before,
+.post-single .resume-projects h3::after {
+    content: none;
+}
