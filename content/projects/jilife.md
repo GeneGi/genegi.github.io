@@ -13,6 +13,6 @@ were with — no manual logging required.
 
 Your data lives in your vault as plain-text org files and never leaves your
 devices. Insights (rhythm, streaks, "most notable" cards) are computed
-on-device; nothing is uploaded to a server. Coming soon to the App Store.
+on-device; nothing is uploaded to a server. [Download it on the App Store](https://apps.apple.com/app/jilife/id6792427405).
 
 [**Open the JiLife site →**](/jilife/) · [Privacy policy](/jilife/privacy.html) · [Support](/jilife/support.html)
